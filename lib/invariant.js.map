@@ -1,0 +1,1 @@
+{"version":3,"file":"invariant.js","names":[],"sources":["../src/invariant.ts"],"sourcesContent":["export function invariant(condition: unknown, message: string): asserts condition {\n  if (!condition) throw new Error(message)\n}\n"],"mappings":";AAAA,SAAgB,UAAU,WAAoB,SAAoC;CAChF,IAAI,CAAC,WAAW,MAAM,IAAI,MAAM,OAAO;AACzC"}

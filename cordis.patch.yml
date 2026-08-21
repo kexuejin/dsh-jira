@@ -1,0 +1,7 @@
+# dsh-jira bundle patch: one plugin row mounting both halves.
+#
+# The host half registers Jira tools plus a loopback-only GUI RPC channel. The
+# browser half provides the Jira sidebar entry.
+- insert:
+    - id: jira-issue-tracker
+      name: dsh-jira
