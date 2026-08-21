@@ -138,3 +138,54 @@ describe('JiraClient', () => {
     expect(() => internals.buildAuthHeader(resolveConfig({ authMode: 'basic' }), 'secret')).toThrow(/username/)
   })
 })
+
+describe('JiraWorkSource', () => {
+  it('maps unresolved assigned issues onto board work items with resolvable ids', async () => {
+    const { baseUrl } = await listen((request, response) => {
+      if (request.url?.includes('/rest/api/2/issue/ABC-1')) {
+        json(response, {
+          key: 'ABC-1',
+          fields: {
+            summary: 'Fix internal bug',
+            status: { name: 'In Progress', statusCategory: { name: 'In Progress' } },
+          },
+        })
+        return
+      }
+      json(response, {
+        issues: [{
+          key: 'ABC-1',
+          fields: {
+            summary: 'Fix internal bug',
+            status: { name: 'In Progress', statusCategory: { name: 'In Progress' } },
+            priority: { name: 'High' },
+            updated: '2026-08-21T10:00:00.000+0000',
+          },
+        }],
+        total: 1,
+      })
+    })
+    const { ctx, dispose } = await contextWithCredential()
+    const source = (await import('../src/work-source.ts')).createJiraWorkSource(ctx, resolveConfig({ baseUrl }))
+
+    const items = await source.list({ filterId: 'mine' })
+
+    expect(items.length).toBe(1)
+    expect(items[0]).toMatchObject({ id: 'jira:ABC-1', sourceId: 'jira', externalId: 'ABC-1', status: 'running' })
+    const detail = await source.get('jira:ABC-1')
+    expect(detail?.title).toBe('Fix internal bug')
+    expect((await source.actions(detail!)).some(action => action.id === 'start')).toBe(true)
+
+    await dispose()
+  })
+
+  it('returns undefined for a malformed board id', async () => {
+    const { baseUrl } = await listen(() => {})
+    const { ctx, dispose } = await contextWithCredential()
+    const source = (await import('../src/work-source.ts')).createJiraWorkSource(ctx, resolveConfig({ baseUrl }))
+
+    expect(await source.get('nope')).toBeUndefined()
+
+    await dispose()
+  })
+})

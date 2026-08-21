@@ -4,10 +4,12 @@ import { defineTool } from '@deepseek-ai/dsh-tools'
 import type { JsonValue } from '@deepseek-ai/dsh-session/types'
 import { createJiraClient, type Config as JiraConfig } from './jira.ts'
 import { registerJiraRpc } from './rpc.ts'
+import { registerJiraWorkSource } from './work-source.ts'
 import type { JiraAddCommentArgs, JiraGetIssueArgs, JiraSearchArgs, JiraTransitionIssueArgs } from './model.ts'
 
 export type * from './model.ts'
 export { createJiraClient, internals, resolveConfig } from './jira.ts'
+export { createJiraWorkSource, registerJiraWorkSource } from './work-source.ts'
 export { JIRA_RPC_CHANNEL } from './model.ts'
 export { registerJiraRpc } from './rpc.ts'
 
@@ -62,6 +64,7 @@ function jsonString(value: JsonValue | undefined, fallback: string): string {
 
 export function apply(ctx: Context, config: Config = {}): void {
   registerJiraRpc(ctx, config)
+  registerJiraWorkSource(ctx, config)
 
   ctx.tools.register(defineTool({
     name: 'jira_search_issues',
