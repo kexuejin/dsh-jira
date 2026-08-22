@@ -5,12 +5,14 @@ import type {
   JiraAddCommentArgs,
   JiraConnectionStatusView,
   JiraGetIssueArgs,
+  JiraGetTransitionsArgs,
   JiraIssueDetail,
   JiraIssueSummary,
   JiraIssueView,
   JiraMutationResult,
   JiraSearchArgs,
   JiraSearchResult,
+  JiraTransition,
   JiraTransitionIssueArgs,
 } from '../model.ts'
 import css from './JiraPanel.module.css'
@@ -20,6 +22,7 @@ export interface JiraPanelPort {
   status: () => Promise<JiraConnectionStatusView>
   search: (args: JiraSearchArgs) => Promise<JiraSearchResult>
   getIssue: (args: JiraGetIssueArgs) => Promise<JiraIssueDetail>
+  getTransitions: (args: JiraGetTransitionsArgs) => Promise<readonly JiraTransition[]>
   addComment: (args: JiraAddCommentArgs) => Promise<JiraMutationResult>
   transitionIssue: (args: JiraTransitionIssueArgs) => Promise<JiraMutationResult>
 }

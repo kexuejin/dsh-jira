@@ -43,7 +43,13 @@ When `dsh-work-board` is mounted, Jira issues matching `workBoardSyncJql` are sy
 
 ## Agent collaboration
 
-Work Board cards for Jira issues expose a manual "Transition" action that calls the Jira transition API by exact transition name, so status moves stay inside the board. Agent executions started from the card record their session and outcome in Work Board; `workBoardWriteback` then reports the result back to Jira as a comment and optionally a transition.
+Work Board cards for Jira issues expose the issue's current transitions as
+one-click buttons plus a free-text transition name, all routed through the
+Jira transition API — status moves stay inside the board. Agent executions
+started from the card record their session and outcome in Work Board;
+`workBoardWriteback` then reports the result back to Jira as a comment and
+optionally a transition. Jira status changes also flow back into the board
+column on the next sync.
 
 ## Agent tools
 

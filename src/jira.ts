@@ -364,6 +364,11 @@ export class JiraClient {
     }
   }
 
+  /** List transitions currently available on an issue (for board UIs). */
+  async listTransitions(args: { issueKey: string }): Promise<readonly JiraTransition[]> {
+    return this.transitions(issueKeyArg(args.issueKey))
+  }
+
   async getIssue(args: JiraGetIssueArgs): Promise<JiraIssueDetail> {
     const issueKey = issueKeyArg(args.issueKey)
     const [issue, transitions] = await Promise.all([

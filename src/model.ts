@@ -87,6 +87,10 @@ export interface JiraGetIssueArgs {
   readonly issueKey: string
 }
 
+export interface JiraGetTransitionsArgs {
+  readonly issueKey: string
+}
+
 export interface JiraAddCommentArgs {
   readonly issueKey: string
   readonly body: string
@@ -105,12 +109,13 @@ export interface JiraMutationResult {
   readonly message: string
 }
 
-export type JiraRpcEndpoint = 'status' | 'search' | 'getIssue' | 'addComment' | 'transitionIssue'
+export type JiraRpcEndpoint = 'status' | 'search' | 'getIssue' | 'getTransitions' | 'addComment' | 'transitionIssue'
 
 export interface JiraRpcResultMap {
   readonly status: JiraConnectionStatusView
   readonly search: JiraSearchResult
   readonly getIssue: JiraIssueDetail
+  readonly getTransitions: readonly JiraTransition[]
   readonly addComment: JiraMutationResult
   readonly transitionIssue: JiraMutationResult
 }

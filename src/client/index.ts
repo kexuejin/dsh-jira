@@ -8,6 +8,7 @@ import {
   type JiraRpcResultMap,
   type JiraSearchArgs,
   type JiraGetIssueArgs,
+  type JiraGetTransitionsArgs,
   type JiraAddCommentArgs,
   type JiraTransitionIssueArgs,
 } from '../model.ts'
@@ -40,6 +41,7 @@ function createPort(connection: ConnectionHandle): JiraPanelPort {
     status: () => call('status'),
     search: (args: JiraSearchArgs) => call('search', args),
     getIssue: (args: JiraGetIssueArgs) => call('getIssue', args),
+    getTransitions: (args: JiraGetTransitionsArgs) => call('getTransitions', args),
     addComment: (args: JiraAddCommentArgs) => call('addComment', args),
     transitionIssue: (args: JiraTransitionIssueArgs) => call('transitionIssue', args),
   }

@@ -6,6 +6,7 @@ import {
   JIRA_RPC_CHANNEL,
   type JiraAddCommentArgs,
   type JiraGetIssueArgs,
+  type JiraGetTransitionsArgs,
   type JiraSearchArgs,
   type JiraTransitionIssueArgs,
 } from './model.ts'
@@ -52,6 +53,10 @@ function getIssueArgs(payload: unknown): JiraGetIssueArgs {
   return { issueKey: stringField(payload, 'issueKey') ?? '' }
 }
 
+function getTransitionsArgs(payload: unknown): JiraGetTransitionsArgs {
+  return { issueKey: stringField(payload, 'issueKey') ?? '' }
+}
+
 function addCommentArgs(payload: unknown): JiraAddCommentArgs {
   return { issueKey: stringField(payload, 'issueKey') ?? '', body: stringField(payload, 'body') ?? '' }
 }
@@ -94,6 +99,8 @@ export function registerJiraRpc(ctx: Context, config: Config): void {
           return ok(await client.search(searchArgs(payload)))
         case 'getIssue':
           return ok(await client.getIssue(getIssueArgs(payload)))
+        case 'getTransitions':
+          return ok(await client.listTransitions(getTransitionsArgs(payload)))
         case 'addComment':
           return ok(await client.addComment(addCommentArgs(payload)))
         case 'transitionIssue':
