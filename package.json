@@ -15,7 +15,8 @@
     "lib",
     "client",
     "cordis.patch.yml",
-    "README.md"
+    "README.md",
+    "docs/plans"
   ],
   "keywords": [
     "dsh-plugin",

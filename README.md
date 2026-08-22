@@ -8,6 +8,8 @@ DSH external plugin for internal Jira issue tracking.
 - Show a first-level Jira entry in the DSH Web sidebar.
 - Provide personal issue views for assigned, watching, reported, and custom JQL.
 - Register agent tools for issue search, issue detail, comments, and single-issue transitions.
+- Sync matching Jira issues into `dsh-work-board` when the Work Board plugin is mounted.
+- Add one Jira comment when a Work Board agent execution settles, unless writeback is disabled.
 - Keep Jira credentials on the Host side and return only redacted connection diagnostics to the Web UI or model.
 
 ## Configuration
@@ -22,9 +24,19 @@ Mount the plugin as a DSH profile bundle, then configure the `jira-issue-tracker
     tokenCredentialRef: JIRA_API_TOKEN
     strictTls: true
     maxResults: 25
+    workBoardSync: true
+    workBoardSyncJql: 'assignee = currentUser() AND resolution = Unresolved ORDER BY updated DESC'
+    workBoardSyncIntervalMs: 300000
+    workBoardWriteback: true
 ```
 
 Set `JIRA_API_TOKEN` through the DSH credentials provider or the launching environment. For older internal deployments that require HTTP Basic authentication, set `authMode: basic`, `username`, and store the password or token in the same credential reference.
+
+## Work Board integration
+
+When `dsh-work-board` is mounted, Jira issues matching `workBoardSyncJql` are synced into the Work Board manual task ledger as `jira:<issue-key>` tasks. The task prompt includes the Jira URL and issue summary so an agent can start from the board card. Local execution history stays in Work Board while issue title, status, priority, assignee, reporter, and URL refresh from Jira on each sync.
+
+`workBoardWriteback` adds one Jira comment per completed Work Board execution using a `[dsh-work-board:<execution-id>]` marker, so retries do not duplicate comments across restarts. Set it to `false` for read-only synchronization.
 
 ## Agent tools
 
@@ -35,7 +47,7 @@ Set `JIRA_API_TOKEN` through the DSH credentials provider or the launching envir
 
 ## Safety boundary
 
-Credential-bearing Jira HTTP requests reject redirects instead of following them. The plugin does not create issues, edit fields, upload attachments, run bulk updates, administer Jira projects, mirror Jira into local storage, or expose Jira raw JSON to the model.
+Credential-bearing Jira HTTP requests reject redirects instead of following them. The plugin does not create issues, edit fields, upload attachments, run bulk updates, administer Jira projects, or expose Jira raw JSON to the model. Work Board synchronization stores normalized issue task records and execution history locally so agents can collaborate from the board without exposing credentials to the browser.
 
 `proxyUrl` is reserved for a later internal-network transport implementation. If it is set in this version, Jira operations fail closed with a diagnostic.
 

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http'
 import type { AddressInfo } from 'node:net'
 import { Context } from '@deepseek-ai/cordis'
@@ -186,6 +186,65 @@ describe('JiraWorkSource', () => {
 
     expect(await source.get('nope')).toBeUndefined()
 
+    await dispose()
+  })
+})
+
+describe('JiraWorkBoardSync', () => {
+  it('does not start a sync timer before baseUrl is configured', async () => {
+    const ctx = new Context()
+    const setIntervalSpy = vi.spyOn(globalThis, 'setInterval')
+    const { registerJiraWorkBoardSync } = await import('../src/work-board-sync.ts')
+
+    registerJiraWorkBoardSync(ctx, {})
+
+    expect(setIntervalSpy).not.toHaveBeenCalled()
+    setIntervalSpy.mockRestore()
+  })
+
+  it('syncs Jira issues into the Work Board manual ledger', async () => {
+    const { baseUrl } = await listen((_request, response) => {
+      json(response, {
+        issues: [{
+          key: 'ABC-9',
+          fields: {
+            summary: 'Implement board sync',
+            status: { name: 'To Do', statusCategory: { name: 'To Do' } },
+            priority: { name: 'High' },
+            assignee: { displayName: 'James' },
+            reporter: { displayName: 'Alice' },
+            created: '2026-08-21T09:00:00.000+0000',
+            updated: '2026-08-21T10:00:00.000+0000',
+          },
+        }],
+        total: 1,
+      })
+    })
+    const { ctx, dispose } = await contextWithCredential()
+    const synced: unknown[] = []
+    await ctx.plugin({
+      apply(child: Context) {
+        child.provide('workBoard', {
+          syncManualTasks(_sourceId: string, tasks: readonly unknown[]) {
+            synced.push(...tasks)
+            return { tasks }
+          },
+          manualSnapshot() {
+            return { tasks: [] }
+          },
+        })
+      },
+    }).await()
+    const { registerJiraWorkBoardSync } = await import('../src/work-board-sync.ts')
+
+    registerJiraWorkBoardSync(ctx, { baseUrl, workBoardSyncIntervalMs: 30000 })
+    await new Promise(resolve => setTimeout(resolve, 30))
+
+    expect(synced[0]).toMatchObject({
+      id: 'jira:ABC-9',
+      title: '[ABC-9] Implement board sync',
+      status: 'todo',
+    })
     await dispose()
   })
 })

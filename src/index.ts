@@ -2,9 +2,10 @@ import type { Context } from '@deepseek-ai/cordis'
 import z from '@deepseek-ai/schemastery'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import type { JsonValue } from '@deepseek-ai/dsh-session/types'
-import { createJiraClient, type Config as JiraConfig } from './jira.ts'
+import { createJiraClient } from './jira.ts'
 import { registerJiraRpc } from './rpc.ts'
 import { registerJiraWorkSource } from './work-source.ts'
+import { registerJiraWorkBoardSync, type JiraWorkBoardSyncConfig } from './work-board-sync.ts'
 import type { JiraAddCommentArgs, JiraGetIssueArgs, JiraSearchArgs, JiraTransitionIssueArgs } from './model.ts'
 
 export type * from './model.ts'
@@ -16,7 +17,7 @@ export { registerJiraRpc } from './rpc.ts'
 export const name = 'jira-issue-tracker'
 export const inject = ['tools', 'connection']
 
-export interface Config extends JiraConfig {}
+export interface Config extends JiraWorkBoardSyncConfig {}
 
 export const Config: z<Config> = z.object({
   baseUrl: z.string(),
@@ -31,6 +32,10 @@ export const Config: z<Config> = z.object({
   assignedJql: z.string(),
   watchingJql: z.string(),
   reportedJql: z.string(),
+  workBoardSync: z.boolean().default(true),
+  workBoardSyncJql: z.string(),
+  workBoardSyncIntervalMs: z.number().step(1).min(30000).default(300000),
+  workBoardWriteback: z.boolean().default(true),
 })
 
 const JSON_OUTPUT = { schema: { type: 'json' } } as const
@@ -65,6 +70,7 @@ function jsonString(value: JsonValue | undefined, fallback: string): string {
 export function apply(ctx: Context, config: Config = {}): void {
   registerJiraRpc(ctx, config)
   registerJiraWorkSource(ctx, config)
+  registerJiraWorkBoardSync(ctx, config)
 
   ctx.tools.register(defineTool({
     name: 'jira_search_issues',
