@@ -7,6 +7,10 @@ export interface JiraWorkBoardSyncConfig extends JiraConfig {
   readonly workBoardSyncJql?: string
   readonly workBoardSyncIntervalMs?: number
   readonly workBoardWriteback?: boolean
+  /** Jira transition name applied when a synced issue's work-board execution succeeds. */
+  readonly workBoardDoneTransition?: string
+  /** Jira transition name applied when a synced issue's work-board execution fails. */
+  readonly workBoardFailedTransition?: string
 }
 
 type TaskStatus = 'backlog' | 'todo' | 'running' | 'done' | 'failed'
@@ -37,9 +41,14 @@ interface ManualSnapshotLike {
   readonly tasks: readonly TaskRecordLike[]
 }
 
+interface WorkBoardExternalTaskHandlerLike {
+  transition(taskId: string, input: { transitionId?: string; transitionName?: string; comment?: string }): Promise<string>
+}
+
 interface WorkBoardManualSyncServiceLike {
   syncManualTasks(sourceId: string, tasks: readonly TaskRecordLike[]): ManualSnapshotLike
   manualSnapshot(): ManualSnapshotLike
+  registerExternalTaskHandler(prefix: string, handler: WorkBoardExternalTaskHandlerLike): () => void
 }
 
 const SOURCE_ID = 'jira'
@@ -154,6 +163,10 @@ async function syncIssues(ctx: Context, config: JiraWorkBoardSyncConfig): Promis
   board.syncManualTasks(SOURCE_ID, result.issues.map(issue => taskFromIssue(issue, now)))
 }
 
+function transitionMarker(executionId: string): string {
+  return `${WRITEBACK_MARKER_PREFIX}${executionId}:transition]`
+}
+
 async function writeBackSettledExecutions(ctx: Context, config: JiraWorkBoardSyncConfig, seen: Set<string>): Promise<void> {
   if (config.workBoardWriteback === false) return
   const board = workBoard(ctx)
@@ -166,6 +179,9 @@ async function writeBackSettledExecutions(ctx: Context, config: JiraWorkBoardSyn
     if (execution === undefined) continue
     const marker = writebackMarker(execution.id)
     if (seen.has(marker)) continue
+    const transitionName = execution.result === 'failed'
+      ? clean(config.workBoardFailedTransition)
+      : execution.result === 'succeeded' ? clean(config.workBoardDoneTransition) : undefined
     try {
       const detail = await client.getIssue({ issueKey })
       if (detail.comments.some(comment => comment.body.includes(marker))) {
@@ -174,6 +190,14 @@ async function writeBackSettledExecutions(ctx: Context, config: JiraWorkBoardSyn
       }
       await client.addComment({ issueKey, body: writebackBody(task, execution) })
       seen.add(marker)
+      const transitionMarkerValue = transitionMarker(execution.id)
+      if (transitionName !== undefined && !detail.comments.some(comment => comment.body.includes(transitionMarkerValue))) {
+        try {
+          await client.transitionIssue({ issueKey, transitionName, comment: writebackBody(task, execution) })
+        } catch (error) {
+          console.error('[dsh-jira] work-board transition failed', error)
+        }
+      }
     } catch (error) {
       console.error('[dsh-jira] work-board writeback failed', error)
     }
@@ -182,6 +206,25 @@ async function writeBackSettledExecutions(ctx: Context, config: JiraWorkBoardSyn
 
 export function registerJiraWorkBoardSync(ctx: Context, config: JiraWorkBoardSyncConfig): void {
   if (config.workBoardSync === false || clean(config.baseUrl) === undefined) return
+  const board = workBoard(ctx)
+  if (board?.registerExternalTaskHandler !== undefined) {
+    ctx.effect(
+      () => board.registerExternalTaskHandler('jira:', {
+        async transition(taskId: string, input: { transitionId?: string; transitionName?: string; comment?: string }) {
+          const issueKey = issueKeyFromTaskId(taskId)
+          if (issueKey === undefined) throw new Error(`task ${taskId} is not a Jira issue`)
+          const client = createJiraClient(ctx, config)
+          return (await client.transitionIssue({
+            issueKey,
+            ...(input.transitionId === undefined ? {} : { transitionId: input.transitionId }),
+            ...(input.transitionName === undefined ? {} : { transitionName: input.transitionName }),
+            ...(input.comment === undefined ? {} : { comment: input.comment }),
+          })).message
+        },
+      }),
+      'jira: work-board external transition handler',
+    )
+  }
   const seenWritebacks = new Set<string>()
   let syncInFlight = false
   let writebackInFlight = false

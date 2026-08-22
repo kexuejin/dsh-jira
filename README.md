@@ -36,7 +36,14 @@ Set `JIRA_API_TOKEN` through the DSH credentials provider or the launching envir
 
 When `dsh-work-board` is mounted, Jira issues matching `workBoardSyncJql` are synced into the Work Board manual task ledger as `jira:<issue-key>` tasks. The task prompt includes the Jira URL and issue summary so an agent can start from the board card. Local execution history stays in Work Board while issue title, status, priority, assignee, reporter, and URL refresh from Jira on each sync.
 
-`workBoardWriteback` adds one Jira comment per completed Work Board execution using a `[dsh-work-board:<execution-id>]` marker, so retries do not duplicate comments across restarts. Set it to `false` for read-only synchronization.
+`workBoardWriteback` adds one Jira comment per completed Work Board execution using a `[dsh-work-board:<execution-id>]` marker, so retries do not duplicate comments across restarts. Set it to `false` for read-only synchronization. When `workBoardDoneTransition` or `workBoardFailedTransition` is set, the issue is also transitioned by exact transition name after a successful or failed execution, again guarded by a marker.
+
+- `workBoardDoneTransition` / `workBoardFailedTransition`: exact transition name applied after a successful or failed execution (marker-guarded against retries).
+- `workBoardManualTransitions`: Jira transition names offered as a manual action on the board card.
+
+## Agent collaboration
+
+Work Board cards for Jira issues expose a manual "Transition" action that calls the Jira transition API by exact transition name, so status moves stay inside the board. Agent executions started from the card record their session and outcome in Work Board; `workBoardWriteback` then reports the result back to Jira as a comment and optionally a transition.
 
 ## Agent tools
 

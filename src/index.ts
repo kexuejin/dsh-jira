@@ -36,6 +36,9 @@ export const Config: z<Config> = z.object({
   workBoardSyncJql: z.string(),
   workBoardSyncIntervalMs: z.number().step(1).min(30000).default(300000),
   workBoardWriteback: z.boolean().default(true),
+  workBoardDoneTransition: z.string(),
+  workBoardFailedTransition: z.string(),
+  workBoardManualTransitions: z.array(z.string()).default([]),
 })
 
 const JSON_OUTPUT = { schema: { type: 'json' } } as const
