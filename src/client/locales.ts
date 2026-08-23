@@ -61,6 +61,8 @@ export const zh = {
   'panel.workBoardIntegration': 'Work Board 集成',
   'panel.workBoardConnected': '已连接：Jira issues 会同步到 Work Board',
   'panel.workBoardStandalone': '独立模式：未安装 Work Board，仅启用 Jira 面板和工具',
+  'panel.configExpand': '展开配置',
+  'panel.configCollapse': '收起配置',
 } satisfies Record<string, string>
 
 export type JiraTrackerKey = keyof typeof zh
@@ -126,6 +128,8 @@ export const en = {
   'panel.workBoardIntegration': 'Work Board integration',
   'panel.workBoardConnected': 'Connected: Jira issues sync to Work Board',
   'panel.workBoardStandalone': 'Standalone mode: Work Board is not installed; Jira panel and tools remain enabled',
+  'panel.configExpand': 'Show config',
+  'panel.configCollapse': 'Hide config',
 } satisfies Record<JiraTrackerKey, string>
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {

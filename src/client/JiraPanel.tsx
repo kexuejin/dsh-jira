@@ -184,6 +184,7 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
   const [status, setStatus] = useState<JiraConnectionStatusView | undefined>()
   const [configView, setConfigView] = useState<JiraConfigEditorView | undefined>()
   const [configDraft, setConfigDraft] = useState<ConfigDraft>(() => draftFromConfig({}))
+  const [configOpen, setConfigOpen] = useState(false)
   const [credentialValue, setCredentialValue] = useState('')
   const [view, setView] = useState<JiraIssueView>('assigned')
   const [customJql, setCustomJql] = useState('')
@@ -311,6 +312,11 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
   }, [open])
 
   useEffect(() => {
+    if (status === undefined) return
+    if (status.status === 'missing-config' || status.status === 'missing-credential') setConfigOpen(true)
+  }, [status])
+
+  useEffect(() => {
     if (issue === undefined || detail?.key === issue.key || busy === 'issue') return
     void loadIssue(issue.key)
   }, [issue?.key])
@@ -347,15 +353,26 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
 
       <section className={css.configBox}>
         <div className={css.configHeader}>
-          <div>
-            <p className={css.sectionTitle}>{t('panel.connectionSettings' as JiraTrackerKey)}</p>
-            <p className={css.subtitle}>{configView === undefined ? t('panel.loading') : t('panel.configPath' as JiraTrackerKey, { path: configView.path })}</p>
-          </div>
-          <button type="button" className={css.primaryButton} disabled={busy !== undefined} onClick={() => { void saveConfig() }}>
-            {busy === 'config' ? t('panel.saving' as JiraTrackerKey) : t('panel.saveConfig' as JiraTrackerKey)}
+          <button type="button" className={css.configToggle} aria-expanded={configOpen} onClick={() => { setConfigOpen(open => !open) }}>
+            <span className={css.configCaret}>{configOpen ? '▾' : '▸'}</span>
+            <span>
+              <p className={css.sectionTitle}>{t('panel.connectionSettings' as JiraTrackerKey)}</p>
+              <p className={css.subtitle}>{configView === undefined ? t('panel.loading') : t('panel.configPath' as JiraTrackerKey, { path: configView.path })}</p>
+            </span>
           </button>
+          <div className={css.configActions}>
+            {configOpen && (
+              <button type="button" className={css.primaryButton} disabled={busy !== undefined} onClick={() => { void saveConfig() }}>
+                {busy === 'config' ? t('panel.saving' as JiraTrackerKey) : t('panel.saveConfig' as JiraTrackerKey)}
+              </button>
+            )}
+            <button type="button" className={css.ghostButton} onClick={() => { setConfigOpen(open => !open) }}>
+              {configOpen ? t('panel.configCollapse' as JiraTrackerKey) : t('panel.configExpand' as JiraTrackerKey)}
+            </button>
+          </div>
         </div>
-        <div className={css.formGrid}>
+        {configOpen && (
+          <div className={css.formGrid}>
           <label><span>{t('panel.baseUrl')}</span><input value={configDraft.baseUrl} placeholder="https://jira.example.com" onChange={event => { setConfigDraft(current => ({ ...current, baseUrl: event.target.value })) }} /></label>
           <label><span>{t('panel.authMode' as JiraTrackerKey)}</span><select value={configDraft.authMode} onChange={event => { setConfigDraft(current => ({ ...current, authMode: event.target.value === 'basic' ? 'basic' : 'pat' })) }}><option value="pat">PAT</option><option value="basic">Basic</option></select></label>
           <label><span>{t('panel.username' as JiraTrackerKey)}</span><input value={configDraft.username} placeholder={t('panel.usernamePlaceholder' as JiraTrackerKey)} onChange={event => { setConfigDraft(current => ({ ...current, username: event.target.value })) }} /></label>
@@ -373,6 +390,7 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
           <label className={css.wideField}><span>{t('panel.manualTransitions' as JiraTrackerKey)}</span><input value={configDraft.workBoardManualTransitions} placeholder="Done, In Progress, Blocked" onChange={event => { setConfigDraft(current => ({ ...current, workBoardManualTransitions: event.target.value })) }} /></label>
           <label className={css.wideField}><span>{t('panel.projectMappings' as JiraTrackerKey)}</span><textarea className={css.mappingTextArea} value={configDraft.workBoardProjectMappings} placeholder={t('panel.projectMappingsPlaceholder' as JiraTrackerKey)} onChange={event => { setConfigDraft(current => ({ ...current, workBoardProjectMappings: event.target.value })) }} /></label>
         </div>
+        )}
       </section>
 
       {error !== undefined && <p className={css.error}>{error}</p>}
@@ -412,7 +430,10 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
           {result?.total !== undefined && <p className={css.total}>{t('panel.total', { count: result.total })}</p>}
           {result?.issues.map(item => (
             <button key={item.key} type="button" className={clsx(css.issueCard, item.key === issue?.key && css.issueCardActive)} onClick={() => { setSelectedKey(item.key) }}>
-              <span className={css.issueKey}>{item.key}</span>
+              <span className={css.issueRow}>
+                <span className={css.issueKey}>{item.key}</span>
+                {item.priority !== undefined && item.priority !== '' && <span className={css.priorityBadge} data-priority={item.priority.toLowerCase()}>{item.priority}</span>}
+              </span>
               <strong>{item.summary}</strong>
               <small>{item.status} · {item.assignee ?? 'Unassigned'} · {dateLabel(item.updated)}</small>
             </button>
@@ -429,7 +450,10 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
               <div className={css.detailTop}>
                 <div>
                   <p className={css.detailTitle}>{detail.key} · {detail.summary}</p>
-                  <p className={css.detailMeta}>{detail.status} · {detail.issueType ?? 'Issue'} · {dateLabel(detail.updated)}</p>
+                  <p className={css.detailMeta}>
+                    {detail.priority !== undefined && detail.priority !== '' && <span className={css.priorityBadge} data-priority={detail.priority.toLowerCase()}>{detail.priority}</span>}
+                    <span>{detail.status} · {detail.issueType ?? 'Issue'} · {dateLabel(detail.updated)}</span>
+                  </p>
                 </div>
                 <a className={css.openLink} href={detail.url} target="_blank" rel="noreferrer">{t('panel.open')}</a>
               </div>
