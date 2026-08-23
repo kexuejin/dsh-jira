@@ -26,7 +26,7 @@ The runtime config field `workBoardProjectMappings` is a JSON array in the Jira 
 ]
 ```
 
-`projectKey` matches the uppercase prefix in Jira issue keys such as `APP-123`. `workspaceId`, `mode`, and `permission` are copied into new synced Work Board tasks so execution starts from the right project context. Existing Work Board task overrides stay local and are not overwritten by later syncs.
+`projectKey` matches the uppercase prefix in Jira issue keys such as `APP-123`. `workspaceId`, execution `mode`, and `permission` are copied into new synced Work Board tasks so execution starts from the right project context. Existing Work Board task overrides stay local and are not overwritten by later syncs. `mode` is a Work Board execution mode backed by a DSH agent preset; model/provider selection belongs in the preset, not in Jira issue data.
 
 ## Analysis flow
 
