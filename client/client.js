@@ -26,7 +26,7 @@ window.__ModuleLoader__.load({
 		}
 		//#endregion
 		//#region \0dsh-jira-css:/Volumes/Kapp/source/dsh-jira/src/client/JiraPanel.module.css.mjs
-		const css = ".XUv5wW_view{z-index:90;pointer-events:none;position:fixed;inset:0}.XUv5wW_entry{width:100%;height:32px;color:var(--dsw-alias-label-secondary,inherit);cursor:pointer;font:inherit;white-space:nowrap;background:0 0;border:none;border-radius:8px;align-items:center;gap:8px;padding:0 12px;font-size:13px;display:flex}.XUv5wW_entry:hover{background:var(--dsw-specific-sidebar-nav-item-hover,#7f7f7f1a);color:var(--dsw-alias-label-primary,inherit)}.XUv5wW_entry[data-active]{background:var(--dsw-specific-sidebar-nav-item-active,#7f7f7f24);color:var(--dsw-alias-label-primary,inherit);font-weight:600}.XUv5wW_entryIcon{flex:none;justify-content:center;align-items:center;display:inline-flex}.XUv5wW_entryLabel{text-overflow:ellipsis;overflow:hidden}[data-dsh-frame][data-sidebar-collapsed] .XUv5wW_entry{justify-content:center;width:100%;padding:0}[data-dsh-frame][data-sidebar-collapsed] .XUv5wW_entryLabel{display:none}.XUv5wW_popover{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);pointer-events:auto;z-index:91;border-radius:16px;width:min(980px,100vw - 96px);max-height:min(760px,100vh - 104px);padding:16px;position:fixed;top:76px;left:72px;overflow:auto;box-shadow:0 18px 48px #0003}.XUv5wW_header,.XUv5wW_detailTop{justify-content:space-between;align-items:flex-start;gap:16px;display:flex}.XUv5wW_title,.XUv5wW_detailTitle,.XUv5wW_sectionTitle{margin:0;font-weight:650}.XUv5wW_subtitle,.XUv5wW_detailMeta,.XUv5wW_empty,.XUv5wW_issueCard small,.XUv5wW_total,.XUv5wW_configGrid span,.XUv5wW_comment strong{color:var(--dsh-color-text-secondary,GrayText);font-size:12px;line-height:1.4}.XUv5wW_subtitle{margin:4px 0 0}.XUv5wW_iconButton{color:inherit;cursor:pointer;background:0 0;border:0;border-radius:8px;padding:4px 8px;font-size:20px;line-height:1}.XUv5wW_iconButton:hover{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_statusBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;grid-template-columns:minmax(180px,1fr) auto;gap:10px;margin-top:14px;padding:12px;display:grid}.XUv5wW_configGrid{word-break:break-word;grid-column:1/-1;grid-template-columns:max-content minmax(0,1fr);gap:5px 10px;display:grid}.XUv5wW_toolbar,.XUv5wW_transitions{flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;display:flex}.XUv5wW_primaryButton,.XUv5wW_tabButton,.XUv5wW_transitions button,.XUv5wW_openLink{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-soft,#7f7f7f14);color:inherit;cursor:pointer;font:inherit;border-radius:10px;padding:7px 10px;font-size:12px;text-decoration:none}.XUv5wW_primaryButton:hover,.XUv5wW_tabButton:hover,.XUv5wW_transitions button:hover:not(:disabled),.XUv5wW_openLink:hover{background:var(--dsh-color-bg-hover,#7f7f7f24)}.XUv5wW_primaryButton:disabled,.XUv5wW_transitions button:disabled{cursor:not-allowed;opacity:.55}.XUv5wW_tabButtonActive{border-color:var(--dsh-color-accent,#3b82f6);color:var(--dsh-color-accent,#2563eb);font-weight:650}.XUv5wW_jqlInput{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;flex:1;min-width:260px;padding:8px 10px;font-size:12px}.XUv5wW_error,.XUv5wW_notice{border-radius:10px;margin:12px 0 0;padding:8px 10px;font-size:12px;line-height:1.4}.XUv5wW_error{color:#c00000;background:#c000001a}.XUv5wW_notice{color:#167c3a;background:#0080001a}.XUv5wW_content{grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:14px;margin-top:14px;display:grid}.XUv5wW_issueList,.XUv5wW_detail{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;min-height:420px;padding:10px}.XUv5wW_issueList{flex-direction:column;gap:8px;display:flex}.XUv5wW_issueCard{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);color:inherit;cursor:pointer;text-align:left;background:0 0;border-radius:12px;flex-direction:column;gap:4px;padding:10px;display:flex}.XUv5wW_issueCard:hover,.XUv5wW_issueCardActive{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_issueCardActive{border-color:var(--dsh-color-accent,#3b82f6)}.XUv5wW_issueKey{color:var(--dsh-color-accent,#2563eb);font-size:12px;font-weight:700}.XUv5wW_section{border-top:1px solid var(--dsh-color-border-subtle,#7f7f7f24);margin-top:14px;padding-top:12px}.XUv5wW_description,.XUv5wW_comment p{white-space:pre-wrap;margin:8px 0 0;font-size:13px;line-height:1.5}.XUv5wW_commentBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);box-sizing:border-box;color:inherit;font:inherit;resize:vertical;border-radius:10px;width:100%;min-height:76px;margin:8px 0;padding:8px 10px;font-size:13px;display:block}.XUv5wW_comment{border:1px solid var(--dsh-color-border-subtle,#7f7f7f29);border-radius:10px;margin-top:8px;padding:9px 10px}@media (width<=820px){.XUv5wW_popover{width:auto;top:64px;left:12px;right:12px}.XUv5wW_content{grid-template-columns:1fr}}";
+		const css = ".XUv5wW_view{z-index:90;pointer-events:none;position:fixed;inset:0}.XUv5wW_entry{width:100%;height:32px;color:var(--dsw-alias-label-secondary,inherit);cursor:pointer;font:inherit;white-space:nowrap;background:0 0;border:none;border-radius:8px;align-items:center;gap:8px;padding:0 12px;font-size:13px;display:flex}.XUv5wW_entry:hover{background:var(--dsw-specific-sidebar-nav-item-hover,#7f7f7f1a);color:var(--dsw-alias-label-primary,inherit)}.XUv5wW_entry[data-active]{background:var(--dsw-specific-sidebar-nav-item-active,#7f7f7f24);color:var(--dsw-alias-label-primary,inherit);font-weight:600}.XUv5wW_entryIcon{flex:none;justify-content:center;align-items:center;display:inline-flex}.XUv5wW_entryLabel{text-overflow:ellipsis;overflow:hidden}[data-dsh-frame][data-sidebar-collapsed] .XUv5wW_entry{justify-content:center;width:100%;padding:0}[data-dsh-frame][data-sidebar-collapsed] .XUv5wW_entryLabel{display:none}.XUv5wW_popover{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);pointer-events:auto;z-index:91;border-radius:16px;width:min(980px,100vw - 96px);max-height:min(760px,100vh - 104px);padding:16px;position:fixed;top:76px;left:72px;overflow:auto;box-shadow:0 18px 48px #0003}.XUv5wW_header,.XUv5wW_detailTop{justify-content:space-between;align-items:flex-start;gap:16px;display:flex}.XUv5wW_title,.XUv5wW_detailTitle,.XUv5wW_sectionTitle{margin:0;font-weight:650}.XUv5wW_subtitle,.XUv5wW_detailMeta,.XUv5wW_empty,.XUv5wW_issueCard small,.XUv5wW_total,.XUv5wW_configGrid span,.XUv5wW_comment strong{color:var(--dsh-color-text-secondary,GrayText);font-size:12px;line-height:1.4}.XUv5wW_subtitle{margin:4px 0 0}.XUv5wW_iconButton{color:inherit;cursor:pointer;background:0 0;border:0;border-radius:8px;padding:4px 8px;font-size:20px;line-height:1}.XUv5wW_iconButton:hover{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_statusBox,.XUv5wW_configBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;grid-template-columns:minmax(180px,1fr) auto;gap:10px;margin-top:14px;padding:12px;display:grid}.XUv5wW_configBox{grid-template-columns:1fr}.XUv5wW_configHeader{justify-content:space-between;align-items:flex-start;gap:12px;display:flex}.XUv5wW_formGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px;display:grid}.XUv5wW_formGrid label{flex-direction:column;gap:5px;min-width:0;display:flex}.XUv5wW_formGrid label span{color:var(--dsh-color-text-secondary,GrayText);font-size:12px}.XUv5wW_formGrid input,.XUv5wW_formGrid select{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;min-width:0;padding:8px 10px;font-size:12px}.XUv5wW_checkboxLabel{align-items:center;padding-top:20px;flex-direction:row!important}.XUv5wW_checkboxLabel input{flex:none;width:auto}.XUv5wW_wideField{grid-column:span 2}.XUv5wW_configGrid{word-break:break-word;grid-column:1/-1;grid-template-columns:max-content minmax(0,1fr);gap:5px 10px;display:grid}.XUv5wW_toolbar,.XUv5wW_transitions{flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;display:flex}.XUv5wW_primaryButton,.XUv5wW_tabButton,.XUv5wW_transitions button,.XUv5wW_openLink{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-soft,#7f7f7f14);color:inherit;cursor:pointer;font:inherit;border-radius:10px;padding:7px 10px;font-size:12px;text-decoration:none}.XUv5wW_primaryButton:hover,.XUv5wW_tabButton:hover,.XUv5wW_transitions button:hover:not(:disabled),.XUv5wW_openLink:hover{background:var(--dsh-color-bg-hover,#7f7f7f24)}.XUv5wW_primaryButton:disabled,.XUv5wW_transitions button:disabled{cursor:not-allowed;opacity:.55}.XUv5wW_tabButtonActive{border-color:var(--dsh-color-accent,#3b82f6);color:var(--dsh-color-accent,#2563eb);font-weight:650}.XUv5wW_jqlInput{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;flex:1;min-width:260px;padding:8px 10px;font-size:12px}.XUv5wW_error,.XUv5wW_notice{border-radius:10px;margin:12px 0 0;padding:8px 10px;font-size:12px;line-height:1.4}.XUv5wW_error{color:#c00000;background:#c000001a}.XUv5wW_notice{color:#167c3a;background:#0080001a}.XUv5wW_content{grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:14px;margin-top:14px;display:grid}.XUv5wW_issueList,.XUv5wW_detail{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;min-height:420px;padding:10px}.XUv5wW_issueList{flex-direction:column;gap:8px;display:flex}.XUv5wW_issueCard{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);color:inherit;cursor:pointer;text-align:left;background:0 0;border-radius:12px;flex-direction:column;gap:4px;padding:10px;display:flex}.XUv5wW_issueCard:hover,.XUv5wW_issueCardActive{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_issueCardActive{border-color:var(--dsh-color-accent,#3b82f6)}.XUv5wW_issueKey{color:var(--dsh-color-accent,#2563eb);font-size:12px;font-weight:700}.XUv5wW_section{border-top:1px solid var(--dsh-color-border-subtle,#7f7f7f24);margin-top:14px;padding-top:12px}.XUv5wW_description,.XUv5wW_comment p{white-space:pre-wrap;margin:8px 0 0;font-size:13px;line-height:1.5}.XUv5wW_commentBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);box-sizing:border-box;color:inherit;font:inherit;resize:vertical;border-radius:10px;width:100%;min-height:76px;margin:8px 0;padding:8px 10px;font-size:13px;display:block}.XUv5wW_comment{border:1px solid var(--dsh-color-border-subtle,#7f7f7f29);border-radius:10px;margin-top:8px;padding:9px 10px}@media (width<=820px){.XUv5wW_popover{width:auto;top:64px;left:12px;right:12px}.XUv5wW_content,.XUv5wW_formGrid{grid-template-columns:1fr}.XUv5wW_wideField{grid-column:auto}}";
 		const tagId = "dsh-jira/JiraPanel.module.css";
 		if (typeof document !== "undefined" && document.querySelector("style[data-plugin-css=" + JSON.stringify(tagId) + "]") === null) {
 			const tag = document.createElement("style");
@@ -36,42 +36,47 @@ window.__ModuleLoader__.load({
 			document.head.appendChild(tag);
 		}
 		var JiraPanel_module_css_default = {
-			"comment": "XUv5wW_comment",
-			"header": "XUv5wW_header",
-			"popover": "XUv5wW_popover",
-			"openLink": "XUv5wW_openLink",
-			"issueList": "XUv5wW_issueList",
-			"content": "XUv5wW_content",
-			"detail": "XUv5wW_detail",
-			"configGrid": "XUv5wW_configGrid",
-			"entry": "XUv5wW_entry",
-			"tabButtonActive": "XUv5wW_tabButtonActive",
-			"statusBox": "XUv5wW_statusBox",
-			"entryLabel": "XUv5wW_entryLabel",
-			"detailTop": "XUv5wW_detailTop",
-			"title": "XUv5wW_title",
-			"error": "XUv5wW_error",
-			"tabButton": "XUv5wW_tabButton",
-			"issueCardActive": "XUv5wW_issueCardActive",
-			"empty": "XUv5wW_empty",
-			"sectionTitle": "XUv5wW_sectionTitle",
-			"detailTitle": "XUv5wW_detailTitle",
-			"jqlInput": "XUv5wW_jqlInput",
-			"section": "XUv5wW_section",
-			"subtitle": "XUv5wW_subtitle",
-			"commentBox": "XUv5wW_commentBox",
-			"issueKey": "XUv5wW_issueKey",
-			"primaryButton": "XUv5wW_primaryButton",
-			"total": "XUv5wW_total",
-			"notice": "XUv5wW_notice",
-			"entryIcon": "XUv5wW_entryIcon",
-			"view": "XUv5wW_view",
-			"iconButton": "XUv5wW_iconButton",
 			"transitions": "XUv5wW_transitions",
-			"description": "XUv5wW_description",
+			"tabButtonActive": "XUv5wW_tabButtonActive",
+			"configGrid": "XUv5wW_configGrid",
+			"title": "XUv5wW_title",
+			"formGrid": "XUv5wW_formGrid",
+			"issueList": "XUv5wW_issueList",
+			"view": "XUv5wW_view",
+			"header": "XUv5wW_header",
+			"openLink": "XUv5wW_openLink",
 			"toolbar": "XUv5wW_toolbar",
+			"tabButton": "XUv5wW_tabButton",
+			"detailTop": "XUv5wW_detailTop",
+			"entry": "XUv5wW_entry",
+			"detailTitle": "XUv5wW_detailTitle",
+			"comment": "XUv5wW_comment",
+			"configBox": "XUv5wW_configBox",
+			"detailMeta": "XUv5wW_detailMeta",
+			"statusBox": "XUv5wW_statusBox",
+			"primaryButton": "XUv5wW_primaryButton",
+			"jqlInput": "XUv5wW_jqlInput",
+			"error": "XUv5wW_error",
+			"checkboxLabel": "XUv5wW_checkboxLabel",
+			"wideField": "XUv5wW_wideField",
+			"configHeader": "XUv5wW_configHeader",
+			"entryLabel": "XUv5wW_entryLabel",
+			"total": "XUv5wW_total",
+			"content": "XUv5wW_content",
 			"issueCard": "XUv5wW_issueCard",
-			"detailMeta": "XUv5wW_detailMeta"
+			"notice": "XUv5wW_notice",
+			"issueCardActive": "XUv5wW_issueCardActive",
+			"popover": "XUv5wW_popover",
+			"issueKey": "XUv5wW_issueKey",
+			"description": "XUv5wW_description",
+			"sectionTitle": "XUv5wW_sectionTitle",
+			"section": "XUv5wW_section",
+			"iconButton": "XUv5wW_iconButton",
+			"entryIcon": "XUv5wW_entryIcon",
+			"commentBox": "XUv5wW_commentBox",
+			"detail": "XUv5wW_detail",
+			"subtitle": "XUv5wW_subtitle",
+			"empty": "XUv5wW_empty"
 		};
 		//#endregion
 		//#region src/client/JiraPanel.tsx
@@ -103,8 +108,66 @@ window.__ModuleLoader__.load({
 				return value;
 			}
 		}
+		function draftFromConfig(config) {
+			return {
+				baseUrl: config.baseUrl ?? "",
+				authMode: config.authMode ?? "pat",
+				tokenCredentialRef: config.tokenCredentialRef ?? "JIRA_API_TOKEN",
+				username: config.username ?? "",
+				strictTls: config.strictTls ?? true,
+				timeoutMs: config.timeoutMs ?? 15e3,
+				maxResults: config.maxResults ?? 25,
+				assignedJql: config.assignedJql ?? "assignee = currentUser() ORDER BY updated DESC",
+				watchingJql: config.watchingJql ?? "watcher = currentUser() ORDER BY updated DESC",
+				reportedJql: config.reportedJql ?? "reporter = currentUser() ORDER BY updated DESC",
+				workBoardSync: config.workBoardSync ?? true,
+				workBoardSyncJql: config.workBoardSyncJql ?? "assignee = currentUser() AND resolution = Unresolved ORDER BY updated DESC",
+				workBoardSyncIntervalMs: config.workBoardSyncIntervalMs ?? 3e5,
+				workBoardWriteback: config.workBoardWriteback ?? true,
+				workBoardDoneTransition: config.workBoardDoneTransition ?? "",
+				workBoardFailedTransition: config.workBoardFailedTransition ?? "",
+				workBoardManualTransitions: (config.workBoardManualTransitions ?? []).join(", ")
+			};
+		}
+		function text(value) {
+			const trimmed = value.trim();
+			return trimmed.length === 0 ? void 0 : trimmed;
+		}
+		function draftToConfig(draft) {
+			const baseUrl = text(draft.baseUrl);
+			const tokenCredentialRef = text(draft.tokenCredentialRef);
+			const username = text(draft.username);
+			const assignedJql = text(draft.assignedJql);
+			const watchingJql = text(draft.watchingJql);
+			const reportedJql = text(draft.reportedJql);
+			const workBoardSyncJql = text(draft.workBoardSyncJql);
+			const workBoardDoneTransition = text(draft.workBoardDoneTransition);
+			const workBoardFailedTransition = text(draft.workBoardFailedTransition);
+			const manualTransitions = draft.workBoardManualTransitions.split(",").map((item) => item.trim()).filter((item) => item.length > 0);
+			return {
+				...baseUrl === void 0 ? {} : { baseUrl },
+				authMode: draft.authMode,
+				...tokenCredentialRef === void 0 ? {} : { tokenCredentialRef },
+				...username === void 0 ? {} : { username },
+				strictTls: draft.strictTls,
+				timeoutMs: draft.timeoutMs,
+				maxResults: draft.maxResults,
+				...assignedJql === void 0 ? {} : { assignedJql },
+				...watchingJql === void 0 ? {} : { watchingJql },
+				...reportedJql === void 0 ? {} : { reportedJql },
+				workBoardSync: draft.workBoardSync,
+				...workBoardSyncJql === void 0 ? {} : { workBoardSyncJql },
+				workBoardSyncIntervalMs: draft.workBoardSyncIntervalMs,
+				workBoardWriteback: draft.workBoardWriteback,
+				...workBoardDoneTransition === void 0 ? {} : { workBoardDoneTransition },
+				...workBoardFailedTransition === void 0 ? {} : { workBoardFailedTransition },
+				...manualTransitions.length === 0 ? {} : { workBoardManualTransitions: manualTransitions }
+			};
+		}
 		function JiraPanel({ open, onClose, port, t }) {
 			const [status, setStatus] = (0, react.useState)();
+			const [configView, setConfigView] = (0, react.useState)();
+			const [configDraft, setConfigDraft] = (0, react.useState)(() => draftFromConfig({}));
 			const [view, setView] = (0, react.useState)("assigned");
 			const [customJql, setCustomJql] = (0, react.useState)("");
 			const [result, setResult] = (0, react.useState)();
@@ -115,6 +178,35 @@ window.__ModuleLoader__.load({
 			const [error, setError] = (0, react.useState)();
 			const [notice, setNotice] = (0, react.useState)();
 			const issue = (0, react.useMemo)(() => selectedIssue(result?.issues ?? [], selectedKey), [result, selectedKey]);
+			const loadConfig = async () => {
+				setBusy("config");
+				setError(void 0);
+				try {
+					const next = await port.config();
+					setConfigView(next);
+					setConfigDraft(draftFromConfig(next.effective));
+				} catch (nextError) {
+					setError(nextError instanceof Error ? nextError.message : String(nextError));
+				} finally {
+					setBusy(void 0);
+				}
+			};
+			const saveConfig = async () => {
+				setBusy("config");
+				setError(void 0);
+				setNotice(void 0);
+				try {
+					const next = await port.saveConfig({ config: draftToConfig(configDraft) });
+					setConfigView(next);
+					setConfigDraft(draftFromConfig(next.effective));
+					setNotice(t("panel.configSaved"));
+					await loadStatus();
+				} catch (nextError) {
+					setError(nextError instanceof Error ? nextError.message : String(nextError));
+				} finally {
+					setBusy(void 0);
+				}
+			};
 			const loadStatus = async () => {
 				setBusy("status");
 				setError(void 0);
@@ -195,7 +287,7 @@ window.__ModuleLoader__.load({
 			};
 			(0, react.useEffect)(() => {
 				if (!open || status !== void 0 || busy !== void 0) return;
-				loadStatus().then(() => {
+				Promise.all([loadStatus(), loadConfig()]).then(() => {
 					search("assigned");
 				});
 			}, [open]);
@@ -260,6 +352,196 @@ window.__ModuleLoader__.load({
 								]
 							})
 						]
+					}),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("section", {
+						className: JiraPanel_module_css_default.configBox,
+						children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+							className: JiraPanel_module_css_default.configHeader,
+							children: [/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
+								className: JiraPanel_module_css_default.sectionTitle,
+								children: t("panel.connectionSettings")
+							}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
+								className: JiraPanel_module_css_default.subtitle,
+								children: configView === void 0 ? t("panel.loading") : t("panel.configPath", { path: configView.path })
+							})] }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("button", {
+								type: "button",
+								className: JiraPanel_module_css_default.primaryButton,
+								disabled: busy !== void 0,
+								onClick: () => {
+									saveConfig();
+								},
+								children: busy === "config" ? t("panel.saving") : t("panel.saveConfig")
+							})]
+						}), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
+							className: JiraPanel_module_css_default.formGrid,
+							children: [
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.baseUrl") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+									value: configDraft.baseUrl,
+									placeholder: "https://jira.example.com",
+									onChange: (event) => {
+										setConfigDraft((current) => ({
+											...current,
+											baseUrl: event.target.value
+										}));
+									}
+								})] }),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.authMode") }), /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("select", {
+									value: configDraft.authMode,
+									onChange: (event) => {
+										setConfigDraft((current) => ({
+											...current,
+											authMode: event.target.value === "basic" ? "basic" : "pat"
+										}));
+									},
+									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("option", {
+										value: "pat",
+										children: "PAT"
+									}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("option", {
+										value: "basic",
+										children: "Basic"
+									})]
+								})] }),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.username") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+									value: configDraft.username,
+									placeholder: t("panel.usernamePlaceholder"),
+									onChange: (event) => {
+										setConfigDraft((current) => ({
+											...current,
+											username: event.target.value
+										}));
+									}
+								})] }),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.credential") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+									value: configDraft.tokenCredentialRef,
+									placeholder: "JIRA_API_TOKEN",
+									onChange: (event) => {
+										setConfigDraft((current) => ({
+											...current,
+											tokenCredentialRef: event.target.value
+										}));
+									}
+								})] }),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.timeoutMs") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+									type: "number",
+									min: 1e3,
+									value: configDraft.timeoutMs,
+									onChange: (event) => {
+										setConfigDraft((current) => ({
+											...current,
+											timeoutMs: Number(event.target.value)
+										}));
+									}
+								})] }),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.maxResults") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+									type: "number",
+									min: 1,
+									max: 100,
+									value: configDraft.maxResults,
+									onChange: (event) => {
+										setConfigDraft((current) => ({
+											...current,
+											maxResults: Number(event.target.value)
+										}));
+									}
+								})] }),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", {
+									className: JiraPanel_module_css_default.checkboxLabel,
+									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+										type: "checkbox",
+										checked: configDraft.strictTls,
+										onChange: (event) => {
+											setConfigDraft((current) => ({
+												...current,
+												strictTls: event.target.checked
+											}));
+										}
+									}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.strictTls") })]
+								}),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", {
+									className: JiraPanel_module_css_default.checkboxLabel,
+									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+										type: "checkbox",
+										checked: configDraft.workBoardSync,
+										onChange: (event) => {
+											setConfigDraft((current) => ({
+												...current,
+												workBoardSync: event.target.checked
+											}));
+										}
+									}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.workBoardSync") })]
+								}),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", {
+									className: JiraPanel_module_css_default.wideField,
+									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.syncJql") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+										value: configDraft.workBoardSyncJql,
+										onChange: (event) => {
+											setConfigDraft((current) => ({
+												...current,
+												workBoardSyncJql: event.target.value
+											}));
+										}
+									})]
+								}),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.syncInterval") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+									type: "number",
+									min: 3e4,
+									step: 1e3,
+									value: configDraft.workBoardSyncIntervalMs,
+									onChange: (event) => {
+										setConfigDraft((current) => ({
+											...current,
+											workBoardSyncIntervalMs: Number(event.target.value)
+										}));
+									}
+								})] }),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", {
+									className: JiraPanel_module_css_default.checkboxLabel,
+									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+										type: "checkbox",
+										checked: configDraft.workBoardWriteback,
+										onChange: (event) => {
+											setConfigDraft((current) => ({
+												...current,
+												workBoardWriteback: event.target.checked
+											}));
+										}
+									}), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.workBoardWriteback") })]
+								}),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.doneTransition") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+									value: configDraft.workBoardDoneTransition,
+									placeholder: "Done",
+									onChange: (event) => {
+										setConfigDraft((current) => ({
+											...current,
+											workBoardDoneTransition: event.target.value
+										}));
+									}
+								})] }),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.failedTransition") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+									value: configDraft.workBoardFailedTransition,
+									placeholder: "Blocked",
+									onChange: (event) => {
+										setConfigDraft((current) => ({
+											...current,
+											workBoardFailedTransition: event.target.value
+										}));
+									}
+								})] }),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", {
+									className: JiraPanel_module_css_default.wideField,
+									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.manualTransitions") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+										value: configDraft.workBoardManualTransitions,
+										placeholder: "Done, In Progress, Blocked",
+										onChange: (event) => {
+											setConfigDraft((current) => ({
+												...current,
+												workBoardManualTransitions: event.target.value
+											}));
+										}
+									})]
+								})
+							]
+						})]
 					}),
 					error !== void 0 && /* @__PURE__ */ (0, react_jsx_runtime.jsx)("p", {
 						className: JiraPanel_module_css_default.error,
@@ -725,7 +1007,25 @@ window.__ModuleLoader__.load({
 			"panel.commenting": "评论中…",
 			"panel.transitioning": "流转中…",
 			"panel.customPlaceholder": "project = ABC ORDER BY updated DESC",
-			"panel.total": "共 {count} 个"
+			"panel.total": "共 {count} 个",
+			"panel.connectionSettings": "连接与同步配置",
+			"panel.saveConfig": "保存配置",
+			"panel.saving": "保存中…",
+			"panel.configSaved": "Jira 配置已保存",
+			"panel.configPath": "保存到 {path}",
+			"panel.authMode": "认证方式",
+			"panel.username": "用户名",
+			"panel.usernamePlaceholder": "Basic 认证时填写",
+			"panel.timeoutMs": "超时 ms",
+			"panel.maxResults": "最大结果数",
+			"panel.strictTls": "严格 TLS",
+			"panel.workBoardSync": "同步到 Work Board",
+			"panel.syncJql": "同步 JQL",
+			"panel.syncInterval": "同步间隔 ms",
+			"panel.workBoardWriteback": "执行结果写回 Jira",
+			"panel.doneTransition": "成功后流转",
+			"panel.failedTransition": "失败后流转",
+			"panel.manualTransitions": "常用流转（逗号分隔）"
 		};
 		const en = {
 			"panel.trigger": "Jira",
@@ -762,7 +1062,25 @@ window.__ModuleLoader__.load({
 			"panel.commenting": "Commenting…",
 			"panel.transitioning": "Transitioning…",
 			"panel.customPlaceholder": "project = ABC ORDER BY updated DESC",
-			"panel.total": "{count} total"
+			"panel.total": "{count} total",
+			"panel.connectionSettings": "Connection & sync settings",
+			"panel.saveConfig": "Save config",
+			"panel.saving": "Saving…",
+			"panel.configSaved": "Jira config saved",
+			"panel.configPath": "Saved to {path}",
+			"panel.authMode": "Auth mode",
+			"panel.username": "Username",
+			"panel.usernamePlaceholder": "Required for Basic auth",
+			"panel.timeoutMs": "Timeout ms",
+			"panel.maxResults": "Max results",
+			"panel.strictTls": "Strict TLS",
+			"panel.workBoardSync": "Sync to Work Board",
+			"panel.syncJql": "Sync JQL",
+			"panel.syncInterval": "Sync interval ms",
+			"panel.workBoardWriteback": "Write results back to Jira",
+			"panel.doneTransition": "Success transition",
+			"panel.failedTransition": "Failure transition",
+			"panel.manualTransitions": "Common transitions (comma-separated)"
 		};
 		//#endregion
 		//#region src/client/index.ts
@@ -777,6 +1095,8 @@ window.__ModuleLoader__.load({
 			};
 			return {
 				status: () => call("status"),
+				config: () => call("config"),
+				saveConfig: (args) => call("saveConfig", args),
 				search: (args) => call("search", args),
 				getIssue: (args) => call("getIssue", args),
 				getTransitions: (args) => call("getTransitions", args),

@@ -58,14 +58,20 @@ function statusFor(jiraStatus: string): WorkItemLike['status'] {
  * assigned to the current user, plus start/open actions. Providers never
  * expose credentials; baseUrl/token resolution stays inside the Jira client.
  */
-export function createJiraWorkSource(ctx: Context, config: Config): WorkSourceProviderLike {
-  const client = createJiraClient(ctx, config)
+type ConfigInput = Config | (() => Config)
+
+function currentConfig(input: ConfigInput): Config {
+  return typeof input === 'function' ? input() : input
+}
+
+export function createJiraWorkSource(ctx: Context, config: ConfigInput): WorkSourceProviderLike {
+  const client = () => createJiraClient(ctx, currentConfig(config))
   return {
     id: 'jira',
     title: 'Jira',
     filters: [{ id: 'mine', label: 'My unresolved' }],
     async list(query: WorkSourceQueryLike): Promise<readonly WorkItemLike[]> {
-      const result = await client.search(query.filterId === 'mine' ? { view: 'assigned', jql: 'assignee = currentUser() AND resolution = Unresolved ORDER BY updated DESC' } : { view: 'assigned' })
+      const result = await client().search(query.filterId === 'mine' ? { view: 'assigned', jql: 'assignee = currentUser() AND resolution = Unresolved ORDER BY updated DESC' } : { view: 'assigned' })
       return result.issues.map(issue => ({
         id: `jira:${issue.key}`,
         sourceId: 'jira',
@@ -80,7 +86,7 @@ export function createJiraWorkSource(ctx: Context, config: Config): WorkSourcePr
     async get(id: string): Promise<WorkItemDetailLike | undefined> {
       const match = /^jira:([A-Z][A-Z0-9]+-\d+)$/u.exec(id)
       if (match === null) return undefined
-      const detail = await client.getIssue({ issueKey: match[1] })
+      const detail = await client().getIssue({ issueKey: match[1] })
       return {
         id,
         sourceId: 'jira',
@@ -104,7 +110,7 @@ export function createJiraWorkSource(ctx: Context, config: Config): WorkSourcePr
 }
 
 /** Register the Jira source when a work-board service is present. */
-export function registerJiraWorkSource(ctx: Context, config: Config): void {
+export function registerJiraWorkSource(ctx: Context, config: ConfigInput): void {
   const workBoard = ctx.get('workBoard') as WorkBoardServiceLike | undefined
   if (workBoard === undefined) return
   const dispose = workBoard.register(createJiraWorkSource(ctx, config))

@@ -119,7 +119,8 @@
   background: var(--dsh-color-bg-hover, rgba(127, 127, 127, 0.10));
 }
 
-.statusBox {
+.statusBox,
+.configBox {
   border: 1px solid var(--dsh-color-border-subtle, rgba(127, 127, 127, 0.18));
   border-radius: 14px;
   display: grid;
@@ -127,6 +128,64 @@
   grid-template-columns: minmax(180px, 1fr) auto;
   margin-top: 14px;
   padding: 12px;
+}
+
+
+.configBox {
+  grid-template-columns: 1fr;
+}
+
+.configHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.formGrid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 12px;
+}
+
+.formGrid label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.formGrid label span {
+  color: var(--dsh-color-text-secondary, GrayText);
+  font-size: 12px;
+}
+
+.formGrid input,
+.formGrid select {
+  border: 1px solid var(--dsh-color-border-subtle, rgba(127, 127, 127, 0.24));
+  border-radius: 10px;
+  background: var(--dsh-color-bg-elevated, Canvas);
+  color: inherit;
+  font: inherit;
+  font-size: 12px;
+  min-width: 0;
+  padding: 8px 10px;
+}
+
+.checkboxLabel {
+  align-items: center;
+  flex-direction: row !important;
+  padding-top: 20px;
+}
+
+.checkboxLabel input {
+  flex: none;
+  width: auto;
+}
+
+.wideField {
+  grid-column: span 2;
 }
 
 .configGrid {
@@ -305,7 +364,12 @@
     width: auto;
   }
 
-  .content {
+  .content,
+  .formGrid {
     grid-template-columns: 1fr;
+  }
+
+  .wideField {
+    grid-column: auto;
   }
 }

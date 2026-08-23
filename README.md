@@ -14,7 +14,9 @@ DSH external plugin for internal Jira issue tracking.
 
 ## Configuration
 
-Mount the plugin as a DSH profile bundle, then configure the `jira-issue-tracker` row:
+Mount the plugin as a DSH profile bundle. The Jira sidebar panel includes a **Connection & sync settings** form that persists runtime overrides to `~/.dsh/jira/config-v1.json`; those overrides are merged over the `jira-issue-tracker` Cordis row and take effect for panel RPC, tools, Work Board source listing, and sync/writeback without editing YAML. The form stores only `tokenCredentialRef`, not the secret token or password.
+
+A profile can still provide deployment defaults:
 
 ```yaml
 - id: jira-issue-tracker

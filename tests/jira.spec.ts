@@ -191,14 +191,30 @@ describe('JiraWorkSource', () => {
 })
 
 describe('JiraWorkBoardSync', () => {
-  it('does not start a sync timer before baseUrl is configured', async () => {
+  it('starts a dormant sync loop before baseUrl is configured', async () => {
     const ctx = new Context()
     const setIntervalSpy = vi.spyOn(globalThis, 'setInterval')
+    const synced: unknown[] = []
+    await ctx.plugin({
+      apply(child: Context) {
+        child.provide('workBoard', {
+          syncManualTasks(_sourceId: string, tasks: readonly unknown[]) {
+            synced.push(...tasks)
+            return { tasks }
+          },
+          manualSnapshot() {
+            return { tasks: [] }
+          },
+        })
+      },
+    }).await()
     const { registerJiraWorkBoardSync } = await import('../src/work-board-sync.ts')
 
     registerJiraWorkBoardSync(ctx, {})
+    await new Promise(resolve => setTimeout(resolve, 5))
 
-    expect(setIntervalSpy).not.toHaveBeenCalled()
+    expect(setIntervalSpy).toHaveBeenCalledOnce()
+    expect(synced).toEqual([])
     setIntervalSpy.mockRestore()
   })
 

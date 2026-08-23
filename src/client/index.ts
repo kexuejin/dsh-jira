@@ -6,6 +6,7 @@ import {
   JIRA_RPC_CHANNEL,
   type JiraRpcEndpoint,
   type JiraRpcResultMap,
+  type JiraSaveConfigArgs,
   type JiraSearchArgs,
   type JiraGetIssueArgs,
   type JiraGetTransitionsArgs,
@@ -39,6 +40,8 @@ function createPort(connection: ConnectionHandle): JiraPanelPort {
   }
   return {
     status: () => call('status'),
+    config: () => call('config'),
+    saveConfig: (args: JiraSaveConfigArgs) => call('saveConfig', args),
     search: (args: JiraSearchArgs) => call('search', args),
     getIssue: (args: JiraGetIssueArgs) => call('getIssue', args),
     getTransitions: (args: JiraGetTransitionsArgs) => call('getTransitions', args),

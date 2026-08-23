@@ -3,13 +3,16 @@ import clsx from 'clsx'
 import type { TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
 import type {
   JiraAddCommentArgs,
+  JiraConfigEditorView,
   JiraConnectionStatusView,
+  JiraEditableConfigView,
   JiraGetIssueArgs,
   JiraGetTransitionsArgs,
   JiraIssueDetail,
   JiraIssueSummary,
   JiraIssueView,
   JiraMutationResult,
+  JiraSaveConfigArgs,
   JiraSearchArgs,
   JiraSearchResult,
   JiraTransition,
@@ -20,6 +23,8 @@ import type { JiraTrackerKey } from './locales.ts'
 
 export interface JiraPanelPort {
   status: () => Promise<JiraConnectionStatusView>
+  config: () => Promise<JiraConfigEditorView>
+  saveConfig: (args: JiraSaveConfigArgs) => Promise<JiraConfigEditorView>
   search: (args: JiraSearchArgs) => Promise<JiraSearchResult>
   getIssue: (args: JiraGetIssueArgs) => Promise<JiraIssueDetail>
   getTransitions: (args: JiraGetTransitionsArgs) => Promise<readonly JiraTransition[]>
@@ -34,7 +39,20 @@ export interface JiraPanelProps {
   readonly t: TranslateNS<'jiraTracker'>
 }
 
-type BusyAction = 'status' | 'search' | 'issue' | 'comment' | 'transition' | undefined
+type BusyAction = 'status' | 'config' | 'search' | 'issue' | 'comment' | 'transition' | undefined
+
+type ConfigDraft = Required<Pick<JiraEditableConfigView, 'authMode' | 'strictTls' | 'timeoutMs' | 'maxResults' | 'workBoardSync' | 'workBoardSyncIntervalMs' | 'workBoardWriteback'>> & {
+  readonly baseUrl: string
+  readonly tokenCredentialRef: string
+  readonly username: string
+  readonly assignedJql: string
+  readonly watchingJql: string
+  readonly reportedJql: string
+  readonly workBoardSyncJql: string
+  readonly workBoardDoneTransition: string
+  readonly workBoardFailedTransition: string
+  readonly workBoardManualTransitions: string
+}
 
 function viewLabel(view: JiraIssueView, t: TranslateNS<'jiraTracker'>): string {
   switch (view) {
@@ -68,8 +86,69 @@ function dateLabel(value: string | undefined): string {
   }
 }
 
+function draftFromConfig(config: JiraEditableConfigView): ConfigDraft {
+  return {
+    baseUrl: config.baseUrl ?? '',
+    authMode: config.authMode ?? 'pat',
+    tokenCredentialRef: config.tokenCredentialRef ?? 'JIRA_API_TOKEN',
+    username: config.username ?? '',
+    strictTls: config.strictTls ?? true,
+    timeoutMs: config.timeoutMs ?? 15000,
+    maxResults: config.maxResults ?? 25,
+    assignedJql: config.assignedJql ?? 'assignee = currentUser() ORDER BY updated DESC',
+    watchingJql: config.watchingJql ?? 'watcher = currentUser() ORDER BY updated DESC',
+    reportedJql: config.reportedJql ?? 'reporter = currentUser() ORDER BY updated DESC',
+    workBoardSync: config.workBoardSync ?? true,
+    workBoardSyncJql: config.workBoardSyncJql ?? 'assignee = currentUser() AND resolution = Unresolved ORDER BY updated DESC',
+    workBoardSyncIntervalMs: config.workBoardSyncIntervalMs ?? 300000,
+    workBoardWriteback: config.workBoardWriteback ?? true,
+    workBoardDoneTransition: config.workBoardDoneTransition ?? '',
+    workBoardFailedTransition: config.workBoardFailedTransition ?? '',
+    workBoardManualTransitions: (config.workBoardManualTransitions ?? []).join(', '),
+  }
+}
+
+function text(value: string): string | undefined {
+  const trimmed = value.trim()
+  return trimmed.length === 0 ? undefined : trimmed
+}
+
+function draftToConfig(draft: ConfigDraft): JiraEditableConfigView {
+  const baseUrl = text(draft.baseUrl)
+  const tokenCredentialRef = text(draft.tokenCredentialRef)
+  const username = text(draft.username)
+  const assignedJql = text(draft.assignedJql)
+  const watchingJql = text(draft.watchingJql)
+  const reportedJql = text(draft.reportedJql)
+  const workBoardSyncJql = text(draft.workBoardSyncJql)
+  const workBoardDoneTransition = text(draft.workBoardDoneTransition)
+  const workBoardFailedTransition = text(draft.workBoardFailedTransition)
+  const manualTransitions = draft.workBoardManualTransitions.split(',').map(item => item.trim()).filter(item => item.length > 0)
+  return {
+    ...(baseUrl === undefined ? {} : { baseUrl }),
+    authMode: draft.authMode,
+    ...(tokenCredentialRef === undefined ? {} : { tokenCredentialRef }),
+    ...(username === undefined ? {} : { username }),
+    strictTls: draft.strictTls,
+    timeoutMs: draft.timeoutMs,
+    maxResults: draft.maxResults,
+    ...(assignedJql === undefined ? {} : { assignedJql }),
+    ...(watchingJql === undefined ? {} : { watchingJql }),
+    ...(reportedJql === undefined ? {} : { reportedJql }),
+    workBoardSync: draft.workBoardSync,
+    ...(workBoardSyncJql === undefined ? {} : { workBoardSyncJql }),
+    workBoardSyncIntervalMs: draft.workBoardSyncIntervalMs,
+    workBoardWriteback: draft.workBoardWriteback,
+    ...(workBoardDoneTransition === undefined ? {} : { workBoardDoneTransition }),
+    ...(workBoardFailedTransition === undefined ? {} : { workBoardFailedTransition }),
+    ...(manualTransitions.length === 0 ? {} : { workBoardManualTransitions: manualTransitions }),
+  }
+}
+
 export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
   const [status, setStatus] = useState<JiraConnectionStatusView | undefined>()
+  const [configView, setConfigView] = useState<JiraConfigEditorView | undefined>()
+  const [configDraft, setConfigDraft] = useState<ConfigDraft>(() => draftFromConfig({}))
   const [view, setView] = useState<JiraIssueView>('assigned')
   const [customJql, setCustomJql] = useState('')
   const [result, setResult] = useState<JiraSearchResult | undefined>()
@@ -80,6 +159,37 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
   const [error, setError] = useState<string | undefined>()
   const [notice, setNotice] = useState<string | undefined>()
   const issue = useMemo(() => selectedIssue(result?.issues ?? [], selectedKey), [result, selectedKey])
+
+  const loadConfig = async () => {
+    setBusy('config')
+    setError(undefined)
+    try {
+      const next = await port.config()
+      setConfigView(next)
+      setConfigDraft(draftFromConfig(next.effective))
+    } catch (nextError) {
+      setError(nextError instanceof Error ? nextError.message : String(nextError))
+    } finally {
+      setBusy(undefined)
+    }
+  }
+
+  const saveConfig = async () => {
+    setBusy('config')
+    setError(undefined)
+    setNotice(undefined)
+    try {
+      const next = await port.saveConfig({ config: draftToConfig(configDraft) })
+      setConfigView(next)
+      setConfigDraft(draftFromConfig(next.effective))
+      setNotice(t('panel.configSaved' as JiraTrackerKey))
+      await loadStatus()
+    } catch (nextError) {
+      setError(nextError instanceof Error ? nextError.message : String(nextError))
+    } finally {
+      setBusy(undefined)
+    }
+  }
 
   const loadStatus = async () => {
     setBusy('status')
@@ -157,7 +267,7 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
 
   useEffect(() => {
     if (!open || status !== undefined || busy !== undefined) return
-    void loadStatus().then(() => { void search('assigned') })
+    void Promise.all([loadStatus(), loadConfig()]).then(() => { void search('assigned') })
   }, [open])
 
   useEffect(() => {
@@ -192,6 +302,34 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
             <span>{t('panel.user')}</span><strong>{status.user?.displayName ?? status.user?.name ?? t('panel.noUser')}</strong>
           </div>
         )}
+      </section>
+
+      <section className={css.configBox}>
+        <div className={css.configHeader}>
+          <div>
+            <p className={css.sectionTitle}>{t('panel.connectionSettings' as JiraTrackerKey)}</p>
+            <p className={css.subtitle}>{configView === undefined ? t('panel.loading') : t('panel.configPath' as JiraTrackerKey, { path: configView.path })}</p>
+          </div>
+          <button type="button" className={css.primaryButton} disabled={busy !== undefined} onClick={() => { void saveConfig() }}>
+            {busy === 'config' ? t('panel.saving' as JiraTrackerKey) : t('panel.saveConfig' as JiraTrackerKey)}
+          </button>
+        </div>
+        <div className={css.formGrid}>
+          <label><span>{t('panel.baseUrl')}</span><input value={configDraft.baseUrl} placeholder="https://jira.example.com" onChange={event => { setConfigDraft(current => ({ ...current, baseUrl: event.target.value })) }} /></label>
+          <label><span>{t('panel.authMode' as JiraTrackerKey)}</span><select value={configDraft.authMode} onChange={event => { setConfigDraft(current => ({ ...current, authMode: event.target.value === 'basic' ? 'basic' : 'pat' })) }}><option value="pat">PAT</option><option value="basic">Basic</option></select></label>
+          <label><span>{t('panel.username' as JiraTrackerKey)}</span><input value={configDraft.username} placeholder={t('panel.usernamePlaceholder' as JiraTrackerKey)} onChange={event => { setConfigDraft(current => ({ ...current, username: event.target.value })) }} /></label>
+          <label><span>{t('panel.credential')}</span><input value={configDraft.tokenCredentialRef} placeholder="JIRA_API_TOKEN" onChange={event => { setConfigDraft(current => ({ ...current, tokenCredentialRef: event.target.value })) }} /></label>
+          <label><span>{t('panel.timeoutMs' as JiraTrackerKey)}</span><input type="number" min={1000} value={configDraft.timeoutMs} onChange={event => { setConfigDraft(current => ({ ...current, timeoutMs: Number(event.target.value) })) }} /></label>
+          <label><span>{t('panel.maxResults' as JiraTrackerKey)}</span><input type="number" min={1} max={100} value={configDraft.maxResults} onChange={event => { setConfigDraft(current => ({ ...current, maxResults: Number(event.target.value) })) }} /></label>
+          <label className={css.checkboxLabel}><input type="checkbox" checked={configDraft.strictTls} onChange={event => { setConfigDraft(current => ({ ...current, strictTls: event.target.checked })) }} /><span>{t('panel.strictTls' as JiraTrackerKey)}</span></label>
+          <label className={css.checkboxLabel}><input type="checkbox" checked={configDraft.workBoardSync} onChange={event => { setConfigDraft(current => ({ ...current, workBoardSync: event.target.checked })) }} /><span>{t('panel.workBoardSync' as JiraTrackerKey)}</span></label>
+          <label className={css.wideField}><span>{t('panel.syncJql' as JiraTrackerKey)}</span><input value={configDraft.workBoardSyncJql} onChange={event => { setConfigDraft(current => ({ ...current, workBoardSyncJql: event.target.value })) }} /></label>
+          <label><span>{t('panel.syncInterval' as JiraTrackerKey)}</span><input type="number" min={30000} step={1000} value={configDraft.workBoardSyncIntervalMs} onChange={event => { setConfigDraft(current => ({ ...current, workBoardSyncIntervalMs: Number(event.target.value) })) }} /></label>
+          <label className={css.checkboxLabel}><input type="checkbox" checked={configDraft.workBoardWriteback} onChange={event => { setConfigDraft(current => ({ ...current, workBoardWriteback: event.target.checked })) }} /><span>{t('panel.workBoardWriteback' as JiraTrackerKey)}</span></label>
+          <label><span>{t('panel.doneTransition' as JiraTrackerKey)}</span><input value={configDraft.workBoardDoneTransition} placeholder="Done" onChange={event => { setConfigDraft(current => ({ ...current, workBoardDoneTransition: event.target.value })) }} /></label>
+          <label><span>{t('panel.failedTransition' as JiraTrackerKey)}</span><input value={configDraft.workBoardFailedTransition} placeholder="Blocked" onChange={event => { setConfigDraft(current => ({ ...current, workBoardFailedTransition: event.target.value })) }} /></label>
+          <label className={css.wideField}><span>{t('panel.manualTransitions' as JiraTrackerKey)}</span><input value={configDraft.workBoardManualTransitions} placeholder="Done, In Progress, Blocked" onChange={event => { setConfigDraft(current => ({ ...current, workBoardManualTransitions: event.target.value })) }} /></label>
+        </div>
       </section>
 
       {error !== undefined && <p className={css.error}>{error}</p>}

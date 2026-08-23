@@ -1,12 +1,14 @@
 import type { Context } from '@deepseek-ai/cordis'
 import type { JsonValue } from '@deepseek-ai/dsh-session/types'
 import type {} from '@deepseek-ai/dsh-client-connection'
-import { createJiraClient, type Config } from './jira.ts'
+import { createJiraClient } from './jira.ts'
+import { JiraConfigStore, sanitizeJiraConfigPatch } from './config-store.ts'
 import {
   JIRA_RPC_CHANNEL,
   type JiraAddCommentArgs,
   type JiraGetIssueArgs,
   type JiraGetTransitionsArgs,
+  type JiraSaveConfigArgs,
   type JiraSearchArgs,
   type JiraTransitionIssueArgs,
 } from './model.ts'
@@ -73,6 +75,11 @@ function transitionIssueArgs(payload: unknown): JiraTransitionIssueArgs {
   }
 }
 
+function saveConfigArgs(payload: unknown): JiraSaveConfigArgs {
+  const config = isRecord(payload) && isRecord(payload.config) ? payload.config : {}
+  return { config: sanitizeJiraConfigPatch(config) }
+}
+
 function ok(value: unknown): { readonly ok: true; readonly value: JsonValue } {
   return { ok: true, value: asJson(value) }
 }
@@ -88,23 +95,26 @@ function failure(error: unknown): { readonly ok: false; readonly error: { readon
   }
 }
 
-export function registerJiraRpc(ctx: Context, config: Config): void {
+export function registerJiraRpc(ctx: Context, store: JiraConfigStore): void {
   ctx.connection.rpc.handle(JIRA_RPC_CHANNEL, async (endpoint, payload) => {
-    const client = createJiraClient(ctx, config)
     try {
       switch (endpoint) {
         case 'status':
-          return ok(await client.status())
+          return ok(await createJiraClient(ctx, store.current()).status())
+        case 'config':
+          return ok(store.view())
+        case 'saveConfig':
+          return ok(store.save(saveConfigArgs(payload).config))
         case 'search':
-          return ok(await client.search(searchArgs(payload)))
+          return ok(await createJiraClient(ctx, store.current()).search(searchArgs(payload)))
         case 'getIssue':
-          return ok(await client.getIssue(getIssueArgs(payload)))
+          return ok(await createJiraClient(ctx, store.current()).getIssue(getIssueArgs(payload)))
         case 'getTransitions':
-          return ok(await client.listTransitions(getTransitionsArgs(payload)))
+          return ok(await createJiraClient(ctx, store.current()).listTransitions(getTransitionsArgs(payload)))
         case 'addComment':
-          return ok(await client.addComment(addCommentArgs(payload)))
+          return ok(await createJiraClient(ctx, store.current()).addComment(addCommentArgs(payload)))
         case 'transitionIssue':
-          return ok(await client.transitionIssue(transitionIssueArgs(payload)))
+          return ok(await createJiraClient(ctx, store.current()).transitionIssue(transitionIssueArgs(payload)))
         default:
           return failure(new Error(`unknown jira endpoint: ${endpoint}`))
       }

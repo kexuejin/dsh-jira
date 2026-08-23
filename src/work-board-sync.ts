@@ -13,6 +13,12 @@ export interface JiraWorkBoardSyncConfig extends JiraConfig {
   readonly workBoardFailedTransition?: string
 }
 
+type ConfigInput = JiraWorkBoardSyncConfig | (() => JiraWorkBoardSyncConfig)
+
+function currentConfig(input: ConfigInput): JiraWorkBoardSyncConfig {
+  return typeof input === 'function' ? input() : input
+}
+
 type TaskStatus = 'backlog' | 'todo' | 'running' | 'done' | 'failed'
 
 type ExecutionResult = 'succeeded' | 'failed' | 'cancelled'
@@ -150,7 +156,9 @@ function workBoard(ctx: Context): WorkBoardManualSyncServiceLike | undefined {
     : undefined
 }
 
-async function syncIssues(ctx: Context, config: JiraWorkBoardSyncConfig): Promise<void> {
+async function syncIssues(ctx: Context, input: ConfigInput): Promise<void> {
+  const config = currentConfig(input)
+  if (config.workBoardSync === false || clean(config.baseUrl) === undefined) return
   const board = workBoard(ctx)
   if (board === undefined) return
   const client = createJiraClient(ctx, config)
@@ -167,8 +175,9 @@ function transitionMarker(executionId: string): string {
   return `${WRITEBACK_MARKER_PREFIX}${executionId}:transition]`
 }
 
-async function writeBackSettledExecutions(ctx: Context, config: JiraWorkBoardSyncConfig, seen: Set<string>): Promise<void> {
-  if (config.workBoardWriteback === false) return
+async function writeBackSettledExecutions(ctx: Context, input: ConfigInput, seen: Set<string>): Promise<void> {
+  const config = currentConfig(input)
+  if (config.workBoardWriteback === false || clean(config.baseUrl) === undefined) return
   const board = workBoard(ctx)
   if (board === undefined) return
   const client = createJiraClient(ctx, config)
@@ -204,21 +213,20 @@ async function writeBackSettledExecutions(ctx: Context, config: JiraWorkBoardSyn
   }
 }
 
-export function registerJiraWorkBoardSync(ctx: Context, config: JiraWorkBoardSyncConfig): void {
-  if (config.workBoardSync === false || clean(config.baseUrl) === undefined) return
+export function registerJiraWorkBoardSync(ctx: Context, input: ConfigInput): void {
   const board = workBoard(ctx)
   if (board?.registerExternalTaskHandler !== undefined) {
     ctx.effect(
       () => board.registerExternalTaskHandler('jira:', {
-        async transition(taskId: string, input: { transitionId?: string; transitionName?: string; comment?: string }) {
+        async transition(taskId: string, transitionInput: { transitionId?: string; transitionName?: string; comment?: string }) {
           const issueKey = issueKeyFromTaskId(taskId)
           if (issueKey === undefined) throw new Error(`task ${taskId} is not a Jira issue`)
-          const client = createJiraClient(ctx, config)
+          const client = createJiraClient(ctx, currentConfig(input))
           return (await client.transitionIssue({
             issueKey,
-            ...(input.transitionId === undefined ? {} : { transitionId: input.transitionId }),
-            ...(input.transitionName === undefined ? {} : { transitionName: input.transitionName }),
-            ...(input.comment === undefined ? {} : { comment: input.comment }),
+            ...(transitionInput.transitionId === undefined ? {} : { transitionId: transitionInput.transitionId }),
+            ...(transitionInput.transitionName === undefined ? {} : { transitionName: transitionInput.transitionName }),
+            ...(transitionInput.comment === undefined ? {} : { comment: transitionInput.comment }),
           })).message
         },
       }),
@@ -231,21 +239,21 @@ export function registerJiraWorkBoardSync(ctx: Context, config: JiraWorkBoardSyn
   const runSync = (): void => {
     if (syncInFlight) return
     syncInFlight = true
-    void syncIssues(ctx, config).catch(error => {
+    void syncIssues(ctx, input).catch(error => {
       console.error('[dsh-jira] work-board sync failed', error)
     }).finally(() => { syncInFlight = false })
   }
   const runWriteback = (): void => {
     if (writebackInFlight) return
     writebackInFlight = true
-    void writeBackSettledExecutions(ctx, config, seenWritebacks).catch(error => {
+    void writeBackSettledExecutions(ctx, input, seenWritebacks).catch(error => {
       console.error('[dsh-jira] work-board writeback failed', error)
     }).finally(() => { writebackInFlight = false })
   }
   const interval = setInterval(() => {
     runSync()
     runWriteback()
-  }, syncIntervalMs(config))
+  }, syncIntervalMs(currentConfig(input)))
   runSync()
   runWriteback()
   ctx.effect(() => () => { clearInterval(interval) }, 'jira: work-board sync loop')

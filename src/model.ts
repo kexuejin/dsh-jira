@@ -23,6 +23,39 @@ export interface JiraConnectionStatusView {
   readonly user?: JiraUser
 }
 
+
+export interface JiraEditableConfigView {
+  readonly baseUrl?: string
+  readonly authMode?: JiraAuthMode
+  readonly tokenCredentialRef?: string
+  readonly username?: string
+  readonly strictTls?: boolean
+  readonly caCertificatePath?: string
+  readonly proxyUrl?: string
+  readonly timeoutMs?: number
+  readonly maxResults?: number
+  readonly assignedJql?: string
+  readonly watchingJql?: string
+  readonly reportedJql?: string
+  readonly workBoardSync?: boolean
+  readonly workBoardSyncJql?: string
+  readonly workBoardSyncIntervalMs?: number
+  readonly workBoardWriteback?: boolean
+  readonly workBoardDoneTransition?: string
+  readonly workBoardFailedTransition?: string
+  readonly workBoardManualTransitions?: readonly string[]
+}
+
+export interface JiraConfigEditorView {
+  readonly path: string
+  readonly overrides: JiraEditableConfigView
+  readonly effective: JiraEditableConfigView
+}
+
+export interface JiraSaveConfigArgs {
+  readonly config: JiraEditableConfigView
+}
+
 export interface JiraUser {
   readonly key?: string
   readonly name?: string
@@ -109,10 +142,12 @@ export interface JiraMutationResult {
   readonly message: string
 }
 
-export type JiraRpcEndpoint = 'status' | 'search' | 'getIssue' | 'getTransitions' | 'addComment' | 'transitionIssue'
+export type JiraRpcEndpoint = 'status' | 'config' | 'saveConfig' | 'search' | 'getIssue' | 'getTransitions' | 'addComment' | 'transitionIssue'
 
 export interface JiraRpcResultMap {
   readonly status: JiraConnectionStatusView
+  readonly config: JiraConfigEditorView
+  readonly saveConfig: JiraConfigEditorView
   readonly search: JiraSearchResult
   readonly getIssue: JiraIssueDetail
   readonly getTransitions: readonly JiraTransition[]

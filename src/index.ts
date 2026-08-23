@@ -3,6 +3,7 @@ import z from '@deepseek-ai/schemastery'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import type { JsonValue } from '@deepseek-ai/dsh-session/types'
 import { createJiraClient } from './jira.ts'
+import { JiraConfigStore } from './config-store.ts'
 import { registerJiraRpc } from './rpc.ts'
 import { registerJiraWorkSource } from './work-source.ts'
 import { registerJiraWorkBoardSync, type JiraWorkBoardSyncConfig } from './work-board-sync.ts'
@@ -71,9 +72,11 @@ function jsonString(value: JsonValue | undefined, fallback: string): string {
 }
 
 export function apply(ctx: Context, config: Config = {}): void {
-  registerJiraRpc(ctx, config)
-  registerJiraWorkSource(ctx, config)
-  registerJiraWorkBoardSync(ctx, config)
+  const configStore = new JiraConfigStore(config)
+  const currentConfig = () => configStore.current()
+  registerJiraRpc(ctx, configStore)
+  registerJiraWorkSource(ctx, currentConfig)
+  registerJiraWorkBoardSync(ctx, currentConfig)
 
   ctx.tools.register(defineTool({
     name: 'jira_search_issues',
@@ -92,7 +95,7 @@ export function apply(ctx: Context, config: Config = {}): void {
       },
     },
     async execute(args: JiraSearchArgs) {
-      return asJson(await createJiraClient(ctx, config).search(args))
+      return asJson(await createJiraClient(ctx, currentConfig()).search(args))
     },
     presentCall: args => ({ card: 'generic', title: 'Search Jira issues', kind: 'other', rawInput: args }),
   }))
@@ -109,7 +112,7 @@ export function apply(ctx: Context, config: Config = {}): void {
       },
     },
     async execute(args: JiraGetIssueArgs) {
-      return asJson(await createJiraClient(ctx, config).getIssue(args))
+      return asJson(await createJiraClient(ctx, currentConfig()).getIssue(args))
     },
     presentCall: args => ({ card: 'generic', title: 'Get Jira issue', kind: 'other', rawInput: args }),
   }))
@@ -129,7 +132,7 @@ export function apply(ctx: Context, config: Config = {}): void {
       },
     },
     async execute(args: JiraAddCommentArgs) {
-      return asJson(await createJiraClient(ctx, config).addComment(args))
+      return asJson(await createJiraClient(ctx, currentConfig()).addComment(args))
     },
     presentCall: args => ({ card: 'generic', title: 'Comment on Jira issue', kind: 'other', rawInput: args }),
   }))
@@ -154,7 +157,7 @@ export function apply(ctx: Context, config: Config = {}): void {
       },
     },
     async execute(args: JiraTransitionIssueArgs) {
-      return asJson(await createJiraClient(ctx, config).transitionIssue(args))
+      return asJson(await createJiraClient(ctx, currentConfig()).transitionIssue(args))
     },
     presentCall: args => ({ card: 'generic', title: 'Transition Jira issue', kind: 'other', rawInput: args }),
   }))
