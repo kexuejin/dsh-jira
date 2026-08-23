@@ -14,7 +14,7 @@ DSH external plugin for internal Jira issue tracking.
 
 ## Configuration
 
-Mount the plugin as a DSH profile bundle. The Jira sidebar panel includes a **Connection & sync settings** form that persists runtime overrides to `~/.dsh/jira/config-v1.json`; those overrides are merged over the `jira-issue-tracker` Cordis row and take effect for panel RPC, tools, Work Board source listing, and sync/writeback without editing YAML. The form stores only `tokenCredentialRef`, not the secret token or password.
+Mount the plugin as a DSH profile bundle. The Jira sidebar panel includes a **Connection & sync settings** form that persists runtime overrides to `~/.dsh/jira/config-v1.json`; those overrides are merged over the `jira-issue-tracker` Cordis row and take effect for panel RPC, tools, Work Board source listing, and sync/writeback without editing YAML. The form stores `tokenCredentialRef` in `config-v1.json`; when the optional Token / password field is filled, that secret is written through the DSH credentials provider and is not stored in the Jira config file.
 
 A profile can still provide deployment defaults:
 
@@ -32,7 +32,7 @@ A profile can still provide deployment defaults:
     workBoardWriteback: true
 ```
 
-Set `JIRA_API_TOKEN` through the DSH credentials provider or the launching environment. For older internal deployments that require HTTP Basic authentication, set `authMode: basic`, `username`, and store the password or token in the same credential reference.
+Set `JIRA_API_TOKEN` through the Jira panel's Token / password field, the DSH credentials provider, or the launching environment. For older internal deployments that require HTTP Basic authentication, set `authMode: basic`, `username`, and store the password or token in the same credential reference.
 
 ## Work Board integration
 

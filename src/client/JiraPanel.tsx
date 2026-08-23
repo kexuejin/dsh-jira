@@ -13,6 +13,7 @@ import type {
   JiraIssueView,
   JiraMutationResult,
   JiraSaveConfigArgs,
+  JiraSaveCredentialArgs,
   JiraSearchArgs,
   JiraSearchResult,
   JiraTransition,
@@ -25,6 +26,7 @@ export interface JiraPanelPort {
   status: () => Promise<JiraConnectionStatusView>
   config: () => Promise<JiraConfigEditorView>
   saveConfig: (args: JiraSaveConfigArgs) => Promise<JiraConfigEditorView>
+  saveCredential: (args: JiraSaveCredentialArgs) => Promise<{ readonly credentialRef: string; readonly message: string }>
   search: (args: JiraSearchArgs) => Promise<JiraSearchResult>
   getIssue: (args: JiraGetIssueArgs) => Promise<JiraIssueDetail>
   getTransitions: (args: JiraGetTransitionsArgs) => Promise<readonly JiraTransition[]>
@@ -149,6 +151,7 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
   const [status, setStatus] = useState<JiraConnectionStatusView | undefined>()
   const [configView, setConfigView] = useState<JiraConfigEditorView | undefined>()
   const [configDraft, setConfigDraft] = useState<ConfigDraft>(() => draftFromConfig({}))
+  const [credentialValue, setCredentialValue] = useState('')
   const [view, setView] = useState<JiraIssueView>('assigned')
   const [customJql, setCustomJql] = useState('')
   const [result, setResult] = useState<JiraSearchResult | undefined>()
@@ -180,6 +183,10 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
     setNotice(undefined)
     try {
       const next = await port.saveConfig({ config: draftToConfig(configDraft) })
+      if (credentialValue.trim().length > 0) {
+        await port.saveCredential({ credentialRef: configDraft.tokenCredentialRef, value: credentialValue })
+        setCredentialValue('')
+      }
       setConfigView(next)
       setConfigDraft(draftFromConfig(next.effective))
       setNotice(t('panel.configSaved' as JiraTrackerKey))
@@ -319,6 +326,7 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
           <label><span>{t('panel.authMode' as JiraTrackerKey)}</span><select value={configDraft.authMode} onChange={event => { setConfigDraft(current => ({ ...current, authMode: event.target.value === 'basic' ? 'basic' : 'pat' })) }}><option value="pat">PAT</option><option value="basic">Basic</option></select></label>
           <label><span>{t('panel.username' as JiraTrackerKey)}</span><input value={configDraft.username} placeholder={t('panel.usernamePlaceholder' as JiraTrackerKey)} onChange={event => { setConfigDraft(current => ({ ...current, username: event.target.value })) }} /></label>
           <label><span>{t('panel.credential')}</span><input value={configDraft.tokenCredentialRef} placeholder="JIRA_API_TOKEN" onChange={event => { setConfigDraft(current => ({ ...current, tokenCredentialRef: event.target.value })) }} /></label>
+          <label><span>{t('panel.credentialValue' as JiraTrackerKey)}</span><input type="password" value={credentialValue} placeholder={t('panel.credentialValuePlaceholder' as JiraTrackerKey)} onChange={event => { setCredentialValue(event.target.value) }} /></label>
           <label><span>{t('panel.timeoutMs' as JiraTrackerKey)}</span><input type="number" min={1000} value={configDraft.timeoutMs} onChange={event => { setConfigDraft(current => ({ ...current, timeoutMs: Number(event.target.value) })) }} /></label>
           <label><span>{t('panel.maxResults' as JiraTrackerKey)}</span><input type="number" min={1} max={100} value={configDraft.maxResults} onChange={event => { setConfigDraft(current => ({ ...current, maxResults: Number(event.target.value) })) }} /></label>
           <label className={css.checkboxLabel}><input type="checkbox" checked={configDraft.strictTls} onChange={event => { setConfigDraft(current => ({ ...current, strictTls: event.target.checked })) }} /><span>{t('panel.strictTls' as JiraTrackerKey)}</span></label>

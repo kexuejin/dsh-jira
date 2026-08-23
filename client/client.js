@@ -36,47 +36,47 @@ window.__ModuleLoader__.load({
 			document.head.appendChild(tag);
 		}
 		var JiraPanel_module_css_default = {
-			"transitions": "XUv5wW_transitions",
-			"tabButtonActive": "XUv5wW_tabButtonActive",
-			"configGrid": "XUv5wW_configGrid",
-			"title": "XUv5wW_title",
-			"formGrid": "XUv5wW_formGrid",
-			"issueList": "XUv5wW_issueList",
 			"view": "XUv5wW_view",
-			"header": "XUv5wW_header",
-			"openLink": "XUv5wW_openLink",
-			"toolbar": "XUv5wW_toolbar",
-			"tabButton": "XUv5wW_tabButton",
-			"detailTop": "XUv5wW_detailTop",
-			"entry": "XUv5wW_entry",
-			"detailTitle": "XUv5wW_detailTitle",
-			"comment": "XUv5wW_comment",
-			"configBox": "XUv5wW_configBox",
-			"detailMeta": "XUv5wW_detailMeta",
-			"statusBox": "XUv5wW_statusBox",
-			"primaryButton": "XUv5wW_primaryButton",
-			"jqlInput": "XUv5wW_jqlInput",
-			"error": "XUv5wW_error",
-			"checkboxLabel": "XUv5wW_checkboxLabel",
-			"wideField": "XUv5wW_wideField",
-			"configHeader": "XUv5wW_configHeader",
-			"entryLabel": "XUv5wW_entryLabel",
-			"total": "XUv5wW_total",
-			"content": "XUv5wW_content",
-			"issueCard": "XUv5wW_issueCard",
-			"notice": "XUv5wW_notice",
-			"issueCardActive": "XUv5wW_issueCardActive",
-			"popover": "XUv5wW_popover",
-			"issueKey": "XUv5wW_issueKey",
-			"description": "XUv5wW_description",
-			"sectionTitle": "XUv5wW_sectionTitle",
 			"section": "XUv5wW_section",
-			"iconButton": "XUv5wW_iconButton",
+			"error": "XUv5wW_error",
+			"primaryButton": "XUv5wW_primaryButton",
+			"transitions": "XUv5wW_transitions",
+			"checkboxLabel": "XUv5wW_checkboxLabel",
+			"sectionTitle": "XUv5wW_sectionTitle",
+			"total": "XUv5wW_total",
+			"configHeader": "XUv5wW_configHeader",
+			"toolbar": "XUv5wW_toolbar",
+			"detailTop": "XUv5wW_detailTop",
+			"tabButtonActive": "XUv5wW_tabButtonActive",
+			"detailTitle": "XUv5wW_detailTitle",
+			"popover": "XUv5wW_popover",
+			"issueCard": "XUv5wW_issueCard",
 			"entryIcon": "XUv5wW_entryIcon",
-			"commentBox": "XUv5wW_commentBox",
-			"detail": "XUv5wW_detail",
+			"header": "XUv5wW_header",
 			"subtitle": "XUv5wW_subtitle",
-			"empty": "XUv5wW_empty"
+			"entry": "XUv5wW_entry",
+			"comment": "XUv5wW_comment",
+			"jqlInput": "XUv5wW_jqlInput",
+			"notice": "XUv5wW_notice",
+			"configBox": "XUv5wW_configBox",
+			"content": "XUv5wW_content",
+			"formGrid": "XUv5wW_formGrid",
+			"empty": "XUv5wW_empty",
+			"tabButton": "XUv5wW_tabButton",
+			"description": "XUv5wW_description",
+			"detail": "XUv5wW_detail",
+			"commentBox": "XUv5wW_commentBox",
+			"detailMeta": "XUv5wW_detailMeta",
+			"wideField": "XUv5wW_wideField",
+			"openLink": "XUv5wW_openLink",
+			"entryLabel": "XUv5wW_entryLabel",
+			"statusBox": "XUv5wW_statusBox",
+			"title": "XUv5wW_title",
+			"issueList": "XUv5wW_issueList",
+			"issueCardActive": "XUv5wW_issueCardActive",
+			"issueKey": "XUv5wW_issueKey",
+			"iconButton": "XUv5wW_iconButton",
+			"configGrid": "XUv5wW_configGrid"
 		};
 		//#endregion
 		//#region src/client/JiraPanel.tsx
@@ -168,6 +168,7 @@ window.__ModuleLoader__.load({
 			const [status, setStatus] = (0, react.useState)();
 			const [configView, setConfigView] = (0, react.useState)();
 			const [configDraft, setConfigDraft] = (0, react.useState)(() => draftFromConfig({}));
+			const [credentialValue, setCredentialValue] = (0, react.useState)("");
 			const [view, setView] = (0, react.useState)("assigned");
 			const [customJql, setCustomJql] = (0, react.useState)("");
 			const [result, setResult] = (0, react.useState)();
@@ -197,6 +198,13 @@ window.__ModuleLoader__.load({
 				setNotice(void 0);
 				try {
 					const next = await port.saveConfig({ config: draftToConfig(configDraft) });
+					if (credentialValue.trim().length > 0) {
+						await port.saveCredential({
+							credentialRef: configDraft.tokenCredentialRef,
+							value: credentialValue
+						});
+						setCredentialValue("");
+					}
 					setConfigView(next);
 					setConfigDraft(draftFromConfig(next.effective));
 					setNotice(t("panel.configSaved"));
@@ -419,6 +427,14 @@ window.__ModuleLoader__.load({
 											...current,
 											tokenCredentialRef: event.target.value
 										}));
+									}
+								})] }),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.credentialValue") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
+									type: "password",
+									value: credentialValue,
+									placeholder: t("panel.credentialValuePlaceholder"),
+									onChange: (event) => {
+										setCredentialValue(event.target.value);
 									}
 								})] }),
 								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", { children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.timeoutMs") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("input", {
@@ -1016,6 +1032,8 @@ window.__ModuleLoader__.load({
 			"panel.authMode": "认证方式",
 			"panel.username": "用户名",
 			"panel.usernamePlaceholder": "Basic 认证时填写",
+			"panel.credentialValue": "Token / 密码",
+			"panel.credentialValuePlaceholder": "留空则不修改已保存凭据",
 			"panel.timeoutMs": "超时 ms",
 			"panel.maxResults": "最大结果数",
 			"panel.strictTls": "严格 TLS",
@@ -1071,6 +1089,8 @@ window.__ModuleLoader__.load({
 			"panel.authMode": "Auth mode",
 			"panel.username": "Username",
 			"panel.usernamePlaceholder": "Required for Basic auth",
+			"panel.credentialValue": "Token / password",
+			"panel.credentialValuePlaceholder": "Leave blank to keep the saved credential",
 			"panel.timeoutMs": "Timeout ms",
 			"panel.maxResults": "Max results",
 			"panel.strictTls": "Strict TLS",
@@ -1097,6 +1117,7 @@ window.__ModuleLoader__.load({
 				status: () => call("status"),
 				config: () => call("config"),
 				saveConfig: (args) => call("saveConfig", args),
+				saveCredential: (args) => call("saveCredential", args),
 				search: (args) => call("search", args),
 				getIssue: (args) => call("getIssue", args),
 				getTransitions: (args) => call("getTransitions", args),

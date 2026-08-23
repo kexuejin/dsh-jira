@@ -1,6 +1,7 @@
 import type { Context } from '@deepseek-ai/cordis'
 import type { JsonValue } from '@deepseek-ai/dsh-session/types'
 import type {} from '@deepseek-ai/dsh-client-connection'
+import { credentialRef } from '@deepseek-ai/dsh-credentials'
 import { createJiraClient } from './jira.ts'
 import { JiraConfigStore, sanitizeJiraConfigPatch } from './config-store.ts'
 import {
@@ -9,6 +10,7 @@ import {
   type JiraGetIssueArgs,
   type JiraGetTransitionsArgs,
   type JiraSaveConfigArgs,
+  type JiraSaveCredentialArgs,
   type JiraSearchArgs,
   type JiraTransitionIssueArgs,
 } from './model.ts'
@@ -80,6 +82,21 @@ function saveConfigArgs(payload: unknown): JiraSaveConfigArgs {
   return { config: sanitizeJiraConfigPatch(config) }
 }
 
+
+function saveCredentialArgs(payload: unknown): JiraSaveCredentialArgs {
+  return { credentialRef: stringField(payload, 'credentialRef') ?? '', value: stringField(payload, 'value') ?? '' }
+}
+
+async function saveCredential(ctx: Context, payload: JiraSaveCredentialArgs): Promise<{ readonly credentialRef: string; readonly message: string }> {
+  const ref = credentialRef(payload.credentialRef)
+  const value = payload.value.trim()
+  if (value.length === 0) throw new Error('jira credential value is required')
+  const credentials = ctx.get('credentials')
+  if (credentials === undefined) throw new Error('credentials service is not mounted')
+  await credentials.set(ref, value)
+  return { credentialRef: ref, message: `Saved credential ${ref}.` }
+}
+
 function ok(value: unknown): { readonly ok: true; readonly value: JsonValue } {
   return { ok: true, value: asJson(value) }
 }
@@ -105,6 +122,8 @@ export function registerJiraRpc(ctx: Context, store: JiraConfigStore): void {
           return ok(store.view())
         case 'saveConfig':
           return ok(store.save(saveConfigArgs(payload).config))
+        case 'saveCredential':
+          return ok(await saveCredential(ctx, saveCredentialArgs(payload)))
         case 'search':
           return ok(await createJiraClient(ctx, store.current()).search(searchArgs(payload)))
         case 'getIssue':

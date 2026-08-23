@@ -56,6 +56,16 @@ export interface JiraSaveConfigArgs {
   readonly config: JiraEditableConfigView
 }
 
+export interface JiraSaveCredentialArgs {
+  readonly credentialRef: string
+  readonly value: string
+}
+
+export interface JiraCredentialSaveResult {
+  readonly credentialRef: string
+  readonly message: string
+}
+
 export interface JiraUser {
   readonly key?: string
   readonly name?: string
@@ -142,12 +152,13 @@ export interface JiraMutationResult {
   readonly message: string
 }
 
-export type JiraRpcEndpoint = 'status' | 'config' | 'saveConfig' | 'search' | 'getIssue' | 'getTransitions' | 'addComment' | 'transitionIssue'
+export type JiraRpcEndpoint = 'status' | 'config' | 'saveConfig' | 'saveCredential' | 'search' | 'getIssue' | 'getTransitions' | 'addComment' | 'transitionIssue'
 
 export interface JiraRpcResultMap {
   readonly status: JiraConnectionStatusView
   readonly config: JiraConfigEditorView
   readonly saveConfig: JiraConfigEditorView
+  readonly saveCredential: JiraCredentialSaveResult
   readonly search: JiraSearchResult
   readonly getIssue: JiraIssueDetail
   readonly getTransitions: readonly JiraTransition[]
