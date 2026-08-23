@@ -36,6 +36,12 @@ export const Config: z<Config> = z.object({
   workBoardSync: z.boolean().default(true),
   workBoardSyncJql: z.string(),
   workBoardSyncIntervalMs: z.number().step(1).min(30000).default(300000),
+  workBoardProjectMappings: z.array(z.object({
+    projectKey: z.string(),
+    workspaceId: z.string(),
+    mode: z.string(),
+    permission: z.union(['read-only', 'workspace-write', 'danger-full-access']),
+  })).default([]),
   workBoardWriteback: z.boolean().default(true),
   workBoardDoneTransition: z.string(),
   workBoardFailedTransition: z.string(),

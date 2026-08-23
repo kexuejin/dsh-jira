@@ -2,10 +2,18 @@ import type { Context } from '@deepseek-ai/cordis'
 import { createJiraClient, type Config as JiraConfig } from './jira.ts'
 import type { JiraIssueSummary } from './model.ts'
 
+export interface JiraWorkBoardProjectMapping {
+  readonly projectKey: string
+  readonly workspaceId?: string
+  readonly mode?: string
+  readonly permission?: 'read-only' | 'workspace-write' | 'danger-full-access'
+}
+
 export interface JiraWorkBoardSyncConfig extends JiraConfig {
   readonly workBoardSync?: boolean
   readonly workBoardSyncJql?: string
   readonly workBoardSyncIntervalMs?: number
+  readonly workBoardProjectMappings?: JiraWorkBoardProjectMapping[]
   readonly workBoardWriteback?: boolean
   /** Jira transition name applied when a synced issue's work-board execution succeeds. */
   readonly workBoardDoneTransition?: string
@@ -41,6 +49,9 @@ interface TaskRecordLike {
   readonly createdAt: number
   readonly updatedAt: number
   readonly executions: readonly ExecutionRecordLike[]
+  readonly workspaceId?: string
+  readonly mode?: string
+  readonly permission?: 'read-only' | 'workspace-write' | 'danger-full-access'
 }
 
 interface ManualSnapshotLike {
@@ -89,6 +100,19 @@ function statusFor(issue: JiraIssueSummary): TaskStatus {
   return 'todo'
 }
 
+function normalizeMappingKey(value: string): string {
+  return value.trim().toUpperCase()
+}
+
+function issueProjectKey(issueKey: string): string {
+  return normalizeMappingKey(issueKey.split('-', 1)[0] ?? issueKey)
+}
+
+function mappingFor(issue: JiraIssueSummary, config: JiraWorkBoardSyncConfig): JiraWorkBoardProjectMapping | undefined {
+  const projectKey = issueProjectKey(issue.key)
+  return config.workBoardProjectMappings?.find(mapping => normalizeMappingKey(mapping.projectKey) === projectKey)
+}
+
 function issueDescription(issue: JiraIssueSummary): string {
   return [
     `Jira: ${issue.key}`,
@@ -110,9 +134,10 @@ function issuePrompt(issue: JiraIssueSummary): string {
   ].join('\n')
 }
 
-function taskFromIssue(issue: JiraIssueSummary, now: number): TaskRecordLike {
+function taskFromIssue(issue: JiraIssueSummary, now: number, config: JiraWorkBoardSyncConfig): TaskRecordLike {
   const createdAt = timestamp(issue.created, now)
   const updatedAt = timestamp(issue.updated, createdAt)
+  const mapping = mappingFor(issue, config)
   return {
     id: `jira:${issue.key}`,
     title: `[${issue.key}] ${issue.summary}`,
@@ -122,6 +147,9 @@ function taskFromIssue(issue: JiraIssueSummary, now: number): TaskRecordLike {
     createdAt,
     updatedAt,
     executions: [],
+    ...(mapping?.workspaceId === undefined ? {} : { workspaceId: mapping.workspaceId }),
+    ...(mapping?.mode === undefined ? {} : { mode: mapping.mode }),
+    ...(mapping?.permission === undefined ? {} : { permission: mapping.permission }),
   }
 }
 
@@ -168,7 +196,7 @@ async function syncIssues(ctx: Context, input: ConfigInput): Promise<void> {
     jql: syncJql(config),
     ...(config.maxResults === undefined ? {} : { maxResults: config.maxResults }),
   })
-  board.syncManualTasks(SOURCE_ID, result.issues.map(issue => taskFromIssue(issue, now)))
+  board.syncManualTasks(SOURCE_ID, result.issues.map(issue => taskFromIssue(issue, now, config)))
 }
 
 function transitionMarker(executionId: string): string {

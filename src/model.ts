@@ -24,6 +24,13 @@ export interface JiraConnectionStatusView {
 }
 
 
+export interface JiraWorkBoardProjectMappingView {
+  readonly projectKey: string
+  readonly workspaceId?: string
+  readonly mode?: string
+  readonly permission?: 'read-only' | 'workspace-write' | 'danger-full-access'
+}
+
 export interface JiraEditableConfigView {
   readonly baseUrl?: string
   readonly authMode?: JiraAuthMode
@@ -40,6 +47,7 @@ export interface JiraEditableConfigView {
   readonly workBoardSync?: boolean
   readonly workBoardSyncJql?: string
   readonly workBoardSyncIntervalMs?: number
+  readonly workBoardProjectMappings?: readonly JiraWorkBoardProjectMappingView[]
   readonly workBoardWriteback?: boolean
   readonly workBoardDoneTransition?: string
   readonly workBoardFailedTransition?: string

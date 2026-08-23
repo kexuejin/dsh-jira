@@ -15,6 +15,7 @@ import type {
   JiraSaveConfigArgs,
   JiraSaveCredentialArgs,
   JiraSearchArgs,
+  JiraWorkBoardProjectMappingView,
   JiraSearchResult,
   JiraTransition,
   JiraTransitionIssueArgs,
@@ -54,6 +55,7 @@ type ConfigDraft = Required<Pick<JiraEditableConfigView, 'authMode' | 'strictTls
   readonly workBoardDoneTransition: string
   readonly workBoardFailedTransition: string
   readonly workBoardManualTransitions: string
+  readonly workBoardProjectMappings: string
 }
 
 function viewLabel(view: JiraIssueView, t: TranslateNS<'jiraTracker'>): string {
@@ -107,12 +109,35 @@ function draftFromConfig(config: JiraEditableConfigView): ConfigDraft {
     workBoardDoneTransition: config.workBoardDoneTransition ?? '',
     workBoardFailedTransition: config.workBoardFailedTransition ?? '',
     workBoardManualTransitions: (config.workBoardManualTransitions ?? []).join(', '),
+    workBoardProjectMappings: JSON.stringify(config.workBoardProjectMappings ?? [], null, 2),
   }
 }
 
 function text(value: string): string | undefined {
   const trimmed = value.trim()
   return trimmed.length === 0 ? undefined : trimmed
+}
+
+function projectMappingsFromDraft(value: string): JiraWorkBoardProjectMappingView[] {
+  const trimmed = value.trim()
+  if (trimmed.length === 0) return []
+  const parsed = JSON.parse(trimmed) as unknown
+  if (!Array.isArray(parsed)) throw new Error('Project mappings must be a JSON array.')
+  return parsed.flatMap(item => {
+    if (typeof item !== 'object' || item === null || Array.isArray(item)) return []
+    const row = item as Record<string, unknown>
+    const projectKey = typeof row.projectKey === 'string' ? row.projectKey.trim().toUpperCase() : ''
+    if (projectKey.length === 0) return []
+    const workspaceId = typeof row.workspaceId === 'string' && row.workspaceId.trim().length > 0 ? row.workspaceId.trim() : undefined
+    const mode = typeof row.mode === 'string' && row.mode.trim().length > 0 ? row.mode.trim() : undefined
+    const permission = row.permission === 'read-only' || row.permission === 'workspace-write' || row.permission === 'danger-full-access' ? row.permission : undefined
+    return [{
+      projectKey,
+      ...(workspaceId === undefined ? {} : { workspaceId }),
+      ...(mode === undefined ? {} : { mode }),
+      ...(permission === undefined ? {} : { permission }),
+    }]
+  })
 }
 
 function draftToConfig(draft: ConfigDraft): JiraEditableConfigView {
@@ -126,6 +151,7 @@ function draftToConfig(draft: ConfigDraft): JiraEditableConfigView {
   const workBoardDoneTransition = text(draft.workBoardDoneTransition)
   const workBoardFailedTransition = text(draft.workBoardFailedTransition)
   const manualTransitions = draft.workBoardManualTransitions.split(',').map(item => item.trim()).filter(item => item.length > 0)
+  const workBoardProjectMappings = projectMappingsFromDraft(draft.workBoardProjectMappings)
   return {
     ...(baseUrl === undefined ? {} : { baseUrl }),
     authMode: draft.authMode,
@@ -144,6 +170,7 @@ function draftToConfig(draft: ConfigDraft): JiraEditableConfigView {
     ...(workBoardDoneTransition === undefined ? {} : { workBoardDoneTransition }),
     ...(workBoardFailedTransition === undefined ? {} : { workBoardFailedTransition }),
     ...(manualTransitions.length === 0 ? {} : { workBoardManualTransitions: manualTransitions }),
+    ...(workBoardProjectMappings.length === 0 ? {} : { workBoardProjectMappings }),
   }
 }
 
@@ -337,6 +364,7 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
           <label><span>{t('panel.doneTransition' as JiraTrackerKey)}</span><input value={configDraft.workBoardDoneTransition} placeholder="Done" onChange={event => { setConfigDraft(current => ({ ...current, workBoardDoneTransition: event.target.value })) }} /></label>
           <label><span>{t('panel.failedTransition' as JiraTrackerKey)}</span><input value={configDraft.workBoardFailedTransition} placeholder="Blocked" onChange={event => { setConfigDraft(current => ({ ...current, workBoardFailedTransition: event.target.value })) }} /></label>
           <label className={css.wideField}><span>{t('panel.manualTransitions' as JiraTrackerKey)}</span><input value={configDraft.workBoardManualTransitions} placeholder="Done, In Progress, Blocked" onChange={event => { setConfigDraft(current => ({ ...current, workBoardManualTransitions: event.target.value })) }} /></label>
+          <label className={css.wideField}><span>{t('panel.projectMappings' as JiraTrackerKey)}</span><textarea className={css.mappingTextArea} value={configDraft.workBoardProjectMappings} placeholder={t('panel.projectMappingsPlaceholder' as JiraTrackerKey)} onChange={event => { setConfigDraft(current => ({ ...current, workBoardProjectMappings: event.target.value })) }} /></label>
         </div>
       </section>
 

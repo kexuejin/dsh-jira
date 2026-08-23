@@ -56,6 +56,8 @@ export const zh = {
   'panel.doneTransition': '成功后流转',
   'panel.failedTransition': '失败后流转',
   'panel.manualTransitions': '常用流转（逗号分隔）',
+  'panel.projectMappings': '项目映射 JSON',
+  'panel.projectMappingsPlaceholder': '[{\n  \"projectKey\": \"APP\",\n  \"workspaceId\": \"/path-or-workspace-id\",\n  \"mode\": \"default\",\n  \"permission\": \"workspace-write\"\n}]',
 } satisfies Record<string, string>
 
 export type JiraTrackerKey = keyof typeof zh
@@ -116,6 +118,8 @@ export const en = {
   'panel.doneTransition': 'Success transition',
   'panel.failedTransition': 'Failure transition',
   'panel.manualTransitions': 'Common transitions (comma-separated)',
+  'panel.projectMappings': 'Project mappings JSON',
+  'panel.projectMappingsPlaceholder': '[{\n  \"projectKey\": \"APP\",\n  \"workspaceId\": \"/path-or-workspace-id\",\n  \"mode\": \"default\",\n  \"permission\": \"workspace-write\"\n}]',
 } satisfies Record<JiraTrackerKey, string>
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {

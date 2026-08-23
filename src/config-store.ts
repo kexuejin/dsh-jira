@@ -1,7 +1,7 @@
 import { mkdirSync, openSync, writeFileSync, fsyncSync, closeSync, chmodSync, renameSync, readFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { dirname, isAbsolute, join } from 'node:path'
-import type { JiraAuthMode } from './model.ts'
+import type { JiraAuthMode, JiraWorkBoardProjectMappingView } from './model.ts'
 import { resolveConfig, type Config as JiraConfig } from './jira.ts'
 import type { JiraWorkBoardSyncConfig } from './work-board-sync.ts'
 
@@ -62,6 +62,28 @@ function stringArray(value: unknown): string[] | undefined {
   return value.map(item => cleanString(item)).filter((item): item is string => item !== undefined)
 }
 
+function permission(value: unknown): JiraWorkBoardProjectMappingView['permission'] | undefined {
+  return value === 'read-only' || value === 'workspace-write' || value === 'danger-full-access' ? value : undefined
+}
+
+function projectMappings(value: unknown): JiraWorkBoardProjectMappingView[] | undefined {
+  if (!Array.isArray(value)) return undefined
+  return value.flatMap(item => {
+    const row = record(item)
+    const projectKey = cleanString(row?.projectKey)?.toUpperCase()
+    if (projectKey === undefined) return []
+    const workspaceId = cleanString(row?.workspaceId)
+    const mode = cleanString(row?.mode)
+    const mappedPermission = permission(row?.permission)
+    return [{
+      projectKey,
+      ...(workspaceId === undefined ? {} : { workspaceId }),
+      ...(mode === undefined ? {} : { mode }),
+      ...(mappedPermission === undefined ? {} : { permission: mappedPermission }),
+    }]
+  })
+}
+
 export function sanitizeJiraConfigPatch(value: unknown): JiraEditableConfig {
   const raw = record(value) ?? {}
   const baseUrl = cleanString(raw.baseUrl)
@@ -79,6 +101,7 @@ export function sanitizeJiraConfigPatch(value: unknown): JiraEditableConfig {
   const workBoardSync = boolField(raw.workBoardSync)
   const workBoardSyncJql = cleanString(raw.workBoardSyncJql)
   const workBoardSyncIntervalMs = numberField(raw.workBoardSyncIntervalMs)
+  const workBoardProjectMappings = projectMappings(raw.workBoardProjectMappings)
   const workBoardWriteback = boolField(raw.workBoardWriteback)
   const workBoardDoneTransition = cleanString(raw.workBoardDoneTransition)
   const workBoardFailedTransition = cleanString(raw.workBoardFailedTransition)
@@ -99,6 +122,7 @@ export function sanitizeJiraConfigPatch(value: unknown): JiraEditableConfig {
     ...(workBoardSync === undefined ? {} : { workBoardSync }),
     ...(workBoardSyncJql === undefined ? {} : { workBoardSyncJql }),
     ...(workBoardSyncIntervalMs === undefined ? {} : { workBoardSyncIntervalMs }),
+    ...(workBoardProjectMappings === undefined ? {} : { workBoardProjectMappings }),
     ...(workBoardWriteback === undefined ? {} : { workBoardWriteback }),
     ...(workBoardDoneTransition === undefined ? {} : { workBoardDoneTransition }),
     ...(workBoardFailedTransition === undefined ? {} : { workBoardFailedTransition }),

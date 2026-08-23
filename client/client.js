@@ -26,7 +26,7 @@ window.__ModuleLoader__.load({
 		}
 		//#endregion
 		//#region \0dsh-jira-css:/Volumes/Kapp/source/dsh-jira/src/client/JiraPanel.module.css.mjs
-		const css = ".XUv5wW_view{z-index:90;pointer-events:none;position:fixed;inset:0}.XUv5wW_entry{width:100%;height:32px;color:var(--dsw-alias-label-secondary,inherit);cursor:pointer;font:inherit;white-space:nowrap;background:0 0;border:none;border-radius:8px;align-items:center;gap:8px;padding:0 12px;font-size:13px;display:flex}.XUv5wW_entry:hover{background:var(--dsw-specific-sidebar-nav-item-hover,#7f7f7f1a);color:var(--dsw-alias-label-primary,inherit)}.XUv5wW_entry[data-active]{background:var(--dsw-specific-sidebar-nav-item-active,#7f7f7f24);color:var(--dsw-alias-label-primary,inherit);font-weight:600}.XUv5wW_entryIcon{flex:none;justify-content:center;align-items:center;display:inline-flex}.XUv5wW_entryLabel{text-overflow:ellipsis;overflow:hidden}[data-dsh-frame][data-sidebar-collapsed] .XUv5wW_entry{justify-content:center;width:100%;padding:0}[data-dsh-frame][data-sidebar-collapsed] .XUv5wW_entryLabel{display:none}.XUv5wW_popover{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);pointer-events:auto;z-index:91;border-radius:16px;width:min(980px,100vw - 96px);max-height:min(760px,100vh - 104px);padding:16px;position:fixed;top:76px;left:72px;overflow:auto;box-shadow:0 18px 48px #0003}.XUv5wW_header,.XUv5wW_detailTop{justify-content:space-between;align-items:flex-start;gap:16px;display:flex}.XUv5wW_title,.XUv5wW_detailTitle,.XUv5wW_sectionTitle{margin:0;font-weight:650}.XUv5wW_subtitle,.XUv5wW_detailMeta,.XUv5wW_empty,.XUv5wW_issueCard small,.XUv5wW_total,.XUv5wW_configGrid span,.XUv5wW_comment strong{color:var(--dsh-color-text-secondary,GrayText);font-size:12px;line-height:1.4}.XUv5wW_subtitle{margin:4px 0 0}.XUv5wW_iconButton{color:inherit;cursor:pointer;background:0 0;border:0;border-radius:8px;padding:4px 8px;font-size:20px;line-height:1}.XUv5wW_iconButton:hover{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_statusBox,.XUv5wW_configBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;grid-template-columns:minmax(180px,1fr) auto;gap:10px;margin-top:14px;padding:12px;display:grid}.XUv5wW_configBox{grid-template-columns:1fr}.XUv5wW_configHeader{justify-content:space-between;align-items:flex-start;gap:12px;display:flex}.XUv5wW_formGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px;display:grid}.XUv5wW_formGrid label{flex-direction:column;gap:5px;min-width:0;display:flex}.XUv5wW_formGrid label span{color:var(--dsh-color-text-secondary,GrayText);font-size:12px}.XUv5wW_formGrid input,.XUv5wW_formGrid select{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;min-width:0;padding:8px 10px;font-size:12px}.XUv5wW_checkboxLabel{align-items:center;padding-top:20px;flex-direction:row!important}.XUv5wW_checkboxLabel input{flex:none;width:auto}.XUv5wW_wideField{grid-column:span 2}.XUv5wW_configGrid{word-break:break-word;grid-column:1/-1;grid-template-columns:max-content minmax(0,1fr);gap:5px 10px;display:grid}.XUv5wW_toolbar,.XUv5wW_transitions{flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;display:flex}.XUv5wW_primaryButton,.XUv5wW_tabButton,.XUv5wW_transitions button,.XUv5wW_openLink{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-soft,#7f7f7f14);color:inherit;cursor:pointer;font:inherit;border-radius:10px;padding:7px 10px;font-size:12px;text-decoration:none}.XUv5wW_primaryButton:hover,.XUv5wW_tabButton:hover,.XUv5wW_transitions button:hover:not(:disabled),.XUv5wW_openLink:hover{background:var(--dsh-color-bg-hover,#7f7f7f24)}.XUv5wW_primaryButton:disabled,.XUv5wW_transitions button:disabled{cursor:not-allowed;opacity:.55}.XUv5wW_tabButtonActive{border-color:var(--dsh-color-accent,#3b82f6);color:var(--dsh-color-accent,#2563eb);font-weight:650}.XUv5wW_jqlInput{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;flex:1;min-width:260px;padding:8px 10px;font-size:12px}.XUv5wW_error,.XUv5wW_notice{border-radius:10px;margin:12px 0 0;padding:8px 10px;font-size:12px;line-height:1.4}.XUv5wW_error{color:#c00000;background:#c000001a}.XUv5wW_notice{color:#167c3a;background:#0080001a}.XUv5wW_content{grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:14px;margin-top:14px;display:grid}.XUv5wW_issueList,.XUv5wW_detail{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;min-height:420px;padding:10px}.XUv5wW_issueList{flex-direction:column;gap:8px;display:flex}.XUv5wW_issueCard{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);color:inherit;cursor:pointer;text-align:left;background:0 0;border-radius:12px;flex-direction:column;gap:4px;padding:10px;display:flex}.XUv5wW_issueCard:hover,.XUv5wW_issueCardActive{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_issueCardActive{border-color:var(--dsh-color-accent,#3b82f6)}.XUv5wW_issueKey{color:var(--dsh-color-accent,#2563eb);font-size:12px;font-weight:700}.XUv5wW_section{border-top:1px solid var(--dsh-color-border-subtle,#7f7f7f24);margin-top:14px;padding-top:12px}.XUv5wW_description,.XUv5wW_comment p{white-space:pre-wrap;margin:8px 0 0;font-size:13px;line-height:1.5}.XUv5wW_commentBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);box-sizing:border-box;color:inherit;font:inherit;resize:vertical;border-radius:10px;width:100%;min-height:76px;margin:8px 0;padding:8px 10px;font-size:13px;display:block}.XUv5wW_comment{border:1px solid var(--dsh-color-border-subtle,#7f7f7f29);border-radius:10px;margin-top:8px;padding:9px 10px}@media (width<=820px){.XUv5wW_popover{width:auto;top:64px;left:12px;right:12px}.XUv5wW_content,.XUv5wW_formGrid{grid-template-columns:1fr}.XUv5wW_wideField{grid-column:auto}}";
+		const css = ".XUv5wW_view{z-index:90;pointer-events:none;position:fixed;inset:0}.XUv5wW_entry{width:100%;height:32px;color:var(--dsw-alias-label-secondary,inherit);cursor:pointer;font:inherit;white-space:nowrap;background:0 0;border:none;border-radius:8px;align-items:center;gap:8px;padding:0 12px;font-size:13px;display:flex}.XUv5wW_entry:hover{background:var(--dsw-specific-sidebar-nav-item-hover,#7f7f7f1a);color:var(--dsw-alias-label-primary,inherit)}.XUv5wW_entry[data-active]{background:var(--dsw-specific-sidebar-nav-item-active,#7f7f7f24);color:var(--dsw-alias-label-primary,inherit);font-weight:600}.XUv5wW_entryIcon{flex:none;justify-content:center;align-items:center;display:inline-flex}.XUv5wW_entryLabel{text-overflow:ellipsis;overflow:hidden}[data-dsh-frame][data-sidebar-collapsed] .XUv5wW_entry{justify-content:center;width:100%;padding:0}[data-dsh-frame][data-sidebar-collapsed] .XUv5wW_entryLabel{display:none}.XUv5wW_popover{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);pointer-events:auto;z-index:91;border-radius:16px;width:min(980px,100vw - 96px);max-height:min(760px,100vh - 104px);padding:16px;position:fixed;top:76px;left:72px;overflow:auto;box-shadow:0 18px 48px #0003}.XUv5wW_header,.XUv5wW_detailTop{justify-content:space-between;align-items:flex-start;gap:16px;display:flex}.XUv5wW_title,.XUv5wW_detailTitle,.XUv5wW_sectionTitle{margin:0;font-weight:650}.XUv5wW_subtitle,.XUv5wW_detailMeta,.XUv5wW_empty,.XUv5wW_issueCard small,.XUv5wW_total,.XUv5wW_configGrid span,.XUv5wW_comment strong{color:var(--dsh-color-text-secondary,GrayText);font-size:12px;line-height:1.4}.XUv5wW_subtitle{margin:4px 0 0}.XUv5wW_iconButton{color:inherit;cursor:pointer;background:0 0;border:0;border-radius:8px;padding:4px 8px;font-size:20px;line-height:1}.XUv5wW_iconButton:hover{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_statusBox,.XUv5wW_configBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;grid-template-columns:minmax(180px,1fr) auto;gap:10px;margin-top:14px;padding:12px;display:grid}.XUv5wW_configBox{grid-template-columns:1fr}.XUv5wW_configHeader{justify-content:space-between;align-items:flex-start;gap:12px;display:flex}.XUv5wW_formGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px;display:grid}.XUv5wW_formGrid label{flex-direction:column;gap:5px;min-width:0;display:flex}.XUv5wW_formGrid label span{color:var(--dsh-color-text-secondary,GrayText);font-size:12px}.XUv5wW_formGrid input,.XUv5wW_formGrid select,.XUv5wW_mappingTextArea{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;min-width:0;padding:8px 10px;font-size:12px}.XUv5wW_mappingTextArea{resize:vertical;min-height:92px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,monospace}.XUv5wW_checkboxLabel{align-items:center;padding-top:20px;flex-direction:row!important}.XUv5wW_checkboxLabel input{flex:none;width:auto}.XUv5wW_wideField{grid-column:span 2}.XUv5wW_configGrid{word-break:break-word;grid-column:1/-1;grid-template-columns:max-content minmax(0,1fr);gap:5px 10px;display:grid}.XUv5wW_toolbar,.XUv5wW_transitions{flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;display:flex}.XUv5wW_primaryButton,.XUv5wW_tabButton,.XUv5wW_transitions button,.XUv5wW_openLink{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-soft,#7f7f7f14);color:inherit;cursor:pointer;font:inherit;border-radius:10px;padding:7px 10px;font-size:12px;text-decoration:none}.XUv5wW_primaryButton:hover,.XUv5wW_tabButton:hover,.XUv5wW_transitions button:hover:not(:disabled),.XUv5wW_openLink:hover{background:var(--dsh-color-bg-hover,#7f7f7f24)}.XUv5wW_primaryButton:disabled,.XUv5wW_transitions button:disabled{cursor:not-allowed;opacity:.55}.XUv5wW_tabButtonActive{border-color:var(--dsh-color-accent,#3b82f6);color:var(--dsh-color-accent,#2563eb);font-weight:650}.XUv5wW_jqlInput{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;flex:1;min-width:260px;padding:8px 10px;font-size:12px}.XUv5wW_error,.XUv5wW_notice{border-radius:10px;margin:12px 0 0;padding:8px 10px;font-size:12px;line-height:1.4}.XUv5wW_error{color:#c00000;background:#c000001a}.XUv5wW_notice{color:#167c3a;background:#0080001a}.XUv5wW_content{grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:14px;margin-top:14px;display:grid}.XUv5wW_issueList,.XUv5wW_detail{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;min-height:420px;padding:10px}.XUv5wW_issueList{flex-direction:column;gap:8px;display:flex}.XUv5wW_issueCard{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);color:inherit;cursor:pointer;text-align:left;background:0 0;border-radius:12px;flex-direction:column;gap:4px;padding:10px;display:flex}.XUv5wW_issueCard:hover,.XUv5wW_issueCardActive{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_issueCardActive{border-color:var(--dsh-color-accent,#3b82f6)}.XUv5wW_issueKey{color:var(--dsh-color-accent,#2563eb);font-size:12px;font-weight:700}.XUv5wW_section{border-top:1px solid var(--dsh-color-border-subtle,#7f7f7f24);margin-top:14px;padding-top:12px}.XUv5wW_description,.XUv5wW_comment p{white-space:pre-wrap;margin:8px 0 0;font-size:13px;line-height:1.5}.XUv5wW_commentBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);box-sizing:border-box;color:inherit;font:inherit;resize:vertical;border-radius:10px;width:100%;min-height:76px;margin:8px 0;padding:8px 10px;font-size:13px;display:block}.XUv5wW_comment{border:1px solid var(--dsh-color-border-subtle,#7f7f7f29);border-radius:10px;margin-top:8px;padding:9px 10px}@media (width<=820px){.XUv5wW_popover{width:auto;top:64px;left:12px;right:12px}.XUv5wW_content,.XUv5wW_formGrid{grid-template-columns:1fr}.XUv5wW_wideField{grid-column:auto}}";
 		const tagId = "dsh-jira/JiraPanel.module.css";
 		if (typeof document !== "undefined" && document.querySelector("style[data-plugin-css=" + JSON.stringify(tagId) + "]") === null) {
 			const tag = document.createElement("style");
@@ -36,47 +36,48 @@ window.__ModuleLoader__.load({
 			document.head.appendChild(tag);
 		}
 		var JiraPanel_module_css_default = {
-			"view": "XUv5wW_view",
-			"section": "XUv5wW_section",
-			"error": "XUv5wW_error",
-			"primaryButton": "XUv5wW_primaryButton",
+			"popover": "XUv5wW_popover",
+			"configBox": "XUv5wW_configBox",
+			"description": "XUv5wW_description",
+			"jqlInput": "XUv5wW_jqlInput",
+			"detailTop": "XUv5wW_detailTop",
+			"statusBox": "XUv5wW_statusBox",
+			"header": "XUv5wW_header",
+			"configGrid": "XUv5wW_configGrid",
+			"entryLabel": "XUv5wW_entryLabel",
 			"transitions": "XUv5wW_transitions",
+			"tabButton": "XUv5wW_tabButton",
+			"configHeader": "XUv5wW_configHeader",
+			"openLink": "XUv5wW_openLink",
+			"comment": "XUv5wW_comment",
+			"detail": "XUv5wW_detail",
+			"primaryButton": "XUv5wW_primaryButton",
+			"tabButtonActive": "XUv5wW_tabButtonActive",
+			"wideField": "XUv5wW_wideField",
+			"total": "XUv5wW_total",
+			"formGrid": "XUv5wW_formGrid",
+			"title": "XUv5wW_title",
+			"content": "XUv5wW_content",
+			"detailMeta": "XUv5wW_detailMeta",
+			"commentBox": "XUv5wW_commentBox",
+			"entry": "XUv5wW_entry",
+			"issueList": "XUv5wW_issueList",
+			"mappingTextArea": "XUv5wW_mappingTextArea",
+			"subtitle": "XUv5wW_subtitle",
+			"detailTitle": "XUv5wW_detailTitle",
+			"iconButton": "XUv5wW_iconButton",
+			"notice": "XUv5wW_notice",
+			"toolbar": "XUv5wW_toolbar",
+			"issueKey": "XUv5wW_issueKey",
+			"issueCardActive": "XUv5wW_issueCardActive",
+			"error": "XUv5wW_error",
+			"empty": "XUv5wW_empty",
+			"section": "XUv5wW_section",
 			"checkboxLabel": "XUv5wW_checkboxLabel",
 			"sectionTitle": "XUv5wW_sectionTitle",
-			"total": "XUv5wW_total",
-			"configHeader": "XUv5wW_configHeader",
-			"toolbar": "XUv5wW_toolbar",
-			"detailTop": "XUv5wW_detailTop",
-			"tabButtonActive": "XUv5wW_tabButtonActive",
-			"detailTitle": "XUv5wW_detailTitle",
-			"popover": "XUv5wW_popover",
-			"issueCard": "XUv5wW_issueCard",
 			"entryIcon": "XUv5wW_entryIcon",
-			"header": "XUv5wW_header",
-			"subtitle": "XUv5wW_subtitle",
-			"entry": "XUv5wW_entry",
-			"comment": "XUv5wW_comment",
-			"jqlInput": "XUv5wW_jqlInput",
-			"notice": "XUv5wW_notice",
-			"configBox": "XUv5wW_configBox",
-			"content": "XUv5wW_content",
-			"formGrid": "XUv5wW_formGrid",
-			"empty": "XUv5wW_empty",
-			"tabButton": "XUv5wW_tabButton",
-			"description": "XUv5wW_description",
-			"detail": "XUv5wW_detail",
-			"commentBox": "XUv5wW_commentBox",
-			"detailMeta": "XUv5wW_detailMeta",
-			"wideField": "XUv5wW_wideField",
-			"openLink": "XUv5wW_openLink",
-			"entryLabel": "XUv5wW_entryLabel",
-			"statusBox": "XUv5wW_statusBox",
-			"title": "XUv5wW_title",
-			"issueList": "XUv5wW_issueList",
-			"issueCardActive": "XUv5wW_issueCardActive",
-			"issueKey": "XUv5wW_issueKey",
-			"iconButton": "XUv5wW_iconButton",
-			"configGrid": "XUv5wW_configGrid"
+			"view": "XUv5wW_view",
+			"issueCard": "XUv5wW_issueCard"
 		};
 		//#endregion
 		//#region src/client/JiraPanel.tsx
@@ -126,12 +127,34 @@ window.__ModuleLoader__.load({
 				workBoardWriteback: config.workBoardWriteback ?? true,
 				workBoardDoneTransition: config.workBoardDoneTransition ?? "",
 				workBoardFailedTransition: config.workBoardFailedTransition ?? "",
-				workBoardManualTransitions: (config.workBoardManualTransitions ?? []).join(", ")
+				workBoardManualTransitions: (config.workBoardManualTransitions ?? []).join(", "),
+				workBoardProjectMappings: JSON.stringify(config.workBoardProjectMappings ?? [], null, 2)
 			};
 		}
 		function text(value) {
 			const trimmed = value.trim();
 			return trimmed.length === 0 ? void 0 : trimmed;
+		}
+		function projectMappingsFromDraft(value) {
+			const trimmed = value.trim();
+			if (trimmed.length === 0) return [];
+			const parsed = JSON.parse(trimmed);
+			if (!Array.isArray(parsed)) throw new Error("Project mappings must be a JSON array.");
+			return parsed.flatMap((item) => {
+				if (typeof item !== "object" || item === null || Array.isArray(item)) return [];
+				const row = item;
+				const projectKey = typeof row.projectKey === "string" ? row.projectKey.trim().toUpperCase() : "";
+				if (projectKey.length === 0) return [];
+				const workspaceId = typeof row.workspaceId === "string" && row.workspaceId.trim().length > 0 ? row.workspaceId.trim() : void 0;
+				const mode = typeof row.mode === "string" && row.mode.trim().length > 0 ? row.mode.trim() : void 0;
+				const permission = row.permission === "read-only" || row.permission === "workspace-write" || row.permission === "danger-full-access" ? row.permission : void 0;
+				return [{
+					projectKey,
+					...workspaceId === void 0 ? {} : { workspaceId },
+					...mode === void 0 ? {} : { mode },
+					...permission === void 0 ? {} : { permission }
+				}];
+			});
 		}
 		function draftToConfig(draft) {
 			const baseUrl = text(draft.baseUrl);
@@ -144,6 +167,7 @@ window.__ModuleLoader__.load({
 			const workBoardDoneTransition = text(draft.workBoardDoneTransition);
 			const workBoardFailedTransition = text(draft.workBoardFailedTransition);
 			const manualTransitions = draft.workBoardManualTransitions.split(",").map((item) => item.trim()).filter((item) => item.length > 0);
+			const workBoardProjectMappings = projectMappingsFromDraft(draft.workBoardProjectMappings);
 			return {
 				...baseUrl === void 0 ? {} : { baseUrl },
 				authMode: draft.authMode,
@@ -161,7 +185,8 @@ window.__ModuleLoader__.load({
 				workBoardWriteback: draft.workBoardWriteback,
 				...workBoardDoneTransition === void 0 ? {} : { workBoardDoneTransition },
 				...workBoardFailedTransition === void 0 ? {} : { workBoardFailedTransition },
-				...manualTransitions.length === 0 ? {} : { workBoardManualTransitions: manualTransitions }
+				...manualTransitions.length === 0 ? {} : { workBoardManualTransitions: manualTransitions },
+				...workBoardProjectMappings.length === 0 ? {} : { workBoardProjectMappings }
 			};
 		}
 		function JiraPanel({ open, onClose, port, t }) {
@@ -552,6 +577,20 @@ window.__ModuleLoader__.load({
 											setConfigDraft((current) => ({
 												...current,
 												workBoardManualTransitions: event.target.value
+											}));
+										}
+									})]
+								}),
+								/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("label", {
+									className: JiraPanel_module_css_default.wideField,
+									children: [/* @__PURE__ */ (0, react_jsx_runtime.jsx)("span", { children: t("panel.projectMappings") }), /* @__PURE__ */ (0, react_jsx_runtime.jsx)("textarea", {
+										className: JiraPanel_module_css_default.mappingTextArea,
+										value: configDraft.workBoardProjectMappings,
+										placeholder: t("panel.projectMappingsPlaceholder"),
+										onChange: (event) => {
+											setConfigDraft((current) => ({
+												...current,
+												workBoardProjectMappings: event.target.value
 											}));
 										}
 									})]
@@ -1043,7 +1082,9 @@ window.__ModuleLoader__.load({
 			"panel.workBoardWriteback": "执行结果写回 Jira",
 			"panel.doneTransition": "成功后流转",
 			"panel.failedTransition": "失败后流转",
-			"panel.manualTransitions": "常用流转（逗号分隔）"
+			"panel.manualTransitions": "常用流转（逗号分隔）",
+			"panel.projectMappings": "项目映射 JSON",
+			"panel.projectMappingsPlaceholder": "[{\n  \"projectKey\": \"APP\",\n  \"workspaceId\": \"/path-or-workspace-id\",\n  \"mode\": \"default\",\n  \"permission\": \"workspace-write\"\n}]"
 		};
 		const en = {
 			"panel.trigger": "Jira",
@@ -1100,7 +1141,9 @@ window.__ModuleLoader__.load({
 			"panel.workBoardWriteback": "Write results back to Jira",
 			"panel.doneTransition": "Success transition",
 			"panel.failedTransition": "Failure transition",
-			"panel.manualTransitions": "Common transitions (comma-separated)"
+			"panel.manualTransitions": "Common transitions (comma-separated)",
+			"panel.projectMappings": "Project mappings JSON",
+			"panel.projectMappingsPlaceholder": "[{\n  \"projectKey\": \"APP\",\n  \"workspaceId\": \"/path-or-workspace-id\",\n  \"mode\": \"default\",\n  \"permission\": \"workspace-write\"\n}]"
 		};
 		//#endregion
 		//#region src/client/index.ts

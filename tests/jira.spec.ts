@@ -253,13 +253,25 @@ describe('JiraWorkBoardSync', () => {
     }).await()
     const { registerJiraWorkBoardSync } = await import('../src/work-board-sync.ts')
 
-    registerJiraWorkBoardSync(ctx, { baseUrl, workBoardSyncIntervalMs: 30000 })
+    registerJiraWorkBoardSync(ctx, {
+      baseUrl,
+      workBoardSyncIntervalMs: 30000,
+      workBoardProjectMappings: [{
+        projectKey: 'ABC',
+        workspaceId: '/Volumes/Kapp/source/app',
+        mode: 'default',
+        permission: 'workspace-write',
+      }],
+    })
     await new Promise(resolve => setTimeout(resolve, 30))
 
     expect(synced[0]).toMatchObject({
       id: 'jira:ABC-9',
       title: '[ABC-9] Implement board sync',
       status: 'todo',
+      workspaceId: '/Volumes/Kapp/source/app',
+      mode: 'default',
+      permission: 'workspace-write',
     })
     await dispose()
   })

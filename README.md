@@ -29,6 +29,11 @@ A profile can still provide deployment defaults:
     workBoardSync: true
     workBoardSyncJql: 'assignee = currentUser() AND resolution = Unresolved ORDER BY updated DESC'
     workBoardSyncIntervalMs: 300000
+    workBoardProjectMappings:
+      - projectKey: APP
+        workspaceId: /Volumes/Kapp/source/app
+        mode: default
+        permission: workspace-write
     workBoardWriteback: true
 ```
 
@@ -38,10 +43,13 @@ Set `JIRA_API_TOKEN` through the Jira panel's Token / password field, the DSH cr
 
 When `dsh-work-board` is mounted, Jira issues matching `workBoardSyncJql` are synced into the Work Board manual task ledger as `jira:<issue-key>` tasks. The task prompt includes the Jira URL and issue summary so an agent can start from the board card. Local execution history stays in Work Board while issue title, status, priority, assignee, reporter, and URL refresh from Jira on each sync.
 
+`workBoardProjectMappings` maps a Jira project key such as `APP` from `APP-123` to a Work Board execution target. New synced tasks receive the mapped `workspaceId`, optional agent `mode`, and optional `permission`; later Jira syncs preserve local overrides made on the Work Board card.
+
 `workBoardWriteback` adds one Jira comment per completed Work Board execution using a `[dsh-work-board:<execution-id>]` marker, so retries do not duplicate comments across restarts. Set it to `false` for read-only synchronization. When `workBoardDoneTransition` or `workBoardFailedTransition` is set, the issue is also transitioned by exact transition name after a successful or failed execution, again guarded by a marker.
 
 - `workBoardDoneTransition` / `workBoardFailedTransition`: exact transition name applied after a successful or failed execution (marker-guarded against retries).
 - `workBoardManualTransitions`: Jira transition names offered as a manual action on the board card.
+- `workBoardProjectMappings`: JSON array of project-key mappings to Work Board `workspaceId`, `mode`, and `permission` execution targets.
 
 ## Agent collaboration
 
