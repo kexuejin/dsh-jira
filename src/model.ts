@@ -15,11 +15,18 @@ export interface JiraConnectionConfigView {
   readonly maxResults: number
 }
 
+export type JiraWorkBoardIntegrationStatus = 'connected' | 'standalone'
+
+export interface JiraWorkBoardIntegrationView {
+  readonly status: JiraWorkBoardIntegrationStatus
+}
+
 export interface JiraConnectionStatusView {
   readonly status: JiraConnectionStatus
   readonly config: JiraConnectionConfigView
   readonly credentialConfigured: boolean
   readonly message: string
+  readonly workBoard?: JiraWorkBoardIntegrationView
   readonly user?: JiraUser
 }
 

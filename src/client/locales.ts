@@ -58,6 +58,9 @@ export const zh = {
   'panel.manualTransitions': '常用流转（逗号分隔）',
   'panel.projectMappings': '项目映射 JSON',
   'panel.projectMappingsPlaceholder': '[{\n  \"projectKey\": \"APP\",\n  \"workspaceId\": \"/path-or-workspace-id\",\n  \"mode\": \"default\",\n  \"permission\": \"workspace-write\"\n}]',
+  'panel.workBoardIntegration': 'Work Board 集成',
+  'panel.workBoardConnected': '已连接：Jira issues 会同步到 Work Board',
+  'panel.workBoardStandalone': '独立模式：未安装 Work Board，仅启用 Jira 面板和工具',
 } satisfies Record<string, string>
 
 export type JiraTrackerKey = keyof typeof zh
@@ -120,6 +123,9 @@ export const en = {
   'panel.manualTransitions': 'Common transitions (comma-separated)',
   'panel.projectMappings': 'Project mappings JSON',
   'panel.projectMappingsPlaceholder': '[{\n  \"projectKey\": \"APP\",\n  \"workspaceId\": \"/path-or-workspace-id\",\n  \"mode\": \"default\",\n  \"permission\": \"workspace-write\"\n}]',
+  'panel.workBoardIntegration': 'Work Board integration',
+  'panel.workBoardConnected': 'Connected: Jira issues sync to Work Board',
+  'panel.workBoardStandalone': 'Standalone mode: Work Board is not installed; Jira panel and tools remain enabled',
 } satisfies Record<JiraTrackerKey, string>
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {

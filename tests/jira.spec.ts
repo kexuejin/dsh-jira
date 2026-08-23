@@ -190,6 +190,29 @@ describe('JiraWorkSource', () => {
   })
 })
 
+describe('JiraWorkBoardIntegration', () => {
+  it('reports standalone mode when Work Board is not mounted', async () => {
+    const { internals: rpcInternals } = await import('../src/rpc.ts')
+
+    expect(rpcInternals.workBoardIntegration(new Context())).toEqual({ status: 'standalone' })
+  })
+
+  it('reports connected mode when Work Board sync service is mounted', async () => {
+    const ctx = new Context()
+    await ctx.plugin({
+      apply(child: Context) {
+        child.provide('workBoard', {
+          syncManualTasks() { return { tasks: [] } },
+          manualSnapshot() { return { tasks: [] } },
+        })
+      },
+    }).await()
+    const { internals: rpcInternals } = await import('../src/rpc.ts')
+
+    expect(rpcInternals.workBoardIntegration(ctx)).toEqual({ status: 'connected' })
+  })
+})
+
 describe('JiraWorkBoardSync', () => {
   it('starts a dormant sync loop before baseUrl is configured', async () => {
     const ctx = new Context()

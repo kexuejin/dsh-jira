@@ -13,6 +13,7 @@ import {
   type JiraSaveCredentialArgs,
   type JiraSearchArgs,
   type JiraTransitionIssueArgs,
+  type JiraWorkBoardIntegrationView,
 } from './model.ts'
 
 function asJson(value: unknown): JsonValue {
@@ -83,6 +84,18 @@ function saveConfigArgs(payload: unknown): JiraSaveConfigArgs {
 }
 
 
+interface WorkBoardServiceLike {
+  syncManualTasks: unknown
+  manualSnapshot: unknown
+}
+
+function workBoardIntegration(ctx: Context): JiraWorkBoardIntegrationView {
+  const service = ctx.get('workBoard') as Partial<WorkBoardServiceLike> | undefined
+  return typeof service?.syncManualTasks === 'function' && typeof service.manualSnapshot === 'function'
+    ? { status: 'connected' }
+    : { status: 'standalone' }
+}
+
 function saveCredentialArgs(payload: unknown): JiraSaveCredentialArgs {
   return { credentialRef: stringField(payload, 'credentialRef') ?? '', value: stringField(payload, 'value') ?? '' }
 }
@@ -112,12 +125,14 @@ function failure(error: unknown): { readonly ok: false; readonly error: { readon
   }
 }
 
+export const internals = { workBoardIntegration }
+
 export function registerJiraRpc(ctx: Context, store: JiraConfigStore): void {
   ctx.connection.rpc.handle(JIRA_RPC_CHANNEL, async (endpoint, payload) => {
     try {
       switch (endpoint) {
         case 'status':
-          return ok(await createJiraClient(ctx, store.current()).status())
+          return ok({ ...await createJiraClient(ctx, store.current()).status(), workBoard: workBoardIntegration(ctx) })
         case 'config':
           return ok(store.view())
         case 'saveConfig':

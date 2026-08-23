@@ -4,6 +4,13 @@
 
 `dsh-jira` keeps Jira-specific configuration and sync policy while `dsh-work-board` remains the generic board. Jira project mappings connect synced issues to the local DSH workspace where an agent can analyze and execute the work.
 
+## Install modes
+
+The Jira plugin has two supported modes:
+
+- Standalone: only `dsh-jira` is installed. The Jira panel and `jira_*` tools work, while Work Board sync/writeback stay inactive.
+- Connected: both `dsh-jira` and `dsh-work-board` are installed. The Jira panel reports the Work Board integration as connected, and synced Jira issues become Work Board tasks.
+
 ## Configuration
 
 The runtime config field `workBoardProjectMappings` is a JSON array in the Jira panel and in `~/.dsh/jira/config-v1.json`:

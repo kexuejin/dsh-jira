@@ -204,6 +204,22 @@
   word-break: break-word;
 }
 
+.integrationBadge {
+  border-radius: 999px;
+  justify-self: start;
+  padding: 2px 8px;
+}
+
+.integrationBadge[data-status='connected'] {
+  background: rgba(0, 128, 0, 0.10);
+  color: #167c3a;
+}
+
+.integrationBadge[data-status='standalone'] {
+  background: rgba(127, 127, 127, 0.12);
+  color: inherit;
+}
+
 .toolbar,
 .transitions {
   display: flex;

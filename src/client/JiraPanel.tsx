@@ -76,6 +76,12 @@ function statusLabel(status: JiraConnectionStatusView['status'], t: TranslateNS<
   }
 }
 
+function workBoardLabel(status: JiraConnectionStatusView['workBoard'] | undefined, t: TranslateNS<'jiraTracker'>): string {
+  return status?.status === 'connected'
+    ? t('panel.workBoardConnected' as JiraTrackerKey)
+    : t('panel.workBoardStandalone' as JiraTrackerKey)
+}
+
 function selectedIssue(issues: readonly JiraIssueSummary[], selectedKey: string | undefined): JiraIssueSummary | undefined {
   if (selectedKey !== undefined) return issues.find(issue => issue.key === selectedKey) ?? issues[0]
   return issues[0]
@@ -334,6 +340,7 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
             <span>{t('panel.baseUrl')}</span><strong>{status.config.baseUrl ?? '—'}</strong>
             <span>{t('panel.credential')}</span><strong>{status.config.credentialRef} · {status.credentialConfigured ? 'configured' : 'missing'}</strong>
             <span>{t('panel.user')}</span><strong>{status.user?.displayName ?? status.user?.name ?? t('panel.noUser')}</strong>
+            <span>{t('panel.workBoardIntegration' as JiraTrackerKey)}</span><strong className={css.integrationBadge} data-status={status.workBoard?.status ?? 'standalone'}>{workBoardLabel(status.workBoard, t)}</strong>
           </div>
         )}
       </section>

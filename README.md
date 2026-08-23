@@ -39,6 +39,12 @@ A profile can still provide deployment defaults:
 
 Set `JIRA_API_TOKEN` through the Jira panel's Token / password field, the DSH credentials provider, or the launching environment. For older internal deployments that require HTTP Basic authentication, set `authMode: basic`, `username`, and store the password or token in the same credential reference.
 
+## Install modes
+
+`dsh-jira` is useful by itself. When `dsh-work-board` is not mounted, the Jira sidebar panel, configuration form, issue search/detail, comments, transitions, and `jira_*` agent tools continue to work in standalone mode. The panel status area reports **Work Board integration: standalone** instead of failing or hiding Jira features.
+
+When `dsh-work-board` is also mounted, the same status area reports **connected** and Jira enables the optional sync/writeback/project-mapping loop described below.
+
 ## Work Board integration
 
 When `dsh-work-board` is mounted, Jira issues matching `workBoardSyncJql` are synced into the Work Board manual task ledger as `jira:<issue-key>` tasks. The task prompt includes the Jira URL and issue summary so an agent can start from the board card. Local execution history stays in Work Board while issue title, status, priority, assignee, reporter, and URL refresh from Jira on each sync.
