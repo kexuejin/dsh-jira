@@ -1,11 +1,39 @@
-/* --- main sidebar entry ----------------------------------------------------- */
+/* --- center-column takeover (global rules, attribute-scoped) ----------------- */
 
-.view {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  pointer-events: none;
+[data-pane='conversation'],
+[class*='centerCol'] {
+  position: relative;
 }
+
+/* The Jira container rides inside the conversation grid item as an extra
+   trailing child; hidden unless the panel is active. */
+[data-dsh-jira-view] {
+  position: absolute;
+  inset: 0;
+  display: none;
+  z-index: 60;
+  background: var(--dsw-alias-bg-base);
+  overflow: auto;
+  container-name: jira-view;
+  container-type: inline-size;
+}
+
+/* The center column is single-occupant; the :not() guards keep the sibling
+   panels (work board / ssh) from fighting over visibility if activation
+   attributes ever coexist. */
+html[data-dsh-jira-active]:not([data-dsh-work-board-active]):not([data-dsh-ssh-active]):not([data-dsh-taskboard-active]) [data-dsh-jira-view] {
+  display: block;
+}
+
+/* While the panel is active, the conversation content underneath is hidden
+   (it stays mounted and stateful). The !important is required: the dsh shell
+   wraps the conversation view in a node with an inline `display: contents`. */
+html[data-dsh-jira-active]:not([data-dsh-work-board-active]):not([data-dsh-ssh-active]):not([data-dsh-taskboard-active]) [data-pane='conversation'] > :not([data-dsh-jira-view]),
+html[data-dsh-jira-active]:not([data-dsh-work-board-active]):not([data-dsh-ssh-active]):not([data-dsh-taskboard-active]) [class*='centerCol'] > :not([data-dsh-jira-view]) {
+  display: none !important;
+}
+
+/* --- main sidebar entry ----------------------------------------------------- */
 
 .entry {
   display: flex;
@@ -57,20 +85,13 @@
   display: none;
 }
 
+/* The panel body fills the embedded center-column view. */
 .popover {
-  position: fixed;
-  left: 72px;
-  top: 76px;
-  width: min(980px, calc(100vw - 96px));
-  max-height: min(760px, calc(100vh - 104px));
+  box-sizing: border-box;
+  height: 100%;
   overflow: auto;
-  border: 1px solid var(--dsh-color-border-subtle, rgba(127, 127, 127, 0.24));
-  border-radius: 16px;
-  background: var(--dsh-color-bg-elevated, Canvas);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.20);
   padding: 16px;
-  pointer-events: auto;
-  z-index: 91;
+  width: 100%;
 }
 
 .header,
@@ -505,14 +526,7 @@
   padding: 9px 10px;
 }
 
-@media (max-width: 820px) {
-  .popover {
-    left: 12px;
-    right: 12px;
-    top: 64px;
-    width: auto;
-  }
-
+@container jira-view (max-width: 820px) {
   .content,
   .formGrid {
     grid-template-columns: 1fr;
