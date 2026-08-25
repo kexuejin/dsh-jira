@@ -192,7 +192,7 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
   const [status, setStatus] = useState<JiraConnectionStatusView | undefined>()
   const [configView, setConfigView] = useState<JiraConfigEditorView | undefined>()
   const [configDraft, setConfigDraft] = useState<ConfigDraft>(() => draftFromConfig({}))
-  const [configOpen, setConfigOpen] = useState(false)
+  const [page, setPage] = useState<'issues' | 'settings'>('issues')
   const [credentialValue, setCredentialValue] = useState('')
   const [view, setView] = useState<JiraIssueView>('assigned')
   const [customJql, setCustomJql] = useState('')
@@ -357,7 +357,7 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
 
   useEffect(() => {
     if (status === undefined) return
-    if (status.status === 'missing-config' || status.status === 'missing-credential') setConfigOpen(true)
+    if (status.status === 'missing-config' || status.status === 'missing-credential') setPage('settings')
   }, [status])
 
   useEffect(() => {
@@ -375,6 +375,27 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
           <p className={css.subtitle}>{t('panel.subtitle')}</p>
         </div>
         <button type="button" className={css.iconButton} onClick={onClose} aria-label={t('panel.close')}>×</button>
+      </div>
+
+      <div className={css.pageTabs} role="tablist">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={page === 'issues'}
+          className={clsx(css.tabButton, page === 'issues' && css.tabButtonActive)}
+          onClick={() => { setPage('issues') }}
+        >
+          {t('panel.issues' as JiraTrackerKey)}
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={page === 'settings'}
+          className={clsx(css.tabButton, page === 'settings' && css.tabButtonActive)}
+          onClick={() => { setPage('settings') }}
+        >
+          {t('panel.settingsTab' as JiraTrackerKey)}
+        </button>
       </div>
 
       <section className={css.statusBox}>
@@ -395,27 +416,24 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
         )}
       </section>
 
-      <section className={css.configBox}>
-        <div className={css.configHeader}>
-          <button type="button" className={css.configToggle} aria-expanded={configOpen} onClick={() => { setConfigOpen(open => !open) }}>
-            <span className={css.configCaret}>{configOpen ? '▾' : '▸'}</span>
-            <span>
+      {status !== undefined && (status.status === 'missing-config' || status.status === 'missing-credential') && page === 'issues' && (
+        <div className={css.missingHint}>
+          <span>{t('panel.configHint' as JiraTrackerKey)}</span>
+          <button type="button" className={css.ghostButton} onClick={() => { setPage('settings') }}>{t('panel.settingsTab' as JiraTrackerKey)}</button>
+        </div>
+      )}
+
+      {page === 'settings' && (
+        <section className={css.configBox}>
+          <div className={css.configHeader}>
+            <div>
               <p className={css.sectionTitle}>{t('panel.connectionSettings' as JiraTrackerKey)}</p>
               <p className={css.subtitle}>{configView === undefined ? t('panel.loading') : t('panel.configPath' as JiraTrackerKey, { path: configView.path })}</p>
-            </span>
-          </button>
-          <div className={css.configActions}>
-            {configOpen && (
-              <button type="button" className={css.primaryButton} disabled={busy !== undefined} onClick={() => { void saveConfig() }}>
-                {busy === 'config' ? t('panel.saving' as JiraTrackerKey) : t('panel.saveConfig' as JiraTrackerKey)}
-              </button>
-            )}
-            <button type="button" className={css.ghostButton} onClick={() => { setConfigOpen(open => !open) }}>
-              {configOpen ? t('panel.configCollapse' as JiraTrackerKey) : t('panel.configExpand' as JiraTrackerKey)}
+            </div>
+            <button type="button" className={css.primaryButton} disabled={busy !== undefined} onClick={() => { void saveConfig() }}>
+              {busy === 'config' ? t('panel.saving' as JiraTrackerKey) : t('panel.saveConfig' as JiraTrackerKey)}
             </button>
           </div>
-        </div>
-        {configOpen && (
           <div className={css.formGrid}>
           <label><span>{t('panel.baseUrl')}</span><input value={configDraft.baseUrl} placeholder="https://jira.example.com" onChange={event => { setConfigDraft(current => ({ ...current, baseUrl: event.target.value })) }} /></label>
           <label><span>{t('panel.authMode' as JiraTrackerKey)}</span><select value={configDraft.authMode} onChange={event => { setConfigDraft(current => ({ ...current, authMode: event.target.value === 'basic' ? 'basic' : 'pat' })) }}><option value="pat">PAT</option><option value="basic">Basic</option></select></label>
@@ -433,13 +451,15 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
           <label><span>{t('panel.failedTransition' as JiraTrackerKey)}</span><input value={configDraft.workBoardFailedTransition} placeholder="Blocked" onChange={event => { setConfigDraft(current => ({ ...current, workBoardFailedTransition: event.target.value })) }} /></label>
           <label className={css.wideField}><span>{t('panel.manualTransitions' as JiraTrackerKey)}</span><input value={configDraft.workBoardManualTransitions} placeholder="Done, In Progress, Blocked" onChange={event => { setConfigDraft(current => ({ ...current, workBoardManualTransitions: event.target.value })) }} /></label>
           <label className={css.wideField}><span>{t('panel.projectMappings' as JiraTrackerKey)}</span><textarea className={css.mappingTextArea} value={configDraft.workBoardProjectMappings} placeholder={t('panel.projectMappingsPlaceholder' as JiraTrackerKey)} onChange={event => { setConfigDraft(current => ({ ...current, workBoardProjectMappings: event.target.value })) }} /></label>
-        </div>
-        )}
-      </section>
+          </div>
+        </section>
+      )}
 
       {error !== undefined && <p className={css.error}>{error}</p>}
       {notice !== undefined && <p className={css.notice}>{notice}</p>}
 
+      {page === 'issues' && (
+        <>
       <div className={css.toolbar}>
         {(['assigned', 'watching', 'reported', 'custom'] as const).map(item => (
           <button
@@ -552,6 +572,8 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
           )}
         </div>
       </div>
+        </>
+      )}
     </div>
   )
 }

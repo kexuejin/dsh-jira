@@ -323,6 +323,30 @@ html[data-dsh-jira-active]:not([data-dsh-work-board-active]):not([data-dsh-ssh-a
   font-weight: 650;
 }
 
+.pageTabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.missingHint {
+  align-items: center;
+  border: 1px solid rgba(200, 120, 0, 0.35);
+  border-radius: 10px;
+  background: rgba(200, 120, 0, 0.08);
+  color: #b26a00;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 8px 10px;
+}
+
+.missingHint span {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .jqlInput {
   border: 1px solid var(--dsh-color-border-subtle, rgba(127, 127, 127, 0.24));
   border-radius: 10px;
