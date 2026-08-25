@@ -82,6 +82,14 @@ function workBoardLabel(status: JiraConnectionStatusView['workBoard'] | undefine
     : t('panel.workBoardStandalone' as JiraTrackerKey)
 }
 
+/** Map a Jira status category to a tone used for color cues (done/progress/todo). */
+function statusTone(category: string | undefined): 'done' | 'progress' | 'todo' {
+  const value = (category ?? '').toLowerCase()
+  if (value.includes('done') || value.includes('complete')) return 'done'
+  if (value.includes('progress') || value.includes('review') || value.includes('indeterminate')) return 'progress'
+  return 'todo'
+}
+
 function selectedIssue(issues: readonly JiraIssueSummary[], selectedKey: string | undefined): JiraIssueSummary | undefined {
   if (selectedKey !== undefined) return issues.find(issue => issue.key === selectedKey) ?? issues[0]
   return issues[0]
@@ -188,6 +196,7 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
   const [credentialValue, setCredentialValue] = useState('')
   const [view, setView] = useState<JiraIssueView>('assigned')
   const [customJql, setCustomJql] = useState('')
+  const [query, setQuery] = useState('')
   const [result, setResult] = useState<JiraSearchResult | undefined>()
   const [selectedKey, setSelectedKey] = useState<string | undefined>()
   const [detail, setDetail] = useState<JiraIssueDetail | undefined>()
@@ -196,6 +205,18 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
   const [error, setError] = useState<string | undefined>()
   const [notice, setNotice] = useState<string | undefined>()
   const issue = useMemo(() => selectedIssue(result?.issues ?? [], selectedKey), [result, selectedKey])
+
+  const filteredIssues = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (q === '') return result?.issues ?? []
+    return (result?.issues ?? []).filter(item =>
+      item.key.toLowerCase().includes(q)
+      || item.summary.toLowerCase().includes(q)
+      || item.status.toLowerCase().includes(q)
+      || (item.priority ?? '').toLowerCase().includes(q)
+      || (item.assignee ?? '').toLowerCase().includes(q),
+    )
+  }, [result, query])
 
   const loadConfig = async () => {
     setBusy('config')
@@ -253,6 +274,29 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
       setResult(next)
       setSelectedKey(current => next.issues.some(item => item.key === current) ? current : next.issues[0]?.key)
       setDetail(undefined)
+    } catch (nextError) {
+      setError(nextError instanceof Error ? nextError.message : String(nextError))
+    } finally {
+      setBusy(undefined)
+    }
+  }
+
+  const loadMore = async () => {
+    if (result === undefined) return
+    setBusy('search')
+    setError(undefined)
+    try {
+      const next = await port.search({
+        view,
+        ...view === 'custom' ? { jql: customJql } : {},
+        startAt: result.issues.length,
+        maxResults: result.maxResults,
+      })
+      const byKey = new Map(result.issues.map(item => [item.key, item]))
+      for (const item of next.issues) {
+        if (!byKey.has(item.key)) byKey.set(item.key, item)
+      }
+      setResult({ ...next, issues: [...byKey.values()] })
     } catch (nextError) {
       setError(nextError instanceof Error ? nextError.message : String(nextError))
     } finally {
@@ -425,19 +469,25 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
 
       <div className={css.content}>
         <div className={css.issueList}>
+          <input className={css.filterInput} value={query} placeholder={t('panel.filterPlaceholder' as JiraTrackerKey)} onChange={event => { setQuery(event.target.value) }} />
           {busy === 'search' && <p className={css.empty}>{t('panel.loading')}</p>}
-          {busy !== 'search' && (result?.issues.length ?? 0) === 0 && <p className={css.empty}>{t('panel.noIssues')}</p>}
+          {busy !== 'search' && filteredIssues.length === 0 && <p className={css.empty}>{t('panel.noIssues')}</p>}
           {result?.total !== undefined && <p className={css.total}>{t('panel.total', { count: result.total })}</p>}
-          {result?.issues.map(item => (
+          {filteredIssues.map(item => (
             <button key={item.key} type="button" className={clsx(css.issueCard, item.key === issue?.key && css.issueCardActive)} onClick={() => { setSelectedKey(item.key) }}>
               <span className={css.issueRow}>
                 <span className={css.issueKey}>{item.key}</span>
                 {item.priority !== undefined && item.priority !== '' && <span className={css.priorityBadge} data-priority={item.priority.toLowerCase()}>{item.priority}</span>}
               </span>
               <strong>{item.summary}</strong>
-              <small>{item.status} · {item.assignee ?? 'Unassigned'} · {dateLabel(item.updated)}</small>
+              <small><span className={css.statusTone} data-tone={statusTone(item.statusCategory)}>{item.status}</span> · {item.assignee ?? 'Unassigned'} · {dateLabel(item.updated)}</small>
             </button>
           ))}
+          {result !== undefined && query.trim() === '' && result.total !== undefined && result.issues.length < result.total && (
+            <button type="button" className={css.ghostButton} disabled={busy !== undefined} onClick={() => { void loadMore() }}>
+              {busy === 'search' ? t('panel.refreshing') : t('panel.loadMore' as JiraTrackerKey)}
+            </button>
+          )}
         </div>
 
         <div className={css.detail}>
@@ -450,10 +500,15 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
               <div className={css.detailTop}>
                 <div>
                   <p className={css.detailTitle}>{detail.key} · {detail.summary}</p>
-                  <p className={css.detailMeta}>
-                    {detail.priority !== undefined && detail.priority !== '' && <span className={css.priorityBadge} data-priority={detail.priority.toLowerCase()}>{detail.priority}</span>}
-                    <span>{detail.status} · {detail.issueType ?? 'Issue'} · {dateLabel(detail.updated)}</span>
-                  </p>
+                  <div className={css.detailMetaGrid}>
+                    <span>{t('panel.issueStatus' as JiraTrackerKey)}</span><strong className={css.statusTone} data-tone={statusTone(detail.statusCategory)}>{detail.status}</strong>
+                    <span>{t('panel.issueType' as JiraTrackerKey)}</span><strong>{detail.issueType ?? 'Issue'}</strong>
+                    <span>{t('panel.priority' as JiraTrackerKey)}</span><strong>{detail.priority ?? '—'}</strong>
+                    <span>{t('panel.assignee' as JiraTrackerKey)}</span><strong>{detail.assignee ?? 'Unassigned'}</strong>
+                    <span>{t('panel.reporter' as JiraTrackerKey)}</span><strong>{detail.reporter ?? '—'}</strong>
+                    <span>{t('panel.updated' as JiraTrackerKey)}</span><strong>{dateLabel(detail.updated)}</strong>
+                    <span>{t('panel.created' as JiraTrackerKey)}</span><strong>{dateLabel(detail.created)}</strong>
+                  </div>
                 </div>
                 <a className={css.openLink} href={detail.url} target="_blank" rel="noreferrer">{t('panel.open')}</a>
               </div>

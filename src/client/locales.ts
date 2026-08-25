@@ -63,6 +63,15 @@ export const zh = {
   'panel.workBoardStandalone': '独立模式：未安装 Work Board，仅启用 Jira 面板和工具',
   'panel.configExpand': '展开配置',
   'panel.configCollapse': '收起配置',
+  'panel.filterPlaceholder': '过滤 issue（key / 标题 / 状态 / 优先级 / 负责人）…',
+  'panel.loadMore': '加载更多',
+  'panel.issueStatus': '状态',
+  'panel.issueType': '类型',
+  'panel.priority': '优先级',
+  'panel.assignee': '负责人',
+  'panel.reporter': '报告人',
+  'panel.updated': '更新',
+  'panel.created': '创建',
 } satisfies Record<string, string>
 
 export type JiraTrackerKey = keyof typeof zh
@@ -130,6 +139,15 @@ export const en = {
   'panel.workBoardStandalone': 'Standalone mode: Work Board is not installed; Jira panel and tools remain enabled',
   'panel.configExpand': 'Show config',
   'panel.configCollapse': 'Hide config',
+  'panel.filterPlaceholder': 'Filter issues (key / summary / status / priority / assignee)…',
+  'panel.loadMore': 'Load more',
+  'panel.issueStatus': 'Status',
+  'panel.issueType': 'Type',
+  'panel.priority': 'Priority',
+  'panel.assignee': 'Assignee',
+  'panel.reporter': 'Reporter',
+  'panel.updated': 'Updated',
+  'panel.created': 'Created',
 } satisfies Record<JiraTrackerKey, string>
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
