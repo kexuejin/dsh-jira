@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http'
 import type { AddressInfo } from 'node:net'
 import { Context } from '@deepseek-ai/cordis'
-import { CredentialProvider, credentialRef, type CredentialInfo, type CredentialRef, type ResolvedCredential } from '@deepseek-ai/dsh-credentials'
+import { CredentialProvider, credentialRef, type CredentialInfo, type CredentialKey, type CredentialRecord, type CredentialRecordEntry, type CredentialRecordInfo, type CredentialRef, type ResolvedCredential } from '@deepseek-ai/dsh-credentials'
 import { JiraClient, internals, resolveConfig } from '../src/jira.ts'
 
 class MemoryCredentials extends CredentialProvider {
@@ -23,6 +23,34 @@ class MemoryCredentials extends CredentialProvider {
 
   async unset(ref: CredentialRef): Promise<void> {
     this.values.delete(ref)
+  }
+
+  async readRecord(key: CredentialKey): Promise<CredentialRecord | undefined> {
+    const value = this.values.get(key)
+    return value === undefined ? undefined : { kind: 'api-key', key: value }
+  }
+
+  async describeRecord(key: CredentialKey): Promise<CredentialRecordInfo> {
+    return { configured: this.values.has(key), writable: true, ...this.values.has(key) ? { kind: 'api-key' } : {} }
+  }
+
+  async listRecords(): Promise<readonly CredentialRecordEntry[]> {
+    return Array.from(this.values.keys(), key => ({ key: key as CredentialKey, kind: 'api-key' as const }))
+  }
+
+  async modifyRecord(
+    key: CredentialKey,
+    mutate: (current: CredentialRecord | undefined) => Promise<CredentialRecord | undefined>,
+  ): Promise<CredentialRecord | undefined> {
+    const current = await this.readRecord(key)
+    const next = await mutate(current)
+    if (next === undefined) this.values.delete(key)
+    else if (next.kind === 'api-key' && next.key !== undefined) this.values.set(key, next.key)
+    return next
+  }
+
+  async deleteRecord(key: CredentialKey): Promise<void> {
+    this.values.delete(key)
   }
 }
 

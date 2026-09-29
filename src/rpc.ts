@@ -1,5 +1,5 @@
 import type { Context } from '@deepseek-ai/cordis'
-import type { JsonValue } from '@deepseek-ai/dsh-session/types'
+import type { JsonValue } from '@deepseek-ai/dsh-util-values'
 import type {} from '@deepseek-ai/dsh-client-connection'
 import { credentialRef } from '@deepseek-ai/dsh-credentials'
 import { createJiraClient } from './jira.ts'
@@ -155,5 +155,5 @@ export function registerJiraRpc(ctx: Context, store: JiraConfigStore): void {
     } catch (error) {
       return failure(error)
     }
-  }, { authority: 'loopback' })
+  })
 }
