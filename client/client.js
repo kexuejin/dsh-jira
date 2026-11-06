@@ -4,7 +4,6 @@ window.__ModuleLoader__.load({
 		var module = { exports: {} };
 		var exports = module.exports;
 		Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
-		let react_dom_client = require("react-dom/client");
 		let react = require("react");
 		let react_jsx_runtime = require("react/jsx-runtime");
 		//#region src/model.ts
@@ -26,7 +25,7 @@ window.__ModuleLoader__.load({
 		}
 		//#endregion
 		//#region \0dsh-jira-css:/Volumes/Kapp/source/dsh-jira/src/client/JiraPanel.module.css.mjs
-		const css = "[data-pane=conversation],[class*=centerCol]{position:relative}[data-dsh-jira-view]{z-index:60;background:var(--dsw-alias-bg-base);display:none;position:absolute;inset:0;overflow:auto;container:XUv5wW_jira-view/inline-size}html[data-dsh-jira-active]:not([data-dsh-work-board-active]):not([data-dsh-ssh-active]):not([data-dsh-taskboard-active]) [data-dsh-jira-view]{display:block}html[data-dsh-jira-active]:not([data-dsh-work-board-active]):not([data-dsh-ssh-active]):not([data-dsh-taskboard-active]) [data-pane=conversation]>:not([data-dsh-jira-view]),html[data-dsh-jira-active]:not([data-dsh-work-board-active]):not([data-dsh-ssh-active]):not([data-dsh-taskboard-active]) [class*=centerCol]>:not([data-dsh-jira-view]){display:none!important}.XUv5wW_entry{width:100%;height:32px;color:var(--dsw-alias-label-secondary,inherit);cursor:pointer;font:inherit;white-space:nowrap;background:0 0;border:none;border-radius:8px;align-items:center;gap:8px;padding:0 12px;font-size:13px;display:flex}.XUv5wW_entry:hover{background:var(--dsw-specific-sidebar-nav-item-hover,#7f7f7f1a);color:var(--dsw-alias-label-primary,inherit)}.XUv5wW_entry[data-active]{background:var(--dsw-specific-sidebar-nav-item-active,#7f7f7f24);color:var(--dsw-alias-label-primary,inherit);font-weight:600}.XUv5wW_entryIcon{flex:none;justify-content:center;align-items:center;display:inline-flex}.XUv5wW_entryLabel{text-overflow:ellipsis;overflow:hidden}[data-dsh-frame][data-sidebar-collapsed] .XUv5wW_entry{justify-content:center;width:100%;padding:0}[data-dsh-frame][data-sidebar-collapsed] .XUv5wW_entryLabel{display:none}.XUv5wW_popover{box-sizing:border-box;width:100%;height:100%;padding:16px;overflow:auto}.XUv5wW_header,.XUv5wW_detailTop{justify-content:space-between;align-items:flex-start;gap:16px;display:flex}.XUv5wW_title,.XUv5wW_detailTitle,.XUv5wW_sectionTitle{margin:0;font-weight:650}.XUv5wW_subtitle,.XUv5wW_detailMeta,.XUv5wW_empty,.XUv5wW_issueCard small,.XUv5wW_total,.XUv5wW_configGrid span,.XUv5wW_comment strong{color:var(--dsh-color-text-secondary,GrayText);font-size:12px;line-height:1.4}.XUv5wW_subtitle{margin:4px 0 0}.XUv5wW_iconButton{color:inherit;cursor:pointer;background:0 0;border:0;border-radius:8px;padding:4px 8px;font-size:20px;line-height:1}.XUv5wW_iconButton:hover{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_statusBox,.XUv5wW_configBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;grid-template-columns:minmax(180px,1fr) auto;gap:10px;margin-top:14px;padding:12px;display:grid}.XUv5wW_configBox{grid-template-columns:1fr}.XUv5wW_configHeader{justify-content:space-between;align-items:flex-start;gap:12px;display:flex}.XUv5wW_configToggle{color:inherit;cursor:pointer;font:inherit;text-align:left;background:0 0;border:0;align-items:flex-start;gap:8px;padding:0;display:flex}.XUv5wW_configCaret{flex:none;margin-top:2px}.XUv5wW_configActions{align-items:center;gap:8px;display:flex}.XUv5wW_ghostButton{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-soft,#7f7f7f14);color:inherit;cursor:pointer;font:inherit;border-radius:10px;padding:7px 10px;font-size:12px}.XUv5wW_ghostButton:hover{background:var(--dsh-color-bg-hover,#7f7f7f24)}.XUv5wW_formGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px;display:grid}.XUv5wW_formGrid label{flex-direction:column;gap:5px;min-width:0;display:flex}.XUv5wW_formGrid label span{color:var(--dsh-color-text-secondary,GrayText);font-size:12px}.XUv5wW_formGrid input,.XUv5wW_formGrid select,.XUv5wW_mappingTextArea{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;min-width:0;padding:8px 10px;font-size:12px}.XUv5wW_mappingTextArea{resize:vertical;min-height:92px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,monospace}.XUv5wW_checkboxLabel{align-items:center;padding-top:20px;flex-direction:row!important}.XUv5wW_checkboxLabel input{flex:none;width:auto}.XUv5wW_wideField{grid-column:span 2}.XUv5wW_configGrid{word-break:break-word;grid-column:1/-1;grid-template-columns:max-content minmax(0,1fr);gap:5px 10px;display:grid}.XUv5wW_integrationBadge{border-radius:999px;justify-self:start;padding:2px 8px}.XUv5wW_integrationBadge[data-status=connected]{color:#167c3a;background:#0080001a}.XUv5wW_integrationBadge[data-status=standalone]{color:inherit;background:#7f7f7f1f}.XUv5wW_toolbar,.XUv5wW_transitions{flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;display:flex}.XUv5wW_primaryButton,.XUv5wW_tabButton,.XUv5wW_transitions button,.XUv5wW_openLink{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-soft,#7f7f7f14);color:inherit;cursor:pointer;font:inherit;border-radius:10px;padding:7px 10px;font-size:12px;text-decoration:none}.XUv5wW_primaryButton:hover,.XUv5wW_tabButton:hover,.XUv5wW_transitions button:hover:not(:disabled),.XUv5wW_openLink:hover{background:var(--dsh-color-bg-hover,#7f7f7f24)}.XUv5wW_primaryButton:disabled,.XUv5wW_transitions button:disabled{cursor:not-allowed;opacity:.55}.XUv5wW_tabButtonActive{border-color:var(--dsh-color-accent,#3b82f6);color:var(--dsh-color-accent,#2563eb);font-weight:650}.XUv5wW_pageTabs{gap:8px;margin-top:12px;display:flex}.XUv5wW_missingHint{color:#b26a00;background:#c8780014;border:1px solid #c8780059;border-radius:10px;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding:8px 10px;display:flex}.XUv5wW_missingHint span{font-size:12px;line-height:1.4}.XUv5wW_jqlInput{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;flex:1;min-width:260px;padding:8px 10px;font-size:12px}.XUv5wW_error,.XUv5wW_notice{border-radius:10px;margin:12px 0 0;padding:8px 10px;font-size:12px;line-height:1.4}.XUv5wW_error{color:#c00000;background:#c000001a}.XUv5wW_notice{color:#167c3a;background:#0080001a}.XUv5wW_content{grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:14px;margin-top:14px;display:grid}.XUv5wW_issueList,.XUv5wW_detail{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;min-height:420px;padding:10px}.XUv5wW_issueList{flex-direction:column;gap:8px;display:flex}.XUv5wW_filterInput{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;padding:8px 10px;font-size:12px}.XUv5wW_statusTone[data-tone=done]{color:#167c3a}.XUv5wW_statusTone[data-tone=progress]{color:var(--dsh-color-accent,#2563eb)}.XUv5wW_detailMetaGrid{grid-template-columns:max-content minmax(0,1fr);gap:3px 10px;margin-top:8px;display:grid}.XUv5wW_detailMetaGrid span{color:var(--dsh-color-text-secondary,GrayText);font-size:12px}.XUv5wW_detailMetaGrid strong{overflow-wrap:anywhere;font-size:12px;font-weight:600}.XUv5wW_issueCard{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);color:inherit;cursor:pointer;text-align:left;background:0 0;border-radius:12px;flex-direction:column;gap:4px;padding:10px;display:flex}.XUv5wW_issueCard strong{-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13px;line-height:1.4;display:-webkit-box;overflow:hidden}.XUv5wW_issueRow{align-items:center;gap:6px;display:flex}.XUv5wW_priorityBadge{border-radius:999px;padding:3px 7px;font-size:11px;font-weight:600;line-height:1}.XUv5wW_priorityBadge[data-priority=highest],.XUv5wW_priorityBadge[data-priority=blocker],.XUv5wW_priorityBadge[data-priority=critical]{color:#c00000;background:#c000001f}.XUv5wW_priorityBadge[data-priority=high],.XUv5wW_priorityBadge[data-priority=major]{color:#b26a00;background:#c8780024}.XUv5wW_priorityBadge[data-priority=medium],.XUv5wW_priorityBadge[data-priority=normal]{color:inherit;background:#7f7f7f1f}.XUv5wW_priorityBadge[data-priority=low],.XUv5wW_priorityBadge[data-priority=minor],.XUv5wW_priorityBadge[data-priority=lowest],.XUv5wW_priorityBadge[data-priority=trivial]{color:#167c3a;background:#0080001a}.XUv5wW_issueCard:hover,.XUv5wW_issueCardActive{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_issueCardActive{border-color:var(--dsh-color-accent,#3b82f6)}.XUv5wW_issueKey{color:var(--dsh-color-accent,#2563eb);font-size:12px;font-weight:700}.XUv5wW_section{border-top:1px solid var(--dsh-color-border-subtle,#7f7f7f24);margin-top:14px;padding-top:12px}.XUv5wW_description,.XUv5wW_comment p{white-space:pre-wrap;margin:8px 0 0;font-size:13px;line-height:1.5}.XUv5wW_commentBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);box-sizing:border-box;color:inherit;font:inherit;resize:vertical;border-radius:10px;width:100%;min-height:76px;margin:8px 0;padding:8px 10px;font-size:13px;display:block}.XUv5wW_comment{border:1px solid var(--dsh-color-border-subtle,#7f7f7f29);border-radius:10px;margin-top:8px;padding:9px 10px}@container XUv5wW_jira-view (width<=820px){.XUv5wW_content,.XUv5wW_formGrid{grid-template-columns:1fr}.XUv5wW_wideField{grid-column:auto}}";
+		const css = ".XUv5wW_mainPanel{box-sizing:border-box;background:var(--dsw-alias-bg-base);outline:none;flex-direction:column;height:100%;display:flex;container:XUv5wW_jira-view/inline-size}.XUv5wW_popover{box-sizing:border-box;width:100%;height:100%;padding:16px;overflow:auto}.XUv5wW_header,.XUv5wW_detailTop{justify-content:space-between;align-items:flex-start;gap:16px;display:flex}.XUv5wW_title,.XUv5wW_detailTitle,.XUv5wW_sectionTitle{margin:0;font-weight:650}.XUv5wW_subtitle,.XUv5wW_detailMeta,.XUv5wW_empty,.XUv5wW_issueCard small,.XUv5wW_total,.XUv5wW_configGrid span,.XUv5wW_comment strong{color:var(--dsh-color-text-secondary,GrayText);font-size:12px;line-height:1.4}.XUv5wW_subtitle{margin:4px 0 0}.XUv5wW_iconButton{color:inherit;cursor:pointer;background:0 0;border:0;border-radius:8px;padding:4px 8px;font-size:20px;line-height:1}.XUv5wW_iconButton:hover{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_statusBox,.XUv5wW_configBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;grid-template-columns:minmax(180px,1fr) auto;gap:10px;margin-top:14px;padding:12px;display:grid}.XUv5wW_configBox{grid-template-columns:1fr}.XUv5wW_configHeader{justify-content:space-between;align-items:flex-start;gap:12px;display:flex}.XUv5wW_configToggle{color:inherit;cursor:pointer;font:inherit;text-align:left;background:0 0;border:0;align-items:flex-start;gap:8px;padding:0;display:flex}.XUv5wW_configCaret{flex:none;margin-top:2px}.XUv5wW_configActions{align-items:center;gap:8px;display:flex}.XUv5wW_ghostButton{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-soft,#7f7f7f14);color:inherit;cursor:pointer;font:inherit;border-radius:10px;padding:7px 10px;font-size:12px}.XUv5wW_ghostButton:hover{background:var(--dsh-color-bg-hover,#7f7f7f24)}.XUv5wW_formGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px;display:grid}.XUv5wW_formGrid label{flex-direction:column;gap:5px;min-width:0;display:flex}.XUv5wW_formGrid label span{color:var(--dsh-color-text-secondary,GrayText);font-size:12px}.XUv5wW_formGrid input,.XUv5wW_formGrid select,.XUv5wW_mappingTextArea{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;min-width:0;padding:8px 10px;font-size:12px}.XUv5wW_mappingTextArea{resize:vertical;min-height:92px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,monospace}.XUv5wW_checkboxLabel{align-items:center;padding-top:20px;flex-direction:row!important}.XUv5wW_checkboxLabel input{flex:none;width:auto}.XUv5wW_wideField{grid-column:span 2}.XUv5wW_configGrid{word-break:break-word;grid-column:1/-1;grid-template-columns:max-content minmax(0,1fr);gap:5px 10px;display:grid}.XUv5wW_integrationBadge{border-radius:999px;justify-self:start;padding:2px 8px}.XUv5wW_integrationBadge[data-status=connected]{color:#167c3a;background:#0080001a}.XUv5wW_integrationBadge[data-status=standalone]{color:inherit;background:#7f7f7f1f}.XUv5wW_toolbar,.XUv5wW_transitions{flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;display:flex}.XUv5wW_primaryButton,.XUv5wW_tabButton,.XUv5wW_transitions button,.XUv5wW_openLink{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-soft,#7f7f7f14);color:inherit;cursor:pointer;font:inherit;border-radius:10px;padding:7px 10px;font-size:12px;text-decoration:none}.XUv5wW_primaryButton:hover,.XUv5wW_tabButton:hover,.XUv5wW_transitions button:hover:not(:disabled),.XUv5wW_openLink:hover{background:var(--dsh-color-bg-hover,#7f7f7f24)}.XUv5wW_primaryButton:disabled,.XUv5wW_transitions button:disabled{cursor:not-allowed;opacity:.55}.XUv5wW_tabButtonActive{border-color:var(--dsh-color-accent,#3b82f6);color:var(--dsh-color-accent,#2563eb);font-weight:650}.XUv5wW_pageTabs{gap:8px;margin-top:12px;display:flex}.XUv5wW_missingHint{color:#b26a00;background:#c8780014;border:1px solid #c8780059;border-radius:10px;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding:8px 10px;display:flex}.XUv5wW_missingHint span{font-size:12px;line-height:1.4}.XUv5wW_jqlInput{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;flex:1;min-width:260px;padding:8px 10px;font-size:12px}.XUv5wW_error,.XUv5wW_notice{border-radius:10px;margin:12px 0 0;padding:8px 10px;font-size:12px;line-height:1.4}.XUv5wW_error{color:#c00000;background:#c000001a}.XUv5wW_notice{color:#167c3a;background:#0080001a}.XUv5wW_content{grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:14px;margin-top:14px;display:grid}.XUv5wW_issueList,.XUv5wW_detail{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);border-radius:14px;min-height:420px;padding:10px}.XUv5wW_issueList{flex-direction:column;gap:8px;display:flex}.XUv5wW_filterInput{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);color:inherit;font:inherit;border-radius:10px;padding:8px 10px;font-size:12px}.XUv5wW_statusTone[data-tone=done]{color:#167c3a}.XUv5wW_statusTone[data-tone=progress]{color:var(--dsh-color-accent,#2563eb)}.XUv5wW_detailMetaGrid{grid-template-columns:max-content minmax(0,1fr);gap:3px 10px;margin-top:8px;display:grid}.XUv5wW_detailMetaGrid span{color:var(--dsh-color-text-secondary,GrayText);font-size:12px}.XUv5wW_detailMetaGrid strong{overflow-wrap:anywhere;font-size:12px;font-weight:600}.XUv5wW_issueCard{border:1px solid var(--dsh-color-border-subtle,#7f7f7f2e);color:inherit;cursor:pointer;text-align:left;background:0 0;border-radius:12px;flex-direction:column;gap:4px;padding:10px;display:flex}.XUv5wW_issueCard strong{-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13px;line-height:1.4;display:-webkit-box;overflow:hidden}.XUv5wW_issueRow{align-items:center;gap:6px;display:flex}.XUv5wW_priorityBadge{border-radius:999px;padding:3px 7px;font-size:11px;font-weight:600;line-height:1}.XUv5wW_priorityBadge[data-priority=highest],.XUv5wW_priorityBadge[data-priority=blocker],.XUv5wW_priorityBadge[data-priority=critical]{color:#c00000;background:#c000001f}.XUv5wW_priorityBadge[data-priority=high],.XUv5wW_priorityBadge[data-priority=major]{color:#b26a00;background:#c8780024}.XUv5wW_priorityBadge[data-priority=medium],.XUv5wW_priorityBadge[data-priority=normal]{color:inherit;background:#7f7f7f1f}.XUv5wW_priorityBadge[data-priority=low],.XUv5wW_priorityBadge[data-priority=minor],.XUv5wW_priorityBadge[data-priority=lowest],.XUv5wW_priorityBadge[data-priority=trivial]{color:#167c3a;background:#0080001a}.XUv5wW_issueCard:hover,.XUv5wW_issueCardActive{background:var(--dsh-color-bg-hover,#7f7f7f1a)}.XUv5wW_issueCardActive{border-color:var(--dsh-color-accent,#3b82f6)}.XUv5wW_issueKey{color:var(--dsh-color-accent,#2563eb);font-size:12px;font-weight:700}.XUv5wW_section{border-top:1px solid var(--dsh-color-border-subtle,#7f7f7f24);margin-top:14px;padding-top:12px}.XUv5wW_description,.XUv5wW_comment p{white-space:pre-wrap;margin:8px 0 0;font-size:13px;line-height:1.5}.XUv5wW_commentBox{border:1px solid var(--dsh-color-border-subtle,#7f7f7f3d);background:var(--dsh-color-bg-elevated,Canvas);box-sizing:border-box;color:inherit;font:inherit;resize:vertical;border-radius:10px;width:100%;min-height:76px;margin:8px 0;padding:8px 10px;font-size:13px;display:block}.XUv5wW_comment{border:1px solid var(--dsh-color-border-subtle,#7f7f7f29);border-radius:10px;margin-top:8px;padding:9px 10px}@container XUv5wW_jira-view (width<=820px){.XUv5wW_content,.XUv5wW_formGrid{grid-template-columns:1fr}.XUv5wW_wideField{grid-column:auto}}";
 		const tagId = "dsh-jira/JiraPanel.module.css";
 		if (typeof document !== "undefined" && document.querySelector("style[data-plugin-css=" + JSON.stringify(tagId) + "]") === null) {
 			const tag = document.createElement("style");
@@ -36,60 +35,58 @@ window.__ModuleLoader__.load({
 			document.head.appendChild(tag);
 		}
 		var JiraPanel_module_css_default = {
-			"jqlInput": "XUv5wW_jqlInput",
-			"detailMetaGrid": "XUv5wW_detailMetaGrid",
-			"error": "XUv5wW_error",
-			"section": "XUv5wW_section",
-			"sectionTitle": "XUv5wW_sectionTitle",
-			"entry": "XUv5wW_entry",
+			"issueKey": "XUv5wW_issueKey",
+			"content": "XUv5wW_content",
+			"mainPanel": "XUv5wW_mainPanel",
+			"empty": "XUv5wW_empty",
+			"openLink": "XUv5wW_openLink",
+			"iconButton": "XUv5wW_iconButton",
+			"issueRow": "XUv5wW_issueRow",
+			"header": "XUv5wW_header",
+			"description": "XUv5wW_description",
+			"commentBox": "XUv5wW_commentBox",
 			"detailTop": "XUv5wW_detailTop",
-			"title": "XUv5wW_title",
+			"detailMeta": "XUv5wW_detailMeta",
+			"error": "XUv5wW_error",
+			"configActions": "XUv5wW_configActions",
+			"ghostButton": "XUv5wW_ghostButton",
+			"configCaret": "XUv5wW_configCaret",
+			"primaryButton": "XUv5wW_primaryButton",
+			"detailTitle": "XUv5wW_detailTitle",
+			"wideField": "XUv5wW_wideField",
+			"sectionTitle": "XUv5wW_sectionTitle",
+			"notice": "XUv5wW_notice",
+			"subtitle": "XUv5wW_subtitle",
+			"priorityBadge": "XUv5wW_priorityBadge",
+			"total": "XUv5wW_total",
+			"jira-view": "XUv5wW_jira-view",
+			"popover": "XUv5wW_popover",
+			"configGrid": "XUv5wW_configGrid",
+			"configToggle": "XUv5wW_configToggle",
+			"detailMetaGrid": "XUv5wW_detailMetaGrid",
+			"issueCard": "XUv5wW_issueCard",
+			"integrationBadge": "XUv5wW_integrationBadge",
+			"comment": "XUv5wW_comment",
+			"missingHint": "XUv5wW_missingHint",
+			"filterInput": "XUv5wW_filterInput",
+			"checkboxLabel": "XUv5wW_checkboxLabel",
+			"issueCardActive": "XUv5wW_issueCardActive",
+			"section": "XUv5wW_section",
+			"toolbar": "XUv5wW_toolbar",
 			"statusBox": "XUv5wW_statusBox",
 			"pageTabs": "XUv5wW_pageTabs",
-			"priorityBadge": "XUv5wW_priorityBadge",
-			"description": "XUv5wW_description",
-			"entryIcon": "XUv5wW_entryIcon",
-			"content": "XUv5wW_content",
-			"iconButton": "XUv5wW_iconButton",
-			"issueKey": "XUv5wW_issueKey",
-			"configCaret": "XUv5wW_configCaret",
-			"integrationBadge": "XUv5wW_integrationBadge",
-			"commentBox": "XUv5wW_commentBox",
-			"missingHint": "XUv5wW_missingHint",
 			"transitions": "XUv5wW_transitions",
-			"checkboxLabel": "XUv5wW_checkboxLabel",
-			"configToggle": "XUv5wW_configToggle",
-			"ghostButton": "XUv5wW_ghostButton",
-			"configGrid": "XUv5wW_configGrid",
-			"popover": "XUv5wW_popover",
-			"configActions": "XUv5wW_configActions",
-			"tabButton": "XUv5wW_tabButton",
-			"toolbar": "XUv5wW_toolbar",
-			"openLink": "XUv5wW_openLink",
-			"detailMeta": "XUv5wW_detailMeta",
-			"total": "XUv5wW_total",
-			"detailTitle": "XUv5wW_detailTitle",
-			"configHeader": "XUv5wW_configHeader",
-			"primaryButton": "XUv5wW_primaryButton",
-			"subtitle": "XUv5wW_subtitle",
-			"notice": "XUv5wW_notice",
-			"filterInput": "XUv5wW_filterInput",
-			"issueCard": "XUv5wW_issueCard",
-			"detail": "XUv5wW_detail",
-			"comment": "XUv5wW_comment",
-			"wideField": "XUv5wW_wideField",
-			"header": "XUv5wW_header",
-			"entryLabel": "XUv5wW_entryLabel",
-			"statusTone": "XUv5wW_statusTone",
-			"issueCardActive": "XUv5wW_issueCardActive",
-			"mappingTextArea": "XUv5wW_mappingTextArea",
-			"tabButtonActive": "XUv5wW_tabButtonActive",
-			"formGrid": "XUv5wW_formGrid",
-			"issueList": "XUv5wW_issueList",
+			"jqlInput": "XUv5wW_jqlInput",
+			"title": "XUv5wW_title",
 			"configBox": "XUv5wW_configBox",
-			"jira-view": "XUv5wW_jira-view",
-			"issueRow": "XUv5wW_issueRow",
-			"empty": "XUv5wW_empty"
+			"configHeader": "XUv5wW_configHeader",
+			"formGrid": "XUv5wW_formGrid",
+			"mappingTextArea": "XUv5wW_mappingTextArea",
+			"tabButton": "XUv5wW_tabButton",
+			"tabButtonActive": "XUv5wW_tabButtonActive",
+			"issueList": "XUv5wW_issueList",
+			"detail": "XUv5wW_detail",
+			"statusTone": "XUv5wW_statusTone"
 		};
 		//#endregion
 		//#region src/client/JiraPanel.tsx
@@ -211,7 +208,7 @@ window.__ModuleLoader__.load({
 				...workBoardProjectMappings.length === 0 ? {} : { workBoardProjectMappings }
 			};
 		}
-		function JiraPanel({ open, onClose, port, t }) {
+		function JiraPanel({ onClose, port, t }) {
 			const [status, setStatus] = (0, react.useState)();
 			const [configView, setConfigView] = (0, react.useState)();
 			const [configDraft, setConfigDraft] = (0, react.useState)(() => draftFromConfig({}));
@@ -371,11 +368,11 @@ window.__ModuleLoader__.load({
 				}
 			};
 			(0, react.useEffect)(() => {
-				if (!open || status !== void 0 || busy !== void 0) return;
+				if (status !== void 0 || busy !== void 0) return;
 				Promise.all([loadStatus(), loadConfig()]).then(() => {
 					search("assigned");
 				});
-			}, [open]);
+			}, []);
 			(0, react.useEffect)(() => {
 				if (status === void 0) return;
 				if (status.status === "missing-config" || status.status === "missing-credential") setPage("settings");
@@ -384,10 +381,8 @@ window.__ModuleLoader__.load({
 				if (issue === void 0 || detail?.key === issue.key || busy === "issue") return;
 				loadIssue(issue.key);
 			}, [issue?.key]);
-			if (!open) return null;
 			return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
 				className: JiraPanel_module_css_default.popover,
-				role: "dialog",
 				"aria-label": t("panel.title"),
 				children: [
 					/* @__PURE__ */ (0, react_jsx_runtime.jsxs)("div", {
@@ -944,280 +939,80 @@ window.__ModuleLoader__.load({
 			});
 		}
 		//#endregion
-		//#region src/client/panel-mount.tsx
+		//#region src/client/panel-entry.tsx
 		/**
-		* Jira view mounting.
+		* The Jira global panel: the sidebar row that selects it and the main-column
+		* view it draws.
 		*
-		* The `conversation` slot is single-occupant and external plugins cannot
-		* declare slots, so the Jira panel takes over the center column at the DOM
-		* level exactly like dsh-work-board: a container is appended inside the
-		* center column (`[data-pane="conversation"]` / `[class*="centerCol"]`) as an
-		* extra trailing child, and a stylesheet rule hides the conversation content
-		* while the panel is active. Toggling is a data attribute on <html>, so the
-		* conversation subtree underneath stays mounted and stateful.
+		* Both ride the frame's own panel slots — `sidebar.panellist` for the row and
+		* `main` for the view — so the sidebar shell owns the row's geometry, icon
+		* size, tooltip, keyboard behaviour, and selected state, exactly as it does for
+		* every other panel. Nothing here reads or writes the sidebar DOM.
 		*/
-		const ACTIVE_EVENT = "dsh-panel-activate";
-		const PANEL_NAME = "jira";
-		const CONVERSATION_COLUMN_SELECTOR = "[data-pane=\"conversation\"], [class*=\"centerCol\"]";
-		const ACTIVE_ATTR = "data-dsh-jira-active";
-		/** Sibling center-column panels evicted when this panel opens. */
-		const OTHER_ACTIVE_ATTRS = [
-			"data-dsh-work-board-active",
-			"data-dsh-taskboard-active",
-			"data-dsh-ssh-active"
-		];
-		/** Sibling panel activation details that close this panel. */
-		const OTHER_PANELS = /* @__PURE__ */ new Set([
-			"workboard",
-			"taskboard",
-			"ssh"
-		]);
-		/** Sidebar rows that hand the center column back to the conversation. */
-		const SIDEBAR_ROW_SELECTOR = "[class*=\"sessionRow\"], [class*=\"projectRow\"], [class*=\"searchResultRow\"], [class*=\"searchResultWorkspace\"], [class*=\"newSession\"]";
-		/** Find the center column, or undefined while the frame is not mounted. */
-		function conversationColumn() {
-			return document.querySelector(CONVERSATION_COLUMN_SELECTOR) ?? void 0;
+		/** The main panel key; the sidebar row that addresses it carries the same id. */
+		const JIRA_PANEL_ID = "jira";
+		/**
+		* Render the Jira row glyph at the size the sidebar asks for — 16 expanded,
+		* 18 in the rail — like every other panel row.
+		* @param props - the sidebar's icon share.
+		* @returns the tracker glyph.
+		*/
+		function JiraPanelIcon({ size }) {
+			return /* @__PURE__ */ (0, react_jsx_runtime.jsxs)("svg", {
+				viewBox: "0 0 16 16",
+				width: size,
+				height: size,
+				fill: "none",
+				stroke: "currentColor",
+				strokeWidth: 1.35,
+				strokeLinecap: "round",
+				strokeLinejoin: "round",
+				"aria-hidden": "true",
+				children: [
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", { d: "M4.2 2.2h5.9l2 2v9.6H4.2z" }),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", { d: "M10.1 2.2v2h2" }),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", { d: "M6.2 7h4" }),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", { d: "M6.2 9.4h3" }),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", { d: "M2 4.2h2.2" }),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", { d: "M2 7.4h2.2" }),
+					/* @__PURE__ */ (0, react_jsx_runtime.jsx)("path", { d: "M2 10.6h2.2" })
+				]
+			});
 		}
-		var JiraControllerImpl = class {
-			port;
-			t;
-			openState = false;
-			listeners = /* @__PURE__ */ new Set();
-			root;
-			container;
-			waitObserver;
-			onOtherActivate = (event) => {
-				const name = String(event.detail);
-				if (name !== PANEL_NAME && OTHER_PANELS.has(name) && this.openState) this.close();
-			};
-			onEscape = (event) => {
-				if (event.key === "Escape" && this.openState) this.close();
-			};
-			onClickSidebarRow = (event) => {
-				if (!this.openState) return;
-				const target = event.target;
-				if (target === null) return;
-				if (target.closest(SIDEBAR_ROW_SELECTOR) !== null) this.close();
-			};
-			constructor(port, t) {
-				this.port = port;
-				this.t = t;
-				document.addEventListener(ACTIVE_EVENT, this.onOtherActivate);
-				document.addEventListener("keydown", this.onEscape);
-				document.addEventListener("click", this.onClickSidebarRow, true);
-			}
-			open() {
-				if (!this.openState) {
-					this.openState = true;
-					document.dispatchEvent(new CustomEvent(ACTIVE_EVENT, { detail: PANEL_NAME }));
-					this.notify();
-				}
-				this.applyActive();
-				this.render();
-			}
-			close() {
-				if (!this.openState) return;
-				this.openState = false;
-				this.notify();
-				this.applyActive();
-				this.render();
-			}
-			toggle() {
-				if (this.openState) this.close();
-				else this.open();
-			}
-			subscribe(listener) {
-				this.listeners.add(listener);
+		/**
+		* Draw the Jira panel in the main column. Escape and the panel's own close
+		* button both hand the column back to the conversation through the frame's
+		* panel selection, which is also what clears the sidebar row's selected state.
+		* @param props - the injected port and host navigation, plus localized copy.
+		* @returns the main-column panel.
+		*/
+		function JiraMainPanel({ port, selectPanel, t }) {
+			const panelRef = (0, react.useRef)(null);
+			(0, react.useEffect)(() => {
+				const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+				const timer = window.setTimeout(() => {
+					panelRef.current?.focus();
+				}, 0);
 				return () => {
-					this.listeners.delete(listener);
+					window.clearTimeout(timer);
+					if (previous?.isConnected === true) previous.focus();
 				};
-			}
-			isOpen() {
-				return this.openState;
-			}
-			dispose() {
-				document.removeEventListener(ACTIVE_EVENT, this.onOtherActivate);
-				document.removeEventListener("keydown", this.onEscape);
-				document.removeEventListener("click", this.onClickSidebarRow, true);
-				this.waitObserver?.disconnect();
-				this.root?.unmount();
-				this.root = void 0;
-				this.container?.remove();
-				this.container = void 0;
-				document.documentElement.removeAttribute(ACTIVE_ATTR);
-				this.listeners.clear();
-			}
-			notify() {
-				for (const listener of [...this.listeners]) listener();
-			}
-			applyActive() {
-				if (this.openState) {
-					for (const attr of OTHER_ACTIVE_ATTRS) document.documentElement.removeAttribute(attr);
-					document.documentElement.setAttribute(ACTIVE_ATTR, "");
-				} else document.documentElement.removeAttribute(ACTIVE_ATTR);
-			}
-			ensureContainer() {
-				if (this.container !== void 0) return;
-				const column = conversationColumn();
-				if (column === void 0) return;
-				this.container = document.createElement("div");
-				this.container.setAttribute("data-dsh-jira-view", "");
-				this.container.dataset.dshPlugin = "dsh-jira";
-				this.container.className = JiraPanel_module_css_default.view;
-				column.appendChild(this.container);
-				this.root = (0, react_dom_client.createRoot)(this.container);
-				this.render();
-			}
-			render() {
-				if (this.container === void 0) {
-					this.waitObserver ??= new MutationObserver(() => {
-						this.ensureContainer();
-					});
-					this.waitObserver.observe(document.body, {
-						childList: true,
-						subtree: true
-					});
-					this.ensureContainer();
-					return;
-				}
-				this.root?.render(/* @__PURE__ */ (0, react_jsx_runtime.jsx)(JiraPanel, {
-					open: this.openState,
-					onClose: () => {
-						this.close();
-					},
-					port: this.port,
-					t: this.t
-				}));
-			}
-		};
-		function createJiraController(port, t) {
-			const controller = new JiraControllerImpl(port, t);
-			controller.close();
-			return controller;
-		}
-		//#endregion
-		//#region src/client/sidebar-entry-core.ts
-		function sidebarRoot() {
-			const column = document.querySelector("[data-pane=\"sidebar\"], [class*=\"sidebarCol\"]");
-			if (column === null) return void 0;
-			return column.querySelector("[class*=\"logoRow\"]")?.parentElement ?? column.firstElementChild;
-		}
-		function newSessionButton(root) {
-			const nested = root.querySelector("button[class*=\"newSession\"]");
-			if (nested !== null) return nested;
-			for (const child of root.children) if (child.tagName === "BUTTON") return child;
-		}
-		function createEntry(options) {
-			const entry = document.createElement("button");
-			entry.type = "button";
-			entry.setAttribute(options.rowAttribute, "");
-			if (options.plugin !== void 0) {
-				entry.setAttribute("data-dsh-plugin", options.plugin);
-				entry.setAttribute("data-dsh-part", "sidebar-entry");
-			}
-			entry.className = options.css.entry ?? "";
-			entry.setAttribute("aria-label", options.label());
-			if (options.tooltip !== void 0) entry.setAttribute("title", options.tooltip());
-			entry.innerHTML = "<span class=\"" + (options.css.entryIcon ?? "") + "\">" + options.icon + "</span><span class=\"" + (options.css.entryLabel ?? "") + "\">" + options.label() + "</span>";
-			entry.addEventListener("click", options.onToggle);
-			return entry;
-		}
-		function placeEntry(root, entry, options) {
-			const button = newSessionButton(root);
-			if (button === void 0) return false;
-			if (entry.parentElement !== root) {
-				const row = button.closest("[class*=\"logoRow\"]");
-				const base = row !== null && row.parentElement === root ? row : button;
-				const family = Array.from(root.children).filter((el) => el instanceof HTMLElement && el.matches(options.familySelectors.join(", ")));
-				const anchor = options.position === "before" ? family.length > 0 ? family[0] : base.nextElementSibling : family.length > 0 ? family[family.length - 1].nextElementSibling : base.nextElementSibling;
-				root.insertBefore(entry, anchor);
-			}
-			return true;
-		}
-		function mountSidebarEntry$1(options) {
-			if (typeof document !== "undefined" && document.querySelector(options.rowSelector) !== null) return () => {};
-			const entry = createEntry(options);
-			let root;
-			let placed = false;
-			const rootObserver = new MutationObserver(() => {
-				if (root === void 0 || !root.isConnected) {
-					placed = false;
-					tryPlace();
-					return;
-				}
-				if (!root.contains(entry)) placed = placeEntry(root, entry, options);
-			});
-			const tryPlace = () => {
-				if (root !== void 0 && !root.isConnected) {
-					rootObserver.disconnect();
-					root = void 0;
-					placed = false;
-				}
-				if (placed) {
-					if (document.body.contains(entry)) return;
-					rootObserver.disconnect();
-					root = void 0;
-					placed = false;
-				}
-				root ??= sidebarRoot();
-				if (root === void 0) return;
-				placed = placeEntry(root, entry, options);
-				if (placed) rootObserver.observe(root, {
-					childList: true,
-					subtree: true
-				});
-			};
-			const waitObserver = new MutationObserver(() => {
-				tryPlace();
-			});
-			waitObserver.observe(document.body, {
-				childList: true,
-				subtree: true
-			});
-			const unsubscribeActive = options.active === void 0 ? void 0 : (() => {
-				const syncActive = () => {
-					if (options.active.isOpen()) entry.dataset.active = "true";
-					else delete entry.dataset.active;
-				};
-				const unsubscribe = options.active.subscribe(syncActive);
-				syncActive();
-				return unsubscribe;
-			})();
-			tryPlace();
-			return () => {
-				waitObserver.disconnect();
-				rootObserver.disconnect();
-				unsubscribeActive?.();
-				entry.remove();
-			};
-		}
-		//#endregion
-		//#region src/client/sidebar-entry.ts
-		const ENTRY_SELECTOR = "[data-dsh-jira-entry]";
-		const ICON = "<svg viewBox=\"0 0 16 16\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.35\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4.2 2.2h5.9l2 2v9.6H4.2z\"/><path d=\"M10.1 2.2v2h2\"/><path d=\"M6.2 7h4\"/><path d=\"M6.2 9.4h3\"/><path d=\"M2 4.2h2.2\"/><path d=\"M2 7.4h2.2\"/><path d=\"M2 10.6h2.2\"/></svg>";
-		function mountSidebarEntry(controller, t) {
-			return mountSidebarEntry$1({
-				rowAttribute: "data-dsh-jira-entry",
-				rowSelector: ENTRY_SELECTOR,
-				plugin: "dsh-jira",
-				icon: ICON,
-				css: JiraPanel_module_css_default,
-				label: () => t("panel.trigger"),
-				tooltip: () => t("panel.title"),
-				onToggle: () => {
-					controller.toggle();
+			}, []);
+			return /* @__PURE__ */ (0, react_jsx_runtime.jsx)("div", {
+				ref: panelRef,
+				className: JiraPanel_module_css_default.mainPanel,
+				tabIndex: -1,
+				"aria-label": t("panel.title"),
+				onKeyDown: (event) => {
+					if (event.key === "Escape") selectPanel(null);
 				},
-				position: "after",
-				familySelectors: [
-					"[data-dsh-taskboard-entry]",
-					"[data-dsh-ssh-entry]",
-					"[data-dsh-release-console-entry]",
-					"[data-dsh-jira-entry]"
-				],
-				active: {
-					subscribe: (listener) => controller.subscribe(listener),
-					isOpen: () => controller.isOpen()
-				}
+				children: /* @__PURE__ */ (0, react_jsx_runtime.jsx)(JiraPanel, {
+					port,
+					t,
+					onClose: () => {
+						selectPanel(null);
+					}
+				})
 			});
 		}
 		//#endregion
@@ -1377,7 +1172,13 @@ window.__ModuleLoader__.load({
 		};
 		//#endregion
 		//#region src/client/index.ts
-		const inject = ["locale", "connection"];
+		/** Services required by the panel slots and the RPC port they serve. */
+		const inject = [
+			"slots",
+			"locale",
+			"layout",
+			"connection"
+		];
 		function unwrapResult(endpoint, result) {
 			if (result.ok) return result.value;
 			throw new Error(`${endpoint}: ${result.error.code}: ${result.error.message}`);
@@ -1398,6 +1199,10 @@ window.__ModuleLoader__.load({
 				transitionIssue: (args) => call("transitionIssue", args)
 			};
 		}
+		/**
+		* Contribute the Jira sidebar row and the main-column panel it selects.
+		* @param ctx - the browser plugin context.
+		*/
 		function apply(ctx) {
 			ctx.effect(() => ctx.locale.register(NS, {
 				zh,
@@ -1405,12 +1210,25 @@ window.__ModuleLoader__.load({
 			}), "jira-tracker: dictionaries");
 			const port = createPort(ctx.get("connection"));
 			const t = ctx.locale.bind(NS);
-			const controller = createJiraController(port, t);
-			const disposeEntry = mountSidebarEntry(controller, t);
-			ctx.effect(() => () => {
-				disposeEntry();
-				controller.dispose();
-			}, "jira-tracker: sidebar entry and panel");
+			const panelFace = () => ({
+				port,
+				selectPanel: (id) => {
+					ctx.layout.selectPanel(id);
+				}
+			});
+			ctx.slots.inject("sidebar.panellist", () => ctx.slots.register({
+				name: "sidebar.panellist",
+				id: JIRA_PANEL_ID,
+				order: 30,
+				locale: NS,
+				label: () => t("panel.trigger")
+			}, JiraPanelIcon));
+			ctx.slots.inject("main", () => ctx.slots.register({
+				name: "main",
+				key: JIRA_PANEL_ID,
+				locale: NS,
+				inject: panelFace
+			}, JiraMainPanel));
 		}
 		//#endregion
 		exports.apply = apply;

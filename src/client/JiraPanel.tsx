@@ -36,7 +36,6 @@ export interface JiraPanelPort {
 }
 
 export interface JiraPanelProps {
-  readonly open: boolean
   readonly onClose: () => void
   readonly port: JiraPanelPort
   readonly t: TranslateNS<'jiraTracker'>
@@ -188,7 +187,7 @@ function draftToConfig(draft: ConfigDraft): JiraEditableConfigView {
   }
 }
 
-export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
+export function JiraPanel({ onClose, port, t }: JiraPanelProps) {
   const [status, setStatus] = useState<JiraConnectionStatusView | undefined>()
   const [configView, setConfigView] = useState<JiraConfigEditorView | undefined>()
   const [configDraft, setConfigDraft] = useState<ConfigDraft>(() => draftFromConfig({}))
@@ -350,10 +349,13 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
     }
   }
 
+  // The panel mounts only while its row holds the main column, so the first
+  // load belongs to mount rather than to an open flag.
   useEffect(() => {
-    if (!open || status !== undefined || busy !== undefined) return
+    if (status !== undefined || busy !== undefined) return
     void Promise.all([loadStatus(), loadConfig()]).then(() => { void search('assigned') })
-  }, [open])
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only first load
+  }, [])
 
   useEffect(() => {
     if (status === undefined) return
@@ -365,10 +367,8 @@ export function JiraPanel({ open, onClose, port, t }: JiraPanelProps) {
     void loadIssue(issue.key)
   }, [issue?.key])
 
-  if (!open) return null
-
   return (
-    <div className={css.popover} role="dialog" aria-label={t('panel.title')}>
+    <div className={css.popover} aria-label={t('panel.title')}>
       <div className={css.header}>
         <div>
           <p className={css.title}>{t('panel.title')}</p>

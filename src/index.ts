@@ -20,7 +20,10 @@ export const inject = ['tools', 'connection']
 
 export interface Config extends JiraWorkBoardSyncConfig {}
 
-export const Config: z<Config> = z.object({
+// The schema's inferred type widens literal defaults to schemastery's
+// `Volatile<T>`, which the declared Config (and its consumers) do not use;
+// the cast keeps the declared interface as the single source of truth.
+export const Config = z.object({
   baseUrl: z.string(),
   authMode: z.union(['pat', 'basic']).default('pat'),
   tokenCredentialRef: z.string().role('credential-ref').default('JIRA_API_TOKEN'),
@@ -46,7 +49,7 @@ export const Config: z<Config> = z.object({
   workBoardDoneTransition: z.string(),
   workBoardFailedTransition: z.string(),
   workBoardManualTransitions: z.array(z.string()).default([]),
-})
+}) as unknown as z<Config>
 
 const JSON_OUTPUT = { schema: { type: 'json' } } as const
 

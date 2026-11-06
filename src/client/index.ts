@@ -1,6 +1,11 @@
 import type { Context as ClientContext } from '@deepseek-ai/cordis'
 import type { ConnectionHandle, RpcResult } from '@deepseek-ai/dsh-client-connection/client'
 import type {} from '@deepseek-ai/dsh-client-locale/client'
+// Type-only: pulls the layout service's Context merge (ctx.layout).
+import type {} from '@deepseek-ai/dsh-client-ui-layout/client'
+// Type-only: pulls the slot registry's Context merge (ctx.slots).
+import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
+// Type-only: pulls the ui-sidebar SlotMap merge ('sidebar.panellist').
 import type {} from '@deepseek-ai/dsh-client-ui-sidebar/client'
 import {
   JIRA_RPC_CHANNEL,
@@ -15,13 +20,13 @@ import {
   type JiraTransitionIssueArgs,
 } from '../model.ts'
 import type { JiraPanelPort } from './JiraPanel.tsx'
-import { createJiraController } from './panel-mount.tsx'
-import { mountSidebarEntry } from './sidebar-entry.ts'
-import { en, NS, zh } from './locales.ts'
+import { JIRA_PANEL_ID, JiraMainPanel, JiraPanelIcon, type JiraPanelInjected } from './panel-entry.tsx'
+import { en, NS, zh, type JiraTrackerKey } from './locales.ts'
 
 export type { JiraTrackerKey } from './locales.ts'
 
-export const inject = ['locale', 'connection']
+/** Services required by the panel slots and the RPC port they serve. */
+export const inject = ['slots', 'locale', 'layout', 'connection']
 
 function unwrapResult<Endpoint extends JiraRpcEndpoint>(
   endpoint: Endpoint,
@@ -52,14 +57,31 @@ function createPort(connection: ConnectionHandle): JiraPanelPort {
   }
 }
 
+/**
+ * Contribute the Jira sidebar row and the main-column panel it selects.
+ * @param ctx - the browser plugin context.
+ */
 export function apply(ctx: ClientContext): void {
   ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'jira-tracker: dictionaries')
   const port = createPort(ctx.get('connection') as ConnectionHandle)
   const t = ctx.locale.bind(NS)
-  const controller = createJiraController(port, t)
-  const disposeEntry = mountSidebarEntry(controller, t)
-  ctx.effect(() => () => {
-    disposeEntry()
-    controller.dispose()
-  }, 'jira-tracker: sidebar entry and panel')
+  // Resolved inside the inject factories: a slot is claimed later than this
+  // plugin applies, and the layout service is what the frame offers at that point.
+  const panelFace = (): JiraPanelInjected => ({
+    port,
+    selectPanel: (id) => { ctx.layout.selectPanel(id) },
+  })
+  ctx.slots.inject('sidebar.panellist', () => ctx.slots.register({
+    name: 'sidebar.panellist',
+    id: JIRA_PANEL_ID,
+    order: 30,
+    locale: NS,
+    label: () => t('panel.trigger' as JiraTrackerKey),
+  }, JiraPanelIcon))
+  ctx.slots.inject('main', () => ctx.slots.register({
+    name: 'main',
+    key: JIRA_PANEL_ID,
+    locale: NS,
+    inject: panelFace,
+  }, JiraMainPanel))
 }

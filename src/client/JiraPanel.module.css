@@ -1,91 +1,21 @@
-/* --- center-column takeover (global rules, attribute-scoped) ----------------- */
+/* --- main-column occupant --------------------------------------------------- */
 
-[data-pane='conversation'],
-[class*='centerCol'] {
-  position: relative;
-}
-
-/* The Jira container rides inside the conversation grid item as an extra
-   trailing child; hidden unless the panel is active. */
-[data-dsh-jira-view] {
-  position: absolute;
-  inset: 0;
-  display: none;
-  z-index: 60;
+/* The Jira panel is a registered `main` occupant: the frame hands it the center
+   column, and the sidebar row that selects it carries the same panel key. Only
+   height and the container query belong here — geometry, selection, and the
+   takeover of the column are the frame's. */
+.mainPanel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
   background: var(--dsw-alias-bg-base);
-  overflow: auto;
+  outline: none;
   container-name: jira-view;
   container-type: inline-size;
 }
 
-/* The center column is single-occupant; the :not() guards keep the sibling
-   panels (work board / ssh) from fighting over visibility if activation
-   attributes ever coexist. */
-html[data-dsh-jira-active]:not([data-dsh-work-board-active]):not([data-dsh-ssh-active]):not([data-dsh-taskboard-active]) [data-dsh-jira-view] {
-  display: block;
-}
-
-/* While the panel is active, the conversation content underneath is hidden
-   (it stays mounted and stateful). The !important is required: the dsh shell
-   wraps the conversation view in a node with an inline `display: contents`. */
-html[data-dsh-jira-active]:not([data-dsh-work-board-active]):not([data-dsh-ssh-active]):not([data-dsh-taskboard-active]) [data-pane='conversation'] > :not([data-dsh-jira-view]),
-html[data-dsh-jira-active]:not([data-dsh-work-board-active]):not([data-dsh-ssh-active]):not([data-dsh-taskboard-active]) [class*='centerCol'] > :not([data-dsh-jira-view]) {
-  display: none !important;
-}
-
-/* --- main sidebar entry ----------------------------------------------------- */
-
-.entry {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  height: 32px;
-  padding: 0 12px;
-  background: transparent;
-  border: none;
-  border-radius: 8px;
-  color: var(--dsw-alias-label-secondary, inherit);
-  cursor: pointer;
-  font: inherit;
-  font-size: 13px;
-  white-space: nowrap;
-}
-
-.entry:hover {
-  background: var(--dsw-specific-sidebar-nav-item-hover, rgba(127, 127, 127, 0.10));
-  color: var(--dsw-alias-label-primary, inherit);
-}
-
-.entry[data-active] {
-  background: var(--dsw-specific-sidebar-nav-item-active, rgba(127, 127, 127, 0.14));
-  color: var(--dsw-alias-label-primary, inherit);
-  font-weight: 600;
-}
-
-.entryIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-}
-
-.entryLabel {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-[data-dsh-frame][data-sidebar-collapsed] .entry {
-  justify-content: center;
-  padding: 0;
-  width: 100%;
-}
-
-[data-dsh-frame][data-sidebar-collapsed] .entryLabel {
-  display: none;
-}
-
-/* The panel body fills the embedded center-column view. */
+/* The panel body fills the main column. */
 .popover {
   box-sizing: border-box;
   height: 100%;
